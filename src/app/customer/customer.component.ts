@@ -1,6 +1,7 @@
 import { Customer } from './models/customer.model';
 import { CustomerService } from './customer.service';
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-customer',
@@ -9,25 +10,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CustomerComponent implements OnInit {
 
+  displayedColumns = ['name', 'cpf', 'birthDate', 'status'];
   customers: Array<Customer>;
+  loading: boolean = false;
 
-  constructor(private _customerService: CustomerService) { }
+  constructor(private _customerService: CustomerService,
+              private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.getCustomers()
+    this.getCustomers();
   }
 
   getCustomers() {
+    this.loading = true;
     this._customerService.getAll()
       .then(result => {
-
-        console.log('customers', result)
-
         if (result) {
           this.customers = result;
         }
+        this.loading = false;
       }).catch(() => {
-
+        this.toastr.error('Ocorreu um erro ao carregar os clientes.');
+        this.loading = false;
       });
   }
 

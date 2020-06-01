@@ -1,1 +1,73 @@
-<p>customer works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title ">Clientes</h3>
+                        <!-- <p class="card-category"> Here is a subtitle for this table</p> -->
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <div class="spinner" *ngIf="loading">
+                            <mat-spinner diameter="60"></mat-spinner>
+                        </div>
+                            <mat-table [dataSource]="customers" class="table">
+                                <ng-container matColumnDef="name">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <span>Nome</span>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let customer">
+                                        <p class="text-trucate">{{customer.name}}</p>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="cpf">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <span>CPF</span>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let customer">
+                                        <p class="text-trucate">{{customer.cpf}}</p>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="birthDate">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <span>Data de nascimento</span>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let customer">
+                                        <p class="text-trucate">{{customer.birthDate}}</p>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="status">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <span>Status</span>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let customer">
+                                        <p class="text-trucate">{{customer.status}}</p>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                                <mat-row class="pointer" *matRowDef="let row; columns: displayedColumns">
+                                </mat-row>
+
+
+                            </mat-table>
+
+                            <div *ngIf="customers.length == 0">
+                                <span>
+                                    Nenhum dado encontrado.
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  
