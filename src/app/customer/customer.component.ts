@@ -2,6 +2,7 @@ import { Customer } from './models/customer.model';
 import { CustomerService } from './customer.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-customer',
@@ -26,6 +27,11 @@ export class CustomerComponent implements OnInit {
     this._customerService.getAll()
       .then(result => {
         if (result) {
+
+          result.forEach(x => {
+            x.BirthDate = moment(x.BirthDate).format("DD/MM/YYYY");
+          });
+
           this.customers = result;
         }
         this.loading = false;

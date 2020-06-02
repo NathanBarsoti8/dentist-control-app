@@ -2,8 +2,9 @@ export interface Customer {
     Id: string;
     Name: string;
     Cpf: string; 
-    BirthDate: Date;
+    BirthDate: string;
     Sex: string;
     Email: string;
     Job: string;
+    IsActive: boolean;
 }

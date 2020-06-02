@@ -12,40 +12,44 @@
                         <div class="spinner" *ngIf="loading">
                             <mat-spinner diameter="60"></mat-spinner>
                         </div>
-                            <mat-table [dataSource]="customers" class="table">
+                            <mat-table [dataSource]="customers" class="table" *ngIf="customers">
                                 <ng-container matColumnDef="name">
                                     <mat-header-cell *matHeaderCellDef>
-                                        <span>Nome</span>
+                                        <b style="font-size: medium;">Nome</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <p class="text-trucate">{{customer.name}}</p>
+                                        <p class="text-trucate">{{customer.Name}}</p>
                                     </mat-cell>
                                 </ng-container>
 
                                 <ng-container matColumnDef="cpf">
                                     <mat-header-cell *matHeaderCellDef>
-                                        <span>CPF</span>
+                                        <b style="font-size: medium;">CPF</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <p class="text-trucate">{{customer.cpf}}</p>
+                                        <p class="text-trucate">{{customer.Cpf}}</p>
                                     </mat-cell>
                                 </ng-container>
 
                                 <ng-container matColumnDef="birthDate">
                                     <mat-header-cell *matHeaderCellDef>
-                                        <span>Data de nascimento</span>
+                                        <b style="font-size: medium;">Data de nascimento</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <p class="text-trucate">{{customer.birthDate}}</p>
+                                        <p class="text-trucate">{{customer.BirthDate}}</p>
                                     </mat-cell>
                                 </ng-container>
 
                                 <ng-container matColumnDef="status">
                                     <mat-header-cell *matHeaderCellDef>
-                                        <span>Status</span>
+                                        <b style="font-size: medium;">Status</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <p class="text-trucate">{{customer.status}}</p>
+                                        <div [ngStyle]="{'color': customer.IsActive ? '#2EFE2E' : '#d3d3d3' }">
+                                            <button mat-icon-button>
+                                                <mat-icon>check_circle</mat-icon>
+                                            </button>
+                                        </div>
                                     </mat-cell>
                                 </ng-container>
 
@@ -57,7 +61,8 @@
 
                             </mat-table>
 
-                            <div *ngIf="customers.length == 0">
+
+                            <div *ngIf="!customers || customers.length == 0" style="text-align: center;">
                                 <span>
                                     Nenhum dado encontrado.
                                 </span>
