@@ -1,3 +1,4 @@
+import { CustomerDetailsComponent } from './../../customer/customer-details/customer-details.component';
 import { CustomerComponent } from './../../customer/customer.component';
 import { Routes } from '@angular/router';
 
@@ -17,8 +18,9 @@ export const AdminLayoutRoutes: Routes = [
     //   component: UserProfileComponent
     // }]
     // }
-    { path: 'dashboard',      component: DashboardComponent },
-    { path: 'user-profile',   component: UserProfileComponent },
-    { path: 'table-list',     component: TableListComponent },
-    { path: 'customer',       component: CustomerComponent },
+    { path: 'dashboard',         component: DashboardComponent },
+    { path: 'user-profile',      component: UserProfileComponent },
+    { path: 'table-list',        component: TableListComponent },
+    { path: 'customer',          component: CustomerComponent },
+    { path: 'customer-details',  component: CustomerDetailsComponent},
 ];

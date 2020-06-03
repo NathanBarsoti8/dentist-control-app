@@ -1,3 +1,4 @@
+import { CustomerDetailsComponent } from './../../customer/customer-details/customer-details.component';
 import { CustomerComponent } from './../../customer/customer.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -37,7 +38,8 @@ import { MatIconModule } from '@angular/material/icon'
     DashboardComponent,
     UserProfileComponent,
     TableListComponent,
-    CustomerComponent
+    CustomerComponent,
+    CustomerDetailsComponent,
   ]
 })
 

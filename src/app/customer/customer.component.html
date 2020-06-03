@@ -55,9 +55,10 @@
 
                                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-                                <mat-row class="pointer" *matRowDef="let row; columns: displayedColumns">
+                                <mat-row class="pointer" *matRowDef="let customer; columns: displayedColumns"
+                                [routerLink]="['/customer-details']"
+                                [queryParams]="{customerId: customer.Id}">
                                 </mat-row>
-
 
                             </mat-table>
 
