@@ -1,1 +1,141 @@
-<p>customer-details works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title">Detalhes do Cliente</h3>
+                    </div>
+                    <div class="spinner" *ngIf="loading">
+                        <mat-spinner diameter="80"></mat-spinner>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="customerDetailsForm">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                      <mat-label>Nome</mat-label>
+                                      <input matInput type="text" formControlName="name" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>CPF</mat-label>
+                                        <input matInput type="text" formControlName="cpf" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Sexo</mat-label>
+                                        <input matInput type="text" formControlName="sex" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Status</mat-label>
+                                        <input matInput type="text" formControlName="isActive" required>
+                                    </mat-form-field>
+                                </div>    
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Data de Nascimento</mat-label>
+                                        <input matInput type="text" formControlName="birthDate" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput type="email" formControlName="email" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Trabalho</mat-label>
+                                        <input matInput type="text" formControlName="job" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Tipo de Telefone</mat-label>
+                                        <input matInput type="text" formControlName="phoneType" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>DDD</mat-label>
+                                        <input matInput type="text" formControlName="ddd" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-7">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Número do Telefone</mat-label>
+                                        <input matInput type="text" formControlName="phoneNumber" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>CEP</mat-label>
+                                        <input matInput type="text" formControlName="zipCode" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Estado</mat-label>
+                                        <input matInput type="text" formControlName="state" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Cidade</mat-label>
+                                        <input matInput type="text" formControlName="city" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Endereço</mat-label>
+                                        <input matInput type="text" formControlName="address" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-1">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Número</mat-label>
+                                        <input matInput type="text" formControlName="addressNumber">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Bairro</mat-label>
+                                        <input matInput type="text" formControlName="neighborhood" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Complemento</mat-label>
+                                        <input matInput type="text" formControlName="complement">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            
+                            <button mat-raised-button type="submit" class="btn btn-danger pull-right"
+                            [disabled]="customerDetailsForm.invalid">Atualizar</button>
+
+                            <button mat-raised-button type="submit" class="btn btn-default pull-right"
+                            style="margin-right: 10px;" [routerLink]="['/customer']">Voltar</button>
+
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  
