@@ -13,7 +13,6 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { TableListComponent } from './table-list/table-list.component';
 import {
   AgmCoreModule
 } from '@agm/core';
@@ -24,6 +23,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DataService } from './shared/services/data.service';
 
 @NgModule({
   imports: [
@@ -47,7 +47,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     AppComponent,
     AdminLayoutComponent,
   ],
-  providers: [],
+  providers: [
+    DataService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
