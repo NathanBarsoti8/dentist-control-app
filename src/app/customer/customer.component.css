@@ -1,1 +1,10 @@
 .pointer {cursor: pointer;}
+
+.add-customer-button {
+    position: absolute;
+    right: 10px;
+    bottom: 7px;
+    z-index: 10;
+    color: red;
+    background-color: white;
+}

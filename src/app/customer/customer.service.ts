@@ -13,16 +13,29 @@ export class CustomerService {
 
   constructor(private httpClient: HttpClient, private dataService: DataService) { }
 
-  getAll(pageSize: number, pageIndex: number, search?: string): Promise<PaginatedItems<Customer>> {
-    return this.dataService.get<PaginatedItems<Customer>>(`${APPLICATION_API}/clients`, {
-      params: {
-        updates: [
-          { param: 'pageSize', value: pageSize.toString() },
-          { param: 'pageIndex', value: pageIndex.toString() },
-          { param: 'filter', value: search ? search : ''}
-        ]
-      }
-    }) as Promise<PaginatedItems<Customer>>;
+  //TO DO: FILTER AND PAGINATION
+  // getAll(pageSize: number, pageIndex: number, search?: string): Promise<PaginatedItems<Customer>> {
+  //   return this.dataService.get<PaginatedItems<Customer>>(`${APPLICATION_API}/clients`, {
+  //     params: {
+  //       updates: [
+  //         { param: 'pageSize', value: pageSize.toString() },
+  //         { param: 'pageIndex', value: pageIndex.toString() },
+  //         { param: 'filter', value: search ? search : ''}
+  //       ]
+  //     }
+  //   }) as Promise<PaginatedItems<Customer>>;
+  // }
+
+  getAll(): Promise<Array<Customer>> {
+    return new Promise<Array<Customer>>((resolve, reject) => {
+      this.httpClient.get(`${APPLICATION_API}/clients`)
+        .subscribe((response: Array<Customer>) => {
+          resolve(response);
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    })
+
   }
 
   getById(id: string): Promise<CustomerDetails> {

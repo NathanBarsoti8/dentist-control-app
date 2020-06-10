@@ -16,7 +16,7 @@ import { fromEvent } from 'rxjs';
 export class CustomerComponent implements OnInit {
 
   displayedColumns = ['name', 'cpf', 'birthDate', 'status'];
-  customers: PaginatedItems<Customer>;
+  customers: Array<Customer>;
   loading: boolean = false;
   pageSize: number = 10;
   pageIndex: number = 0;
@@ -31,28 +31,28 @@ export class CustomerComponent implements OnInit {
     this.getCustomers(this.pageSize, this.pageIndex)
   }
 
-  ngAfterViewInit(): void {
-    fromEvent(this.search.nativeElement, 'keyup').pipe(
-      debounceTime(250),
-      distinctUntilChanged()
-    ).subscribe(() => {
-      this.refreshTable();
-    });
+  // ngAfterViewInit(): void {
+  //   fromEvent(this.search.nativeElement, 'keyup').pipe(
+  //     debounceTime(250),
+  //     distinctUntilChanged()
+  //   ).subscribe(() => {
+  //     this.refreshTable();
+  //   });
 
-    this.paginator.page.pipe(
-      tap(() => {
-        this.refreshTable();
-      })
-    ).subscribe();
-  }
+  //   this.paginator.page.pipe(
+  //     tap(() => {
+  //       this.refreshTable();
+  //     })
+  //   ).subscribe();
+  // }
 
   getCustomers(pageSize: number, pageIndex: number, search?: string): void {
     this.loading = true;
-    this._customerService.getAll(pageSize, pageIndex, search)
+    this._customerService.getAll()
       .then(result => {
         if (result) {
 
-          result.data.forEach(x => {
+          result.forEach(x => {
             x.BirthDate = moment(x.BirthDate).format("DD/MM/YYYY");
           });
 
@@ -65,18 +65,18 @@ export class CustomerComponent implements OnInit {
       });
   }
 
-  searchCustomers(): void {
-    this.getCustomers(this.paginator.pageSize, this.paginator.pageIndex, this.search.nativeElement.value);
-    this.paginator.page.pipe(
-      tap(() => {
-        this.getCustomers(this.paginator.pageSize, this.paginator.pageIndex, this.search.nativeElement.value);
-      })
-    ).subscribe();
-    this.paginator.pageIndex = 0;
-  }
+  // searchCustomers(): void {
+  //   this.getCustomers(this.paginator.pageSize, this.paginator.pageIndex, this.search.nativeElement.value);
+  //   this.paginator.page.pipe(
+  //     tap(() => {
+  //       this.getCustomers(this.paginator.pageSize, this.paginator.pageIndex, this.search.nativeElement.value);
+  //     })
+  //   ).subscribe();
+  //   this.paginator.pageIndex = 0;
+  // }
 
-  refreshTable(): void {
-    this.getCustomers(this.paginator.pageSize, this.paginator.pageIndex, this.search.nativeElement.value);
-  }
+  // refreshTable(): void {
+  //   this.getCustomers(this.paginator.pageSize, this.paginator.pageIndex, this.search.nativeElement.value);
+  // }
 
 }

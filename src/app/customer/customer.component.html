@@ -5,6 +5,9 @@
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h3 class="card-title ">Clientes</h3>
+                        <button mat-fab class="add-customer-button">
+                            <mat-icon>add</mat-icon>
+                        </button>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -62,7 +65,7 @@
                             </mat-table>
 
 
-                            <div *ngIf="!customers || customers.data.length == 0" style="text-align: center;">
+                            <div *ngIf="!customers || customers.length == 0" style="text-align: center;">
                                 <span>
                                     Nenhum dado encontrado.
                                 </span>
