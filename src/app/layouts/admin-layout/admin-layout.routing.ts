@@ -1,3 +1,4 @@
+import { CustomerCreateComponent } from './../../customer/customer-create/customer-create.component';
 import { CustomerDetailsComponent } from './../../customer/customer-details/customer-details.component';
 import { CustomerComponent } from './../../customer/customer.component';
 import { Routes } from '@angular/router';
@@ -21,4 +22,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'table-list',        component: TableListComponent },
     { path: 'customer',          component: CustomerComponent },
     { path: 'customer-details',  component: CustomerDetailsComponent},
+    { path: 'customer-create',   component: CustomerCreateComponent }
 ];

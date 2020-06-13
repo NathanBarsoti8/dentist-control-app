@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FilterCustomer } from './models/filterCustomer.model';
 import { DataService } from 'app/shared/services/data.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +35,7 @@ export class CustomerService {
         }, reject);
     }).catch(error => {
       return Promise.reject(error);
-    })
-
+    });
   }
 
   getById(id: string): Promise<CustomerDetails> {
@@ -47,6 +47,10 @@ export class CustomerService {
     }).catch(error => {
       return Promise.reject(error);
     });
+  }
+
+  create(obj) {
+    return this.httpClient.post(`${APPLICATION_API}/clients`, obj);
   }
   
 }

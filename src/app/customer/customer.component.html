@@ -5,7 +5,8 @@
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h3 class="card-title ">Clientes</h3>
-                        <button mat-fab class="add-customer-button">
+                        <button mat-fab class="add-customer-button" matTooltip="Adicionar novo cliente"
+                        [routerLink]="['/customer-create']">
                             <mat-icon>add</mat-icon>
                         </button>
                     </div>

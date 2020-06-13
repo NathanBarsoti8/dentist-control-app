@@ -1,5 +1,3 @@
-import { CustomerDetailsComponent } from './../../customer/customer-details/customer-details.component';
-import { CustomerComponent } from './../../customer/customer.component';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -17,6 +15,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon'
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { CustomerDetailsComponent } from './../../customer/customer-details/customer-details.component';
+import { CustomerComponent } from './../../customer/customer.component';
+import { CustomerCreateComponent } from 'app/customer/customer-create/customer-create.component';
 
 @NgModule({
   imports: [
@@ -40,6 +41,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     TableListComponent,
     CustomerComponent,
     CustomerDetailsComponent,
+    CustomerCreateComponent
   ]
 })
 
