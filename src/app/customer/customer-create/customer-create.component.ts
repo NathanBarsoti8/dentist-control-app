@@ -1,3 +1,4 @@
+import { FormValidationMessages } from './../models/validation-messages.model';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from './../customer.service';
 import { Component, OnInit } from '@angular/core';
@@ -11,6 +12,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class CustomerCreateComponent implements OnInit {
 
   addCustomerForm: FormGroup;
+  public validation_messages: FormValidationMessages;
 
   constructor(private _customerService: CustomerService,
     private formBuilder: FormBuilder,
@@ -18,6 +20,7 @@ export class CustomerCreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.generateForm();
+    this.setValidationMessages();
   }
 
   generateForm(): void {
@@ -40,6 +43,14 @@ export class CustomerCreateComponent implements OnInit {
       city: [''],
       state: ['']
     });
+  }
+
+  setValidationMessages(): void {
+    this.validation_messages = {
+      name: [
+        { type: 'required', message: 'Nome é obrigatório' }
+      ],
+    }
   }
 
 }
