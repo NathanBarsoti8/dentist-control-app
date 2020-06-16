@@ -1,25 +1,25 @@
 export interface Customer {
-    Id: string;
-    Name: string;
-    Cpf: string; 
-    BirthDate: string;
-    Sex: string;
-    Email: string;
-    Job: string;
-    IsActive: boolean;
+    id: string;
+    name: string;
+    cpf: string; 
+    birthDate: string;
+    sex: string;
+    email: string;
+    job: string;
+    isActive: boolean;
 }
 
 export interface CustomerDetails extends Customer{
-    PhoneId: string;
-    PhoneNumber: string;
+    phoneId: string;
+    phoneNumber: string;
     DDD: string;
-    PhoneType: string;
-    AddressId: string;
-    ZipCode: number;
-    Address: string;
-    AddressNumber: number;
-    Neighborhood: string;
-    Complement: string;
-    City: string;
-    State: string;
+    phoneType: string;
+    addressId: string;
+    zipCode: number;
+    address: string;
+    addressNumber: number;
+    neighborhood: string;
+    complement: string;
+    city: string;
+    state: string;
 }

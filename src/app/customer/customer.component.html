@@ -21,7 +21,7 @@
                                         <b style="font-size: medium;">Nome</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <p class="text-trucate">{{customer.Name}}</p>
+                                        <p class="text-trucate">{{customer.name}}</p>
                                     </mat-cell>
                                 </ng-container>
 
@@ -30,7 +30,7 @@
                                         <b style="font-size: medium;">CPF</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <p class="text-trucate">{{customer.Cpf}}</p>
+                                        <p class="text-trucate">{{customer.cpf}}</p>
                                     </mat-cell>
                                 </ng-container>
 
@@ -39,7 +39,7 @@
                                         <b style="font-size: medium;">Data de nascimento</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <p class="text-trucate">{{customer.BirthDate}}</p>
+                                        <p class="text-trucate">{{customer.birthDate}}</p>
                                     </mat-cell>
                                 </ng-container>
 
@@ -48,7 +48,7 @@
                                         <b style="font-size: medium;">Status</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <div [ngStyle]="{'color': customer.IsActive ? '#2EFE2E' : '#d3d3d3' }">
+                                        <div [ngStyle]="{'color': customer.isActive ? '#2EFE2E' : '#d3d3d3' }">
                                             <button mat-icon-button>
                                                 <mat-icon>check_circle</mat-icon>
                                             </button>
@@ -60,7 +60,7 @@
 
                                 <mat-row class="pointer" *matRowDef="let customer; columns: displayedColumns"
                                 [routerLink]="['/customer-details']"
-                                [queryParams]="{customerId: customer.Id}">
+                                [queryParams]="{customerId: customer.id}">
                                 </mat-row>
 
                             </mat-table>

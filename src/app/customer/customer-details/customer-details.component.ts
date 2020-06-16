@@ -59,23 +59,23 @@ export class CustomerDetailsComponent implements OnInit {
       customer[0].BirthDate = moment(customer[0].BirthDate).format("DD/MM/YYYY");
 
       this.customerDetailsForm.patchValue(customer[0]);
-      this.customerDetailsForm.get('name').setValue(customer[0].Name);
-      this.customerDetailsForm.get('cpf').setValue(customer[0].Cpf);
-      this.customerDetailsForm.get('birthDate').setValue(customer[0].BirthDate);
-      this.customerDetailsForm.get('sex').setValue(customer[0].Sex);
-      this.customerDetailsForm.get('email').setValue(customer[0].Email);
-      this.customerDetailsForm.get('job').setValue(customer[0].Job);
-      this.customerDetailsForm.get('isActive').setValue(customer[0].IsActive);
-      this.customerDetailsForm.get('phoneType').setValue(customer[0].PhoneType);
+      this.customerDetailsForm.get('name').setValue(customer[0].name);
+      this.customerDetailsForm.get('cpf').setValue(customer[0].cpf);
+      this.customerDetailsForm.get('birthDate').setValue(customer[0].birthDate);
+      this.customerDetailsForm.get('sex').setValue(customer[0].sex);
+      this.customerDetailsForm.get('email').setValue(customer[0].email);
+      this.customerDetailsForm.get('job').setValue(customer[0].job);
+      this.customerDetailsForm.get('isActive').setValue(customer[0].isActive);
+      this.customerDetailsForm.get('phoneType').setValue(customer[0].phoneType);
       this.customerDetailsForm.get('ddd').setValue(customer[0].DDD);
-      this.customerDetailsForm.get('phoneNumber').setValue(customer[0].PhoneNumber);
-      this.customerDetailsForm.get('zipCode').setValue(customer[0].ZipCode);
-      this.customerDetailsForm.get('address').setValue(customer[0].Address);
-      this.customerDetailsForm.get('addressNumber').setValue(customer[0].AddressNumber);
-      this.customerDetailsForm.get('neighborhood').setValue(customer[0].Neighborhood);
-      this.customerDetailsForm.get('complement').setValue(customer[0].Complement);
-      this.customerDetailsForm.get('city').setValue(customer[0].City);
-      this.customerDetailsForm.get('state').setValue(customer[0].State);
+      this.customerDetailsForm.get('phoneNumber').setValue(customer[0].phoneNumber);
+      this.customerDetailsForm.get('zipCode').setValue(customer[0].zipCode);
+      this.customerDetailsForm.get('address').setValue(customer[0].address);
+      this.customerDetailsForm.get('addressNumber').setValue(customer[0].addressNumber);
+      this.customerDetailsForm.get('neighborhood').setValue(customer[0].neighborhood);
+      this.customerDetailsForm.get('complement').setValue(customer[0].complement);
+      this.customerDetailsForm.get('city').setValue(customer[0].city);
+      this.customerDetailsForm.get('state').setValue(customer[0].state);
     }
     return;
   }

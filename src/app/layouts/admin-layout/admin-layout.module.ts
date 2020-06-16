@@ -18,11 +18,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CustomerDetailsComponent } from './../../customer/customer-details/customer-details.component';
 import { CustomerComponent } from './../../customer/customer.component';
 import { CustomerCreateComponent } from 'app/customer/customer-create/customer-create.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
+    ToastrModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,

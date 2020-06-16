@@ -53,7 +53,7 @@ export class CustomerComponent implements OnInit {
         if (result) {
 
           result.forEach(x => {
-            x.BirthDate = moment(x.BirthDate).format("DD/MM/YYYY");
+            x.birthDate = moment(x.birthDate).format("DD/MM/YYYY");
           });
 
           this.customers = result;
