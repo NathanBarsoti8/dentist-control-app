@@ -1,3 +1,4 @@
+import { SharedModule } from './../../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -38,7 +39,8 @@ import { NgxMaskModule } from "ngx-mask";
     MatProgressSpinnerModule,
     MatIconModule,
     MatPaginatorModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    SharedModule.forRoot()
   ],
   declarations: [
     DashboardComponent,

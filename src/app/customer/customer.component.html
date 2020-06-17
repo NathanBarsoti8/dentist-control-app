@@ -30,7 +30,7 @@
                                         <b style="font-size: medium;">CPF</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <p class="text-trucate">{{customer.cpf}}</p>
+                                        <p class="text-trucate">{{customer.cpf | cpf}}</p>
                                     </mat-cell>
                                 </ng-container>
 

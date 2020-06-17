@@ -1,5 +1,5 @@
 import { DefaultInterface } from 'app/shared/models/default-interface.model';
-import { FormValidationMessages } from './../models/validation-messages.model';
+import { FormValidationMessages } from '../../shared/models/validation-messages.model';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from './../customer.service';
 import { Component, OnInit } from '@angular/core';
