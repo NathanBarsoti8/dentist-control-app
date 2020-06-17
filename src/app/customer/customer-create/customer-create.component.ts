@@ -3,8 +3,9 @@ import { FormValidationMessages } from './../models/validation-messages.model';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from './../customer.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CpfValidator } from 'app/shared/custom/cpf-validator';
 
 @Component({
   selector: 'app-customer-create',
@@ -12,6 +13,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./customer-create.component.css']
 })
 export class CustomerCreateComponent implements OnInit {
+
+  states = [
+    "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"
+  ];
+
+  genders = [
+    { value: "M", option: "Masculino" },
+    { value: "F", option: "Feminino" }
+  ];
 
   phoneTypes: Array<DefaultInterface<number>>;
   addCustomerForm: FormGroup;
@@ -30,29 +40,29 @@ export class CustomerCreateComponent implements OnInit {
 
   generateForm(): void {
     this.addCustomerForm = this.formBuilder.group({
-      name: [''],
-      cpf: [''],
-      birthDate: [''], 
-      sex: [''],
+      name: ['', [Validators.required]],
+      cpf: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), CpfValidator.validate]],
+      birthDate: ['', [Validators.required]], 
+      sex: ['', [Validators.required]],
       email: [''],
-      job: [''],
-      phoneType: [''],
-      ddd: [''],
-      phoneNumber: [''],
-      zipCode: [''],
-      address: [''],
+      job: ['', [Validators.required]],
+      phoneType: ['', [Validators.required]],
+      ddd: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(3)]],
+      phoneNumber: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]],
+      zipCode: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+      address: ['', [Validators.required]],
       addressNumber: [''],
-      neighborhood: [''],
+      neighborhood: ['', [Validators.required]],
       complement: [''],
-      city: [''],
-      state: ['']
+      city: ['', [Validators.required]],
+      state: ['', [Validators.required]]
     });
   }
 
   setValidationMessages(): void {
     this.validation_messages = {
-      name: [
-        { type: 'required', message: 'Nome é obrigatório' }
+      generic: [
+        { type: 'required', message: 'Campo obrigatório' }
       ],
     }
   }

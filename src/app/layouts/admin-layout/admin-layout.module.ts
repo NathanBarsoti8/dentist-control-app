@@ -19,6 +19,7 @@ import { CustomerDetailsComponent } from './../../customer/customer-details/cust
 import { CustomerComponent } from './../../customer/customer.component';
 import { CustomerCreateComponent } from 'app/customer/customer-create/customer-create.component';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxMaskModule } from "ngx-mask";
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { ToastrModule } from 'ngx-toastr';
     MatTableModule,
     MatProgressSpinnerModule,
     MatIconModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    NgxMaskModule.forRoot()
   ],
   declarations: [
     DashboardComponent,
