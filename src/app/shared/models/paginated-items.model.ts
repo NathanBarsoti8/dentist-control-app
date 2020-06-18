@@ -1,6 +1,6 @@
 export interface PaginatedItems<T> {
     count: number;
-    pageSize: number;
-    pageIndex: number;
+    previous: number;
+    next: number;
     data: Array<T>;
 }

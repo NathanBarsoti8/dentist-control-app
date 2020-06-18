@@ -48,15 +48,15 @@ export class CustomerComponent implements OnInit {
 
   getCustomers(pageSize: number, pageIndex: number, search?: string): void {
     this.loading = true;
-    this._customerService.getAll()
+    this._customerService.getAll(1)
       .then(result => {
         if (result) {
 
-          result.forEach(x => {
+          result.data.forEach(x => {
             x.birthDate = moment(x.birthDate).format("DD/MM/YYYY");
           });
 
-          this.customers = result;
+          this.customers = result.data;
         }
         this.loading = false;
       }).catch(() => {

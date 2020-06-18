@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { DataService } from 'app/shared/services/data.service';
 import { Observable } from 'rxjs';
 import { DefaultInterface } from 'app/shared/models/default-interface.model';
+import { PaginatedItems } from 'app/shared/models/paginated-items.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,10 +27,10 @@ export class CustomerService {
   //   }) as Promise<PaginatedItems<Customer>>;
   // }
 
-  getAll(): Promise<Array<Customer>> {
-    return new Promise<Array<Customer>>((resolve, reject) => {
-      this.httpClient.get(`${APPLICATION_API}/clients`)
-        .subscribe((response: Array<Customer>) => {
+  getAll(page: number): Promise<PaginatedItems<Customer>> {
+    return new Promise<PaginatedItems<Customer>>((resolve, reject) => {
+      this.httpClient.get(`${APPLICATION_API}/clients?page=${page}&limit=3`)
+        .subscribe((response: PaginatedItems<Customer>) => {
           resolve(response);
         }, reject);
     }).catch(error => {
