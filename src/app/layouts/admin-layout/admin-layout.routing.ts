@@ -4,7 +4,6 @@ import { CustomerComponent } from './../../customer/customer.component';
 import { Routes } from '@angular/router';
 
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { TableListComponent } from '../../table-list/table-list.component';
 export const AdminLayoutRoutes: Routes = [
     // {
     //   path: '',
@@ -19,7 +18,6 @@ export const AdminLayoutRoutes: Routes = [
     // }]
     // }
     { path: 'dashboard',         component: DashboardComponent },
-    { path: 'table-list',        component: TableListComponent },
     { path: 'customer',          component: CustomerComponent },
     { path: 'customer-details',  component: CustomerDetailsComponent},
     { path: 'customer-create',   component: CustomerCreateComponent }
