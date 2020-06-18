@@ -42,7 +42,7 @@ export class CustomerCreateComponent implements OnInit {
     this.addCustomerForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       cpf: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), CpfValidator.validate]],
-      birthDate: ['', [Validators.required]], 
+      birthDate: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]], 
       sex: ['', [Validators.required]],
       email: [''],
       job: ['', [Validators.required]],

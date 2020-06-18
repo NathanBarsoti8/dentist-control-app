@@ -58,7 +58,7 @@
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Data de Nascimento</mat-label>
-                                        <input matInput type="text" formControlName="birthDate" required>
+                                        <input matInput type="text" mask="00/00/0000" maxlength="10" formControlName="birthDate" required>
                                         <mat-error *ngFor="let validation of validation_messages.generic">
                                             <span *ngIf="addCustomerForm.get('birthDate').dirty || addCustomerForm.get('birthDate').touched
                                                 && addCustomerForm.get('birthDate').hasError(validation.type)">

@@ -1,4 +1,43 @@
 <div class="main-content">
+
+    <form class="navbar-form">
+        <div class="row">
+            <div class="col-md-3">
+                <mat-slide-toggle class="pr-24 toggle-style" color="warn">
+                    Mostrar inativos
+                </mat-slide-toggle>
+            </div>
+
+
+            <div class="input-group col-md-5">
+                <input matInput type="text" value="" class="form-control" placeholder="Pesquisar...">
+                <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon" matTooltip="Pequisar">
+                    <i class="material-icons">search</i>
+                    <div class="ripple-container"></div>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    
+    <!-- <mat-slide-toggle class="pr-24" [checked]="!onlyActives" (change)="toggleStatus()">
+        {{ 'hr.cards.employeelist.show_inactives' | translate }}
+    </mat-slide-toggle> -->
+
+    <!-- <div class="search-input-wrapper" fxFlex fxLayout="row" fxLayoutAlign="end center">
+        <label for="search" class="mr-8">
+            <button mat-icon-button matTooltip="Pequisar"
+            (click)="searchEmployees()">
+                <mat-icon class="secondary-text">search</mat-icon>
+            </button>
+        </label>
+
+        <mat-form-field floatLabel="never" class="search-employee-input">
+            <input (keydown.enter)="searchEmployees()" matInput #search placeholder="Pesquisar..." #search>
+        </mat-form-field>
+    </div> -->
+
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -21,7 +60,7 @@
                                         <b style="font-size: medium;">Nome</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <p class="text-trucate">{{customer.name}}</p>
+                                        <p class="text-trucate align-cell">{{customer.name}}</p>
                                     </mat-cell>
                                 </ng-container>
 
@@ -30,7 +69,7 @@
                                         <b style="font-size: medium;">CPF</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <p class="text-trucate">{{customer.cpf | cpf}}</p>
+                                        <p class="text-trucate align-cell">{{customer.cpf | cpf}}</p>
                                     </mat-cell>
                                 </ng-container>
 
@@ -39,7 +78,7 @@
                                         <b style="font-size: medium;">Data de nascimento</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer">
-                                        <p class="text-trucate">{{customer.birthDate}}</p>
+                                        <p class="text-trucate align-cell">{{customer.birthDate}}</p>
                                     </mat-cell>
                                 </ng-container>
 

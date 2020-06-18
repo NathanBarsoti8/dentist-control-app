@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon'
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -37,6 +38,7 @@ import { NgxMaskModule } from "ngx-mask";
     MatTooltipModule,
     MatTableModule,
     MatProgressSpinnerModule,
+    MatSlideToggleModule,
     MatIconModule,
     MatPaginatorModule,
     NgxMaskModule.forRoot(),

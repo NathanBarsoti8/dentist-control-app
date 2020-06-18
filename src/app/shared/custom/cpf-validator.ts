@@ -7,8 +7,6 @@ export class CpfValidator {
         let digit = 0;
         cpf = cpf.replace(".", "").replace("-", "");
 
-        console.log(cpf, "cpf")
-
         if (cpf.length == 11) {
             if (cpf == "12345678909")
                 return { 'invalidCPF': true };

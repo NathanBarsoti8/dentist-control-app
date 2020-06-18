@@ -3,8 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CustomerDetails } from '../models/customer.model';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { CpfValidator } from 'app/shared/custom/cpf-validator';
 
 @Component({
   selector: 'app-customer-details',
@@ -12,6 +13,15 @@ import * as moment from 'moment';
   styleUrls: ['./customer-details.component.css']
 })
 export class CustomerDetailsComponent implements OnInit {
+
+  states = [
+    "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO"
+  ];
+
+  genders = [
+    { value: "M", option: "Masculino" },
+    { value: "F", option: "Feminino" }
+  ];
 
   customerId: string;
   loading: boolean = false;
@@ -33,30 +43,30 @@ export class CustomerDetailsComponent implements OnInit {
 
   generateForm(): void {
     this.customerDetailsForm = this.formBuilder.group({
-      name: [''],
-      cpf: [''],
-      birthDate: [''], 
-      sex: [''],
-      email: [''],
-      job: [''],
+      name: ['', [Validators.required]],
+      cpf: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), CpfValidator.validate]],
+      birthDate: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]], 
+      sex: ['', [Validators.required]],
       isActive: [''],
-      phoneType: [''],
-      ddd: [''],
-      phoneNumber: [''],
-      zipCode: [''],
-      address: [''],
+      email: [''],
+      job: ['', [Validators.required]],
+      phoneType: ['', [Validators.required]],
+      ddd: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(3)]],
+      phoneNumber: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]],
+      zipCode: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+      address: ['', [Validators.required]],
       addressNumber: [''],
-      neighborhood: [''],
+      neighborhood: ['', [Validators.required]],
       complement: [''],
-      city: [''],
-      state: ['']
+      city: ['', [Validators.required]],
+      state: ['', [Validators.required]]
     });
   }
 
   populateForm(customer: CustomerDetails): void {
     if (customer) {
 
-      customer[0].BirthDate = moment(customer[0].BirthDate).format("DD/MM/YYYY");
+      customer[0].birthDate = moment(customer[0].birthDate).format("DD/MM/YYYY");
 
       this.customerDetailsForm.patchValue(customer[0]);
       this.customerDetailsForm.get('name').setValue(customer[0].name);

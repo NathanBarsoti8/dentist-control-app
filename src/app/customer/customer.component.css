@@ -8,3 +8,12 @@
     color: red;
     background-color: white;
 }
+
+.align-cell {
+    margin-top: 10px;
+}
+
+.toggle-style {
+    margin-top: 10px;
+    margin-left: 17px;
+}
