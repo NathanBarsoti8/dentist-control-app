@@ -1,12 +1,12 @@
+import { Pager } from './../shared/models/paginated-items.model';
 import { Customer } from './models/customer.model';
 import { CustomerService } from './customer.service';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
-import { PaginatedItems } from 'app/shared/models/paginated-items.model';
 import { MatPaginator } from '@angular/material/paginator';
-import { tap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { fromEvent } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-customer',
@@ -18,45 +18,30 @@ export class CustomerComponent implements OnInit {
   displayedColumns = ['name', 'cpf', 'birthDate', 'status'];
   customers: Array<Customer>;
   loading: boolean = false;
-  pageSize: number = 10;
-  pageIndex: number = 0;
+  pager: Pager;
 
   @ViewChild('search', { static: false }) search: ElementRef;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  // @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
     constructor(private _customerService: CustomerService,
-      private toastr: ToastrService) { }
+      private toastr: ToastrService,
+      private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.getCustomers(this.pageSize, this.pageIndex)
+    this.route.queryParams.subscribe(x => this.getCustomers(x.page || 1))
   }
 
-  // ngAfterViewInit(): void {
-  //   fromEvent(this.search.nativeElement, 'keyup').pipe(
-  //     debounceTime(250),
-  //     distinctUntilChanged()
-  //   ).subscribe(() => {
-  //     this.refreshTable();
-  //   });
-
-  //   this.paginator.page.pipe(
-  //     tap(() => {
-  //       this.refreshTable();
-  //     })
-  //   ).subscribe();
-  // }
-
-  getCustomers(pageSize: number, pageIndex: number, search?: string): void {
+  getCustomers(page: number): void {
     this.loading = true;
-    this._customerService.getAll(1)
+    this._customerService.getAll(page)
       .then(result => {
         if (result) {
-
-          result.data.forEach(x => {
+          this.pager = result.pager;
+          this.customers = result.data;
+          
+          this.customers.forEach(x => {
             x.birthDate = moment(x.birthDate).format("DD/MM/YYYY");
           });
-
-          this.customers = result.data;
         }
         this.loading = false;
       }).catch(() => {
@@ -65,18 +50,5 @@ export class CustomerComponent implements OnInit {
       });
   }
 
-  // searchCustomers(): void {
-  //   this.getCustomers(this.paginator.pageSize, this.paginator.pageIndex, this.search.nativeElement.value);
-  //   this.paginator.page.pipe(
-  //     tap(() => {
-  //       this.getCustomers(this.paginator.pageSize, this.paginator.pageIndex, this.search.nativeElement.value);
-  //     })
-  //   ).subscribe();
-  //   this.paginator.pageIndex = 0;
-  // }
-
-  // refreshTable(): void {
-  //   this.getCustomers(this.paginator.pageSize, this.paginator.pageIndex, this.search.nativeElement.value);
-  // }
-
+  
 }

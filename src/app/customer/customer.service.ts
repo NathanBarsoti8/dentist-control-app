@@ -14,22 +14,9 @@ export class CustomerService {
 
   constructor(private httpClient: HttpClient, private dataService: DataService) { }
 
-  //TO DO: FILTER AND PAGINATION
-  // getAll(pageSize: number, pageIndex: number, search?: string): Promise<PaginatedItems<Customer>> {
-  //   return this.dataService.get<PaginatedItems<Customer>>(`${APPLICATION_API}/clients`, {
-  //     params: {
-  //       updates: [
-  //         { param: 'pageSize', value: pageSize.toString() },
-  //         { param: 'pageIndex', value: pageIndex.toString() },
-  //         { param: 'filter', value: search ? search : ''}
-  //       ]
-  //     }
-  //   }) as Promise<PaginatedItems<Customer>>;
-  // }
-
   getAll(page: number): Promise<PaginatedItems<Customer>> {
     return new Promise<PaginatedItems<Customer>>((resolve, reject) => {
-      this.httpClient.get(`${APPLICATION_API}/clients?page=${page}&limit=3`)
+      this.httpClient.get(`${APPLICATION_API}/clients?page=${page}`)
         .subscribe((response: PaginatedItems<Customer>) => {
           resolve(response);
         }, reject);

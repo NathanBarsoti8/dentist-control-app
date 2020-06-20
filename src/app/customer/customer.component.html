@@ -103,6 +103,26 @@
                                 </mat-row>
 
                             </mat-table>
+                            
+                            <div class="card-footer pb-0 pt-3" style="margin-top: 60px;">
+                                <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <a [routerLink]="['/customer']" [queryParams]="{ page: 1}" matTooltip="Primeira página">First</a>
+                                    </li>
+                                    <li [ngClass]="{disabled:pager.currentPage === 1}">
+                                        <a [routerLink]="['/customer']" [queryParams]="{ page: pager.currentPage - 1 }" matTooltip="Anterior">&lt;</a>
+                                    </li>
+                                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                                        <a [routerLink]="['/customer']" [queryParams]="{ page: page }">{{page}}</a>
+                                    </li>
+                                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                        <a [routerLink]="['/customer']" [queryParams]="{ page: pager.currentPage + 1 }" matTooltip="Próxima">&gt;</a>
+                                    </li>
+                                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                                        <a [routerLink]="['/customer']" [queryParams]="{ page: pager.totalPages }" matTooltip="Última página">Last</a>
+                                    </li>
+                                </ul>
+                            </div>
 
 
                             <div *ngIf="!customers || customers.length == 0" style="text-align: center;">
