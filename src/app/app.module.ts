@@ -24,6 +24,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DataService } from './shared/services/data.service';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import { DataService } from './shared/services/data.service';
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
+    NgxSpinnerModule
   ],
   declarations: [
     AppComponent,

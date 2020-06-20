@@ -43,7 +43,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h3 class="card-title ">Clientes</h3>
+                        <h3 class="card-title">Clientes</h3>
                         <button mat-fab class="add-customer-button" matTooltip="Adicionar novo cliente"
                         [routerLink]="['/customer-create']">
                             <mat-icon>add</mat-icon>
@@ -51,9 +51,10 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                        <div class="spinner" *ngIf="loading">
-                            <mat-spinner diameter="60"></mat-spinner>
-                        </div>
+                        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" 
+                            type="triangle-skew-spin" [fullScreen]="true">
+                            <p style="color: white" > Carregando... </p>> 
+                        </ngx-spinner>
                             <mat-table [dataSource]="customers" class="table" *ngIf="customers">
                                 <ng-container matColumnDef="name">
                                     <mat-header-cell *matHeaderCellDef>

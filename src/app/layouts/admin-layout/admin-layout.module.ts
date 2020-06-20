@@ -21,6 +21,7 @@ import { CustomerComponent } from './../../customer/customer.component';
 import { CustomerCreateComponent } from 'app/customer/customer-create/customer-create.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxMaskModule } from "ngx-mask";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   imports: [
@@ -41,7 +42,8 @@ import { NgxMaskModule } from "ngx-mask";
     MatIconModule,
     MatPaginatorModule,
     NgxMaskModule.forRoot(),
-    SharedModule.forRoot()
+    SharedModule.forRoot(),
+    NgxSpinnerModule
   ],
   declarations: [
     DashboardComponent,
