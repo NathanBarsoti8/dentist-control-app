@@ -1,3 +1,4 @@
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Pager } from './../shared/models/paginated-items.model';
 import { Customer } from './models/customer.model';
 import { CustomerService } from './customer.service';
@@ -6,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-customer',
@@ -19,7 +21,6 @@ export class CustomerComponent implements OnInit {
   pager: Pager;
 
   @ViewChild('search', { static: false }) search: ElementRef;
-  // @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
     constructor(private _customerService: CustomerService,
       private toastr: ToastrService,
@@ -27,12 +28,21 @@ export class CustomerComponent implements OnInit {
       private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(x => this.getCustomers(x.page || 1))
+    this.route.queryParams.subscribe(x => this.getCustomers(x.page || 1, ''))
   }
 
-  getCustomers(page: number): void {
+  ngAfterViewInit(): void {
+    fromEvent(this.search.nativeElement, 'keyup').pipe(
+      debounceTime(500),
+      distinctUntilChanged()
+    ).subscribe(() => {
+      this.getCustomers(this.pager.startPage, this.search.nativeElement.value)
+    })
+  }
+
+  getCustomers(page: number, search?: string): void {
     this.spinner.show();
-    this._customerService.getAll(page)
+    this._customerService.getAll(page, search)
       .then(result => {
         if (result) {
           this.pager = result.pager;
@@ -47,6 +57,10 @@ export class CustomerComponent implements OnInit {
         this.toastr.error('Ocorreu um erro ao carregar os clientes.');
         this.spinner.hide();
       });
+  }
+
+  searchCustomers(): void {
+    this.getCustomers(this.pager.startPage, this.search.nativeElement.value)
   }
 
   

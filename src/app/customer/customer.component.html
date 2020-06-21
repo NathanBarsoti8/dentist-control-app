@@ -10,8 +10,9 @@
 
 
             <div class="input-group col-md-5">
-                <input matInput type="text" value="" class="form-control" placeholder="Pesquisar...">
-                <button mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon" matTooltip="Pequisar">
+                <input (keydown.enter)="searchCustomers()" matInput type="text" value="" class="form-control" #search placeholder="Pesquisar..." #search>
+        
+                <button (click)="searchCustomers()" mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon" matTooltip="Pequisar">
                     <i class="material-icons">search</i>
                     <div class="ripple-container"></div>
                 </button>
@@ -105,7 +106,7 @@
 
                             </mat-table>
                             
-                            <div class="card-footer pb-0 pt-3" style="margin-top: 60px;">
+                            <div *ngIf="customers" class="card-footer pb-0 pt-3" style="margin-top: 60px;">
                                 <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
                                     <li [ngClass]="{disabled:pager.currentPage === 1}">
                                         <a [routerLink]="['/customer']" [queryParams]="{ page: 1}" matTooltip="Primeira página">

@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CpfValidator } from 'app/shared/custom/cpf-validator';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-customer-create',
@@ -30,7 +31,8 @@ export class CustomerCreateComponent implements OnInit {
   constructor(private _customerService: CustomerService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private router: Router) { }
+    private router: Router,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.generateForm();
@@ -81,7 +83,12 @@ export class CustomerCreateComponent implements OnInit {
     this._customerService.create(customer)
       .then(() => {
 
-          //TO DO
+        this.spinner.show();
+ 
+        setTimeout(() => {
+          /** spinner ends after 5 seconds */
+          this.spinner.hide();
+        }, 5000);
         
           this.toastr.success('Cliente adicionado com sucesso.');
           this.router.navigate([`/customer`]);
