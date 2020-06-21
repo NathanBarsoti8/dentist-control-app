@@ -1,3 +1,4 @@
+import { NotificationService } from './../../shared/notification/notification.service';
 import { DefaultInterface } from 'app/shared/models/default-interface.model';
 import { FormValidationMessages } from '../../shared/models/validation-messages.model';
 import { ToastrService } from 'ngx-toastr';
@@ -44,7 +45,7 @@ export class CustomerCreateComponent implements OnInit {
     this.addCustomerForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       cpf: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), CpfValidator.validate]],
-      birthDate: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]], 
+      birthDate: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
       sex: ['', [Validators.required]],
       email: [''],
       job: ['', [Validators.required]],
@@ -80,23 +81,16 @@ export class CustomerCreateComponent implements OnInit {
   }
 
   createCustomer(customer): void {
+    this.spinner.show();
     this._customerService.create(customer)
       .then(() => {
-
-        this.spinner.show();
- 
-        setTimeout(() => {
-          /** spinner ends after 5 seconds */
-          this.spinner.hide();
-        }, 5000);
-        
-          this.toastr.success('Cliente adicionado com sucesso.');
-          this.router.navigate([`/customer`]);
-        
-        
+        this.spinner.hide();
+        this.toastr.success('Cliente adicionado com sucesso.');
+        this.router.navigate([`/customer`]);
       })
       .catch(() => {
-        this.toastr.error('Ocorreu um erro ao salvar novo cliente.')
+        this.toastr.error('Ocorreu um erro ao salvar novo cliente.');
+        this.spinner.hide();
       })
   }
 

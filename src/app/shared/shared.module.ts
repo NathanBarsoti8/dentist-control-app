@@ -1,4 +1,4 @@
-//Pipes
+import { NotificationService } from './notification/notification.service';
 import { CpfPipe } from './pipes/cpf.pipe';
 import { NgModule, ModuleWithProviders } from '@angular/core';
 
@@ -17,6 +17,7 @@ export class SharedModule {
         return {
             ngModule: SharedModule,
             providers: [
+                NotificationService
             ]
         }
     }
