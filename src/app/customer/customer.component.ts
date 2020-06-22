@@ -1,3 +1,4 @@
+import { NotificationService } from './../shared/notification/notification.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Pager } from './../shared/models/paginated-items.model';
 import { Customer } from './models/customer.model';
@@ -8,6 +9,7 @@ import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { fromEvent } from 'rxjs';
+declare var $: any;
 
 @Component({
   selector: 'app-customer',
@@ -22,10 +24,11 @@ export class CustomerComponent implements OnInit {
 
   @ViewChild('search', { static: false }) search: ElementRef;
 
-    constructor(private _customerService: CustomerService,
-      private toastr: ToastrService,
-      private route: ActivatedRoute,
-      private spinner: NgxSpinnerService) { }
+  constructor(private _customerService: CustomerService,
+    private toastr: ToastrService,
+    private route: ActivatedRoute,
+    private spinner: NgxSpinnerService,
+    private notification: NotificationService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(x => this.getCustomers(x.page || 1, ''))
@@ -54,8 +57,8 @@ export class CustomerComponent implements OnInit {
         }
         this.spinner.hide();
       }).catch(() => {
-        this.toastr.error('Ocorreu um erro ao carregar os clientes.');
         this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao carregar os clientes.', 'error');
       });
   }
 
@@ -63,5 +66,4 @@ export class CustomerComponent implements OnInit {
     this.getCustomers(this.pager.startPage, this.search.nativeElement.value)
   }
 
-  
 }
