@@ -7,7 +7,7 @@
     right: 10px;
     bottom: 7px;
     z-index: 10;
-    color: red;
+    color: #18bace;
     background-color: white;
 }
 
@@ -19,7 +19,6 @@
     margin-top: 10px;
     margin-left: 17px;
 }
-
 
 .pagination {
     position: absolute;
