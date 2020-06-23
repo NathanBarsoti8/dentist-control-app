@@ -316,7 +316,7 @@
         @include set-background-color-button($brand-warning);
     }
     &[data-color="danger"]{
-        @include set-background-color-button($brand-danger);
+        @include set-background-color-button($brand-info);
     }
     &[data-color="rose"]{
         @include set-background-color-button($brand-rose);
