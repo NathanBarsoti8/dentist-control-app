@@ -108,26 +108,32 @@
                             
                             <div *ngIf="customers" class="card-footer pb-0 pt-3" style="margin-top: 60px;">
                                 <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
-                                    <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                        <a [routerLink]="['/customer']" [queryParams]="{ page: 1}" matTooltip="Primeira página">
+                                    <li>
+                                        <a [routerLink]="['/customer']" [queryParams]="{ page: 1}" matTooltip="Primeira página"
+                                        [ngClass]="{disable:pager.currentPage === 1}">
                                             <mat-icon>first_page</mat-icon>
                                         </a>
                                     </li>
-                                    <li [ngClass]="{disabled:pager.currentPage === 1}">
-                                        <a [routerLink]="['/customer']" [queryParams]="{ page: pager.currentPage - 1 }" matTooltip="Anterior">
+                                    <li>
+                                        <a [routerLink]="['/customer']" [queryParams]="{ page: pager.currentPage - 1 }" matTooltip="Anterior"
+                                        [ngClass]="{disable:pager.currentPage === 1}">
                                             <mat-icon>keyboard_arrow_left</mat-icon>
                                         </a>
                                     </li>
-                                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-                                        <a [routerLink]="['/customer']" [queryParams]="{ page: page }"><b>{{page}}</b></a>
+                                    <li *ngFor="let page of pager.pages">
+                                        <a [routerLink]="['/customer']" [queryParams]="{ page: page }"
+                                        [ngClass]="{active:pager.currentPage === page}"><b>{{page}}</b>
+                                        </a>
                                     </li>
-                                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                        <a [routerLink]="['/customer']" [queryParams]="{ page: pager.currentPage + 1 }" matTooltip="Próxima">
+                                    <li>
+                                        <a [routerLink]="['/customer']" [queryParams]="{ page: pager.currentPage + 1 }" matTooltip="Próxima"
+                                        [ngClass]="{disable:pager.currentPage === pager.totalPages}">
                                             <mat-icon>keyboard_arrow_right</mat-icon>
                                         </a>
                                     </li>
-                                    <li [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-                                        <a [routerLink]="['/customer']" [queryParams]="{ page: pager.totalPages }" matTooltip="Última página">
+                                    <li>
+                                        <a [routerLink]="['/customer']" [queryParams]="{ page: pager.totalPages }" matTooltip="Última página"
+                                        [ngClass]="{disable:pager.currentPage === pager.totalPages}">
                                             <mat-icon>last_page</mat-icon>
                                         </a>
                                     </li>

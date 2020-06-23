@@ -57,6 +57,13 @@
     background-color: #ff4242;
 }
 
+.pagination li a.disable {
+    cursor: not-allowed;
+    pointer-events: none;
+    color: #c0c0c0;
+    background-color: #ffffff;
+}
+
 .pagination li:first-child a {
     border-radius: 40px 0 0 40px;
 }
