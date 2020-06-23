@@ -54,7 +54,7 @@
 .pagination li a:hover,
 .pagination li a.active {
     color: #fff;
-    background-color: #ff4242;
+    background-color: #18bace;
 }
 
 .pagination li a.disable {
