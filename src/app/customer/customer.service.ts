@@ -13,9 +13,9 @@ export class CustomerService {
 
   constructor(private httpClient: HttpClient, private dataService: DataService) { }
 
-  getAll(page: number, search?: string): Promise<PaginatedItems<Customer>> {
+  getAll(page: number, status: boolean, search?: string): Promise<PaginatedItems<Customer>> {
     return new Promise<PaginatedItems<Customer>>((resolve, reject) => {
-      this.httpClient.get(`${APPLICATION_API}/clients?page=${page}&search=${search}`)
+      this.httpClient.get(`${APPLICATION_API}/clients?page=${page}&status=${status}&search=${search}`)
         .subscribe((response: PaginatedItems<Customer>) => {
           resolve(response);
         }, reject);

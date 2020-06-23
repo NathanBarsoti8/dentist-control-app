@@ -21,6 +21,7 @@ export class CustomerComponent implements OnInit {
   displayedColumns = ['name', 'cpf', 'birthDate', 'status'];
   customers: Array<Customer>;
   pager: Pager;
+  onlyActives: boolean = true;
 
   @ViewChild('search', { static: false }) search: ElementRef;
 
@@ -31,7 +32,7 @@ export class CustomerComponent implements OnInit {
     private notification: NotificationService) { }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(x => this.getCustomers(x.page || 1, ''))
+    this.route.queryParams.subscribe(x => this.getCustomers(x.page || 1, true, ''))
   }
 
   ngAfterViewInit(): void {
@@ -43,9 +44,9 @@ export class CustomerComponent implements OnInit {
     })
   }
 
-  getCustomers(page: number, search?: string): void {
+  getCustomers(page: number, status: boolean, search?: string): void {
     this.spinner.show();
-    this._customerService.getAll(page, search)
+    this._customerService.getAll(page, status, search)
       .then(result => {
         if (result) {
           this.pager = result.pager;
@@ -64,6 +65,15 @@ export class CustomerComponent implements OnInit {
 
   searchCustomers(): void {
     this.getCustomers(this.pager.startPage, this.search.nativeElement.value)
+  }
+
+  toggleStatus(): void {
+    if (this.onlyActives)
+      this.onlyActives = false;
+    else
+      this.onlyActives = true;
+
+    this.getCustomers(this.pager.startPage, this.onlyActives, '');
   }
 
 }

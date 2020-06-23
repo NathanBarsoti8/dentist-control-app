@@ -3,11 +3,10 @@
     <form class="navbar-form">
         <div class="row">
             <div class="col-md-3">
-                <mat-slide-toggle class="pr-24 toggle-style" color="warn">
+                <mat-slide-toggle class="pr-24 toggle-style" color="warn" [checked]="!onlyActives" (change)="toggleStatus()">
                     Mostrar inativos
                 </mat-slide-toggle>
             </div>
-
 
             <div class="input-group col-md-5">
                 <input (keydown.enter)="searchCustomers()" matInput type="text" value="" class="form-control" #search placeholder="Pesquisar..." #search>
@@ -19,25 +18,6 @@
             </div>
         </div>
     </form>
-
-    
-    <!-- <mat-slide-toggle class="pr-24" [checked]="!onlyActives" (change)="toggleStatus()">
-        {{ 'hr.cards.employeelist.show_inactives' | translate }}
-    </mat-slide-toggle> -->
-
-    <!-- <div class="search-input-wrapper" fxFlex fxLayout="row" fxLayoutAlign="end center">
-        <label for="search" class="mr-8">
-            <button mat-icon-button matTooltip="Pequisar"
-            (click)="searchEmployees()">
-                <mat-icon class="secondary-text">search</mat-icon>
-            </button>
-        </label>
-
-        <mat-form-field floatLabel="never" class="search-employee-input">
-            <input (keydown.enter)="searchEmployees()" matInput #search placeholder="Pesquisar..." #search>
-        </mat-form-field>
-    </div> -->
-
 
     <div class="container-fluid">
         <div class="row">
