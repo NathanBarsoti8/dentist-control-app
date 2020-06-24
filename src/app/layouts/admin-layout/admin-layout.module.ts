@@ -22,6 +22,8 @@ import { CustomerCreateComponent } from 'app/customer/customer-create/customer-c
 import { ToastrModule } from 'ngx-toastr';
 import { NgxMaskModule } from "ngx-mask";
 import { NgxSpinnerModule } from "ngx-spinner";
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -43,7 +45,9 @@ import { NgxSpinnerModule } from "ngx-spinner";
     MatPaginatorModule,
     NgxMaskModule.forRoot(),
     SharedModule.forRoot(),
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatToolbarModule,
+    MatDialogModule
   ],
   declarations: [
     DashboardComponent,

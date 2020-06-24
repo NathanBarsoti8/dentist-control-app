@@ -56,5 +56,9 @@ export class CustomerService {
       return Promise.reject(error);
     });
   }
+
+  changeStatus(id: string) {
+    return this.httpClient.put(`${APPLICATION_API}/clients/${id}/changeStatus`, null);
+  }
   
 }

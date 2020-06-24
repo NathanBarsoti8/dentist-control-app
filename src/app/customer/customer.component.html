@@ -77,6 +77,28 @@
                                     </mat-cell>
                                 </ng-container>
 
+                                <ng-container matColumnDef="action" *ngIf="!onlyActives">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <b style="font-size: medium;">Ação</b>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let customer" (click)="$event.stopPropagation()">
+                                        <button class="btn btn-info btn-round" (click)="changeStatusCustomer(customer.id)">
+                                            Ativar
+                                        </button>
+                                    </mat-cell> 
+                                </ng-container>
+
+                                <ng-container matColumnDef="action" *ngIf="onlyActives">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <b style="font-size: medium;">Ação</b>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let customer" (click)="$event.stopPropagation()">
+                                        <button class="btn btn-danger btn-round" (click)="changeStatusCustomer(customer.id)">
+                                            Desativar
+                                        </button>
+                                    </mat-cell> 
+                                </ng-container>
+
                                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
                                 <mat-row class="pointer" *matRowDef="let customer; columns: displayedColumns"
@@ -134,4 +156,33 @@
         </div>
     </div>
   </div>
+
+<!-- <ng-template #confirmModal>
+    <div class="page-layout carded fullwidth">
+        <mat-toolbar class="mat-accent m-0">
+          <mat-toolbar-row fxFlex fxLayout="row" fxLayoutAlign="space-between center">
+            <span class="title dialog-title">Confirmar ação</span>
+          </mat-toolbar-row>
+        </mat-toolbar>
+      
+        <div>
+          <div mat-dialog-content class="m-0 h">
+            <div style="padding: 10px;">
+              <div fxLayout="row" fxLayoutAlign="start center">
+                <div class="p-4" fxFill>
+                  <p>Você deseja confirmar essa ação?<br></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div mat-dialog-actions class="m-0 p-16" fxLayout="row" fxLayoutAlign="end center">
+          <button type="button" mat-raised-button color="basic" fxFlex="15" class="mr-16"
+            [[mat-dialog-close]]>Cancelar</button>
+          <button mat-raised-button class="save-button mat-accent" fxFlex="15"
+            >Confirmar</button>
+        </div>
+      </div>
+ 
+</ng-template> -->
   
