@@ -82,7 +82,7 @@
                                         <b style="font-size: medium;">Ação</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer" (click)="$event.stopPropagation()">
-                                        <button class="btn btn-info btn-round" (click)="changeStatusCustomer(customer.id)">
+                                        <button class="btn btn-info btn-round" (click)="confirmDialog(customer.id)">
                                             Ativar
                                         </button>
                                     </mat-cell> 
@@ -93,7 +93,7 @@
                                         <b style="font-size: medium;">Ação</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let customer" (click)="$event.stopPropagation()">
-                                        <button class="btn btn-danger btn-round" (click)="changeStatusCustomer(customer.id)">
+                                        <button class="btn btn-danger btn-round" (click)="confirmDialog(customer.id)">
                                             Desativar
                                         </button>
                                     </mat-cell> 

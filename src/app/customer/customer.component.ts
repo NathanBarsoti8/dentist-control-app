@@ -9,6 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { fromEvent } from 'rxjs';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { ModalConfirmDialogComponent } from './modal-confirm-dialog/modal-confirm-dialog.component';
+import { ConfirmDialogData } from './models/confirm-dialog.model';
 
 @Component({
   selector: 'app-customer',
@@ -21,16 +23,16 @@ export class CustomerComponent implements OnInit {
   customers: Array<Customer>;
   pager: Pager;
   onlyActives: boolean = true;
-  confirmDialogRef: MatDialogRef<any>;
+  confirmDialogRef: MatDialogRef<ModalConfirmDialogComponent>;
 
   @ViewChild('search', { static: false }) search: ElementRef;
-  @ViewChild('confirmModal', { static: true }) confirmDialogTemplate: TemplateRef<any>;
+  // @ViewChild('confirmModal', { static: true }) confirmDialogTemplate: TemplateRef<any>;
 
   constructor(private _customerService: CustomerService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private notification: NotificationService,
-    private dialog: MatDialog) { }
+    private matDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(x => this.getCustomers(x.page || 1, true, ''))
@@ -82,13 +84,27 @@ export class CustomerComponent implements OnInit {
       .subscribe(() => this.getCustomers(this.pager.currentPage, this.onlyActives, ''));
   }
 
-  // confirmDialog() {
-  //   this.confirmDialogRef = this.dialog.open(this.confirmDialogTemplate, {
-  //     width: '400px'
-  //   })
-  // }
+  confirmDialog(customerId: string): void {
+    this.confirmDialogRef = this.matDialog.open(ModalConfirmDialogComponent, {
+      width: '500px',
+      height: '210px',
+      data: {
+        id: customerId
+      }
+    });
 
-  
+    this.confirmDialogRef.afterClosed()
+      .subscribe((response: ConfirmDialogData) => {
+        this.onDisableAdmissionModalClosed(response);
+      });
+  }
+
+  onDisableAdmissionModalClosed(response: ConfirmDialogData): void {
+    if (response.isConfirmed)
+      this.changeStatusCustomer(response.id);
+  }
+
+
 
 
 }

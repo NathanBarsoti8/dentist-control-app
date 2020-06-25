@@ -24,6 +24,7 @@ import { NgxMaskModule } from "ngx-mask";
 import { NgxSpinnerModule } from "ngx-spinner";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ModalConfirmDialogComponent } from 'app/customer/modal-confirm-dialog/modal-confirm-dialog.component';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     DashboardComponent,
     CustomerComponent,
     CustomerDetailsComponent,
-    CustomerCreateComponent
+    CustomerCreateComponent,
+    ModalConfirmDialogComponent
   ]
 })
 
