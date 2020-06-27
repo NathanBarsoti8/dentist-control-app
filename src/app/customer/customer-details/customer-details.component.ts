@@ -1,11 +1,12 @@
 import { CustomerService } from './../customer.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { CustomerDetails } from '../models/customer.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { CpfValidator } from 'app/shared/custom/cpf-validator';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { NotificationService } from 'app/shared/notification/notification.service';
 
 @Component({
   selector: 'app-customer-details',
@@ -30,8 +31,9 @@ export class CustomerDetailsComponent implements OnInit {
 
   constructor(private router: ActivatedRoute,
     private _customerService: CustomerService,
-    private toastr: ToastrService,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    private spinner: NgxSpinnerService,
+    private notification: NotificationService) { }
 
   ngOnInit(): void {
     this.router.queryParams.subscribe(params => {
@@ -45,7 +47,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.customerDetailsForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       cpf: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), CpfValidator.validate]],
-      birthDate: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]], 
+      birthDate: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
       sex: ['', [Validators.required]],
       isActive: [''],
       email: [''],
@@ -91,18 +93,30 @@ export class CustomerDetailsComponent implements OnInit {
   }
 
   getDetails(id: string): void {
-    this.loading = true;
+    this.spinner.show();
     this._customerService.getById(id)
-    .then(result => {
-      if (result) {
-        this.customer = result
-        this.populateForm(this.customer);
-      }
-      this.loading = false;
-    }).catch(() => {
-      this.toastr.error('Ocorreu um erro ao carregar os detalhes do cliente.');
-      this.loading = false;
-    });
+      .then(result => {
+        if (result) {
+          this.customer = result
+          this.populateForm(this.customer);
+        }
+        this.spinner.hide();
+      }).catch(() => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao carregar os detalhes do cliente.', 'error');
+      });
+  }
+
+  update(obj: CustomerDetails): void {
+    this.spinner.show();
+    this._customerService.update(this.customerId, obj)
+      .then(() => {
+        this.spinner.hide();
+        this.notification.showNotification('success', 'Dados do cliente atualizado com sucesso.', 'info');
+      }).catch(() => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao atualizar dados do cliente.', 'error');
+      })
   }
 
 }

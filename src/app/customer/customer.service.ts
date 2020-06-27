@@ -60,5 +60,16 @@ export class CustomerService {
   changeStatus(id: string) {
     return this.httpClient.put(`${APPLICATION_API}/clients/${id}/changeStatus`, null);
   }
+
+  update(id: string, obj: CustomerDetails): Promise<CustomerDetails> {
+    return new Promise<CustomerDetails>((resolve, reject) => {
+      this.httpClient.put(`${APPLICATION_API}/clients/${id}/update`, obj)
+        .subscribe(() => {
+          resolve();
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    })
+  }
   
 }
