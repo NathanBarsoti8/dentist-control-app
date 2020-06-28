@@ -43,7 +43,7 @@ export class CustomerComponent implements OnInit {
       debounceTime(500),
       distinctUntilChanged()
     ).subscribe(() => {
-      this.getCustomers(this.pager.startPage, this.search.nativeElement.value)
+      this.getCustomers(this.pager.startPage, this.onlyActives, this.search.nativeElement.value)
     })
   }
 

@@ -2,7 +2,7 @@ export interface Customer {
     id: string;
     name: string;
     cpf: string; 
-    birthDate: string;
+    birthDate: any;
     sex: string;
     email: string;
     job: string;

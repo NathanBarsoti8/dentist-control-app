@@ -1,3 +1,5 @@
+import { FormValidationMessages } from './../../shared/models/validation-messages.model';
+import { DefaultInterface } from './../../shared/models/default-interface.model';
 import { CustomerService } from './../customer.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -28,6 +30,8 @@ export class CustomerDetailsComponent implements OnInit {
   loading: boolean = false;
   customer: CustomerDetails;
   customerDetailsForm: FormGroup;
+  phoneTypes: Array<DefaultInterface<number>>;
+  validation_messages: FormValidationMessages;
 
   constructor(private router: ActivatedRoute,
     private _customerService: CustomerService,
@@ -41,6 +45,8 @@ export class CustomerDetailsComponent implements OnInit {
       this.getDetails(this.customerId);
     });
     this.generateForm();
+    this.getPhoneType();
+    this.setValidationMessages();
   }
 
   generateForm(): void {
@@ -78,7 +84,7 @@ export class CustomerDetailsComponent implements OnInit {
       this.customerDetailsForm.get('email').setValue(customer[0].email);
       this.customerDetailsForm.get('job').setValue(customer[0].job);
       this.customerDetailsForm.get('isActive').setValue(customer[0].isActive);
-      this.customerDetailsForm.get('phoneType').setValue(customer[0].phoneType);
+      this.customerDetailsForm.get('phoneType').setValue(customer[0].phoneTypeId);
       this.customerDetailsForm.get('ddd').setValue(customer[0].DDD);
       this.customerDetailsForm.get('phoneNumber').setValue(customer[0].phoneNumber);
       this.customerDetailsForm.get('zipCode').setValue(customer[0].zipCode);
@@ -107,8 +113,39 @@ export class CustomerDetailsComponent implements OnInit {
       });
   }
 
+  getPhoneType(): void {
+    this._customerService.getPhoneType()
+      .then(result => {
+        this.phoneTypes = result;
+      })
+      .catch(() => {
+        this.notification.showNotification('danger', 'Ocorreu um erro ao buscar os tipos de telefone.', 'error');
+      });
+  }
+
+  setValidationMessages(): void {
+    this.validation_messages = {
+      generic: [
+        { type: 'required', message: 'Campo obrigatório' }
+      ],
+    }
+  }
+
   update(obj: CustomerDetails): void {
     this.spinner.show();
+
+
+    //NEED REFACT THAT
+    let a = obj.birthDate.slice(0, 2)
+    let b = obj.birthDate.slice(2, 4)
+    let c = obj.birthDate.slice(4, 8)
+
+    let d = new Date(`${a}/${b}/${c}`)
+
+    console.log(d);
+
+    obj.birthDate = d;
+
     this._customerService.update(this.customerId, obj)
       .then(() => {
         this.spinner.hide();

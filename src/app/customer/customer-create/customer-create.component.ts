@@ -1,7 +1,6 @@
 import { NotificationService } from './../../shared/notification/notification.service';
 import { DefaultInterface } from 'app/shared/models/default-interface.model';
 import { FormValidationMessages } from '../../shared/models/validation-messages.model';
-import { ToastrService } from 'ngx-toastr';
 import { CustomerService } from './../customer.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -31,9 +30,9 @@ export class CustomerCreateComponent implements OnInit {
 
   constructor(private _customerService: CustomerService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService,
     private router: Router,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService,
+    private notification: NotificationService) { }
 
   ngOnInit(): void {
     this.generateForm();
@@ -76,7 +75,7 @@ export class CustomerCreateComponent implements OnInit {
         this.phoneTypes = result;
       })
       .catch(() => {
-        this.toastr.error('Ocorreu um erro ao buscar os tipos de telefone.');
+        this.notification.showNotification('danger', 'Ocorreu um erro ao buscar os tipos de telefone.', 'error');
       });
   }
 
@@ -85,13 +84,14 @@ export class CustomerCreateComponent implements OnInit {
     this._customerService.create(customer)
       .then(() => {
         this.spinner.hide();
-        this.toastr.success('Cliente adicionado com sucesso.');
+        this.notification.showNotification('success', 'Cliente adicionado com sucesso.', 'info');
         this.router.navigate([`/customer`]);
       })
       .catch(() => {
-        this.toastr.error('Ocorreu um erro ao salvar novo cliente.');
+        this.notification.showNotification('danger', 'Ocorreu um erro ao adicionar novo cliente.', 'error');
         this.spinner.hide();
       })
   }
 
 }
+

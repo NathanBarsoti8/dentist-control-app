@@ -64,7 +64,15 @@
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Tipo de Telefone</mat-label>
-                                        <input matInput type="text" formControlName="phoneType" required>
+                                        <mat-select formControlName="phoneType" (selectionChange)="getPhoneType()" required>
+                                            <mat-option *ngFor="let option of phoneTypes" [value]="option.id">{{ option.name }}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="customerDetailsForm.get('phoneType').dirty || customerDetailsForm.get('phoneType').touched
+                                                && customerDetailsForm.get('phoneType').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-2">
@@ -130,7 +138,8 @@
                             </div>
                             
                             <button mat-raised-button type="submit" class="btn btn-info pull-right"
-                            [disabled]="customerDetailsForm.invalid">Atualizar</button>
+                            [disabled]="customerDetailsForm.invalid"
+                            (click)="update(customerDetailsForm.value)">Atualizar</button>
 
                             <button mat-raised-button type="submit" class="btn btn-default pull-right"
                             style="margin-right: 10px;" [routerLink]="['/customer']">Voltar</button>
