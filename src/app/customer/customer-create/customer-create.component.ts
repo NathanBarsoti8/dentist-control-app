@@ -1,3 +1,4 @@
+import { CustomerDetails } from './../models/customer.model';
 import { NotificationService } from './../../shared/notification/notification.service';
 import { DefaultInterface } from 'app/shared/models/default-interface.model';
 import { FormValidationMessages } from '../../shared/models/validation-messages.model';
@@ -7,6 +8,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CpfValidator } from 'app/shared/custom/cpf-validator';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DateConverterService } from 'app/shared/services/dateConverter.service';
 
 @Component({
   selector: 'app-customer-create',
@@ -32,7 +34,8 @@ export class CustomerCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private spinner: NgxSpinnerService,
-    private notification: NotificationService) { }
+    private notification: NotificationService,
+    private dateConverter: DateConverterService) { }
 
   ngOnInit(): void {
     this.generateForm();
@@ -79,17 +82,9 @@ export class CustomerCreateComponent implements OnInit {
       });
   }
 
-  createCustomer(customer): void {
+  createCustomer(customer: CustomerDetails): void {
     this.spinner.show();
-
-    //NEED REFACT THAT
-    let day = customer.birthDate.slice(0, 2)
-    let month = customer.birthDate.slice(2, 4)
-    let year = customer.birthDate.slice(4, 8)
-
-    let date = new Date(`${year}-${month}-${day}`)
-
-    customer.birthDate = date;
+    customer.birthDate = this.dateConverter.convertStringToDate(customer.birthDate);
 
     this._customerService.create(customer)
       .then(() => {

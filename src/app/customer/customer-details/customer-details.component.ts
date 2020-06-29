@@ -1,3 +1,4 @@
+import { DateConverterService } from './../../shared/services/dateConverter.service';
 import { FormValidationMessages } from './../../shared/models/validation-messages.model';
 import { DefaultInterface } from './../../shared/models/default-interface.model';
 import { CustomerService } from './../customer.service';
@@ -37,7 +38,8 @@ export class CustomerDetailsComponent implements OnInit {
     private _customerService: CustomerService,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
-    private notification: NotificationService) { }
+    private notification: NotificationService,
+    private dateConverter: DateConverterService) { }
 
   ngOnInit(): void {
     this.router.queryParams.subscribe(params => {
@@ -133,15 +135,7 @@ export class CustomerDetailsComponent implements OnInit {
 
   update(obj: CustomerDetails): void {
     this.spinner.show();
-
-    //NEED REFACT THAT
-    let day = obj.birthDate.slice(0, 2)
-    let month = obj.birthDate.slice(2, 4)
-    let year = obj.birthDate.slice(4, 8)
-
-    let date = new Date(`${year}-${month}-${day}`)
-
-    obj.birthDate = date;
+    obj.birthDate = this.dateConverter.convertStringToDate(obj.birthDate);
 
     this._customerService.update(this.customerId, obj)
       .then(() => {

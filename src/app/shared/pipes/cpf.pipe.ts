@@ -10,7 +10,8 @@ export class CpfPipe implements PipeTransform {
 
     if (cpf) {
       return cpfPoints(cpf)
-    } else {
+    }
+    else {
       return 'Não declarado'
     }
 

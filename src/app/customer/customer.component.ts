@@ -3,7 +3,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Pager } from './../shared/models/paginated-items.model';
 import { Customer } from './models/customer.model';
 import { CustomerService } from './customer.service';
-import { Component, OnInit, ViewChild, ElementRef, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -26,7 +26,6 @@ export class CustomerComponent implements OnInit {
   confirmDialogRef: MatDialogRef<ModalConfirmDialogComponent>;
 
   @ViewChild('search', { static: false }) search: ElementRef;
-  // @ViewChild('confirmModal', { static: true }) confirmDialogTemplate: TemplateRef<any>;
 
   constructor(private _customerService: CustomerService,
     private route: ActivatedRoute,
@@ -59,6 +58,9 @@ export class CustomerComponent implements OnInit {
             x.birthDate = moment(x.birthDate).format("DD/MM/YYYY");
           });
         }
+        else {
+          this.customers = undefined
+        }
         this.spinner.hide();
       }).catch(() => {
         this.spinner.hide();
@@ -76,7 +78,7 @@ export class CustomerComponent implements OnInit {
     else
       this.onlyActives = true;
 
-    this.getCustomers(this.pager.startPage, this.onlyActives, '');
+    this.getCustomers(1, this.onlyActives, '');
   }
 
   changeStatusCustomer(id: string): void {
