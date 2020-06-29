@@ -134,17 +134,14 @@ export class CustomerDetailsComponent implements OnInit {
   update(obj: CustomerDetails): void {
     this.spinner.show();
 
-
     //NEED REFACT THAT
-    let a = obj.birthDate.slice(0, 2)
-    let b = obj.birthDate.slice(2, 4)
-    let c = obj.birthDate.slice(4, 8)
+    let day = obj.birthDate.slice(0, 2)
+    let month = obj.birthDate.slice(2, 4)
+    let year = obj.birthDate.slice(4, 8)
 
-    let d = new Date(`${a}/${b}/${c}`)
+    let date = new Date(`${year}-${month}-${day}`)
 
-    console.log(d);
-
-    obj.birthDate = d;
+    obj.birthDate = date;
 
     this._customerService.update(this.customerId, obj)
       .then(() => {

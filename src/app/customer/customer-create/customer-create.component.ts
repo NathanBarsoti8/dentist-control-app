@@ -81,6 +81,16 @@ export class CustomerCreateComponent implements OnInit {
 
   createCustomer(customer): void {
     this.spinner.show();
+
+    //NEED REFACT THAT
+    let day = customer.birthDate.slice(0, 2)
+    let month = customer.birthDate.slice(2, 4)
+    let year = customer.birthDate.slice(4, 8)
+
+    let date = new Date(`${year}-${month}-${day}`)
+
+    customer.birthDate = date;
+
     this._customerService.create(customer)
       .then(() => {
         this.spinner.hide();
