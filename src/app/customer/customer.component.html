@@ -9,7 +9,7 @@
             </div>
 
             <div class="input-group col-md-5">
-                <input (keydown.enter)="searchCustomers()" matInput type="text" value="" class="form-control" #search placeholder="Pesquisar..." #search>
+                <input class="form-control search-group" (keydown.enter)="searchCustomers()" matInput type="text" value="" #search placeholder="Pesquisar..." #search>
         
                 <button (click)="searchCustomers()" mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon" matTooltip="Pequisar">
                     <i class="material-icons">search</i>

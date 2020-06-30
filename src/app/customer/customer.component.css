@@ -70,3 +70,9 @@
 .pagination li:last-child a {
     border-radius: 0 40px 40px 0;
 }
+
+.search-group {
+    border-bottom-style: solid !important;
+    border-bottom-color: #d2d2d2 !important;
+    border-bottom-width: thin;
+}

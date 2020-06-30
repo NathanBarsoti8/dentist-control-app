@@ -55,7 +55,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.customerDetailsForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       cpf: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), CpfValidator.validate]],
-      birthDate: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
+      birthDate: ['', [Validators.required]],
       sex: ['', [Validators.required]],
       isActive: [''],
       email: [''],
