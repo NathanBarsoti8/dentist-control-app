@@ -82,8 +82,17 @@ export class CustomerComponent implements OnInit {
   }
 
   changeStatusCustomer(id: string): void {
+    this.spinner.show();
     this._customerService.changeStatus(id)
-      .subscribe(() => this.getCustomers(this.pager.currentPage, this.onlyActives, ''));
+      .then(() => {
+        this.spinner.hide();
+        this.notification.showNotification('success', 'Status atualizado com sucesso.', 'info');
+      }).catch(() => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao atualizar o status.', 'error');
+      }).finally(() => {
+        this.getCustomers(1, this.onlyActives, '');
+      });
   }
 
   confirmDialog(customerId: string): void {

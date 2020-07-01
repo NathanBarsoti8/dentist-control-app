@@ -57,8 +57,15 @@ export class CustomerService {
     });
   }
 
-  changeStatus(id: string) {
-    return this.httpClient.put(`${APPLICATION_API}/clients/${id}/changeStatus`, null);
+  changeStatus(id: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.httpClient.put(`${APPLICATION_API}/clients/${id}/changeStatus`, null)
+        .subscribe(() => {
+          resolve();
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    });
   }
 
   update(id: string, obj: CustomerDetails): Promise<CustomerDetails> {
@@ -71,5 +78,5 @@ export class CustomerService {
       return Promise.reject(error);
     })
   }
-  
+
 }

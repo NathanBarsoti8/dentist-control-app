@@ -93,8 +93,8 @@ export class CustomerCreateComponent implements OnInit {
         this.router.navigate([`/customer`]);
       })
       .catch(() => {
-        this.notification.showNotification('danger', 'Ocorreu um erro ao adicionar novo cliente.', 'error');
         this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao adicionar novo cliente.', 'error');
       })
   }
 
