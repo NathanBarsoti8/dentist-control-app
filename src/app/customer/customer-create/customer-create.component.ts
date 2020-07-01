@@ -56,7 +56,7 @@ export class CustomerCreateComponent implements OnInit {
       phoneNumber: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]],
       zipCode: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
       address: ['', [Validators.required]],
-      addressNumber: [''],
+      addressNumber: ['', [Validators.minLength(3), Validators.maxLength(5), Validators.pattern('[0-9]*')]],
       neighborhood: ['', [Validators.required]],
       complement: [''],
       city: ['', [Validators.required]],
