@@ -87,11 +87,10 @@ export class CustomerComponent implements OnInit {
       .then(() => {
         this.spinner.hide();
         this.notification.showNotification('success', 'Status atualizado com sucesso.', 'info');
+        this.getCustomers(1, this.onlyActives, '');
       }).catch(() => {
         this.spinner.hide();
         this.notification.showNotification('danger', 'Ocorreu um erro ao atualizar o status.', 'error');
-      }).finally(() => {
-        this.getCustomers(1, this.onlyActives, '');
       });
   }
 

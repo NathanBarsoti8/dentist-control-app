@@ -19,6 +19,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CustomerDetailsComponent } from './../../customer/customer-details/customer-details.component';
 import { CustomerComponent } from './../../customer/customer.component';
 import { CustomerCreateComponent } from 'app/customer/customer-create/customer-create.component';
+import { SchedulingComponent } from 'app/scheduling/scheduling.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxMaskModule } from "ngx-mask";
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -55,7 +56,8 @@ import { ModalConfirmDialogComponent } from 'app/customer/modal-confirm-dialog/m
     CustomerComponent,
     CustomerDetailsComponent,
     CustomerCreateComponent,
-    ModalConfirmDialogComponent
+    ModalConfirmDialogComponent,
+    SchedulingComponent
   ]
 })
 
