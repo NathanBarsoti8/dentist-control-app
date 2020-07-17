@@ -9,7 +9,7 @@ export interface Customer {
     isActive: boolean;
 }
 
-export interface CustomerDetails extends Customer{
+export interface CustomerDetails extends Customer {
     phoneId: string;
     phoneNumber: string;
     DDD: string;
