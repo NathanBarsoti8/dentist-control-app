@@ -105,11 +105,11 @@ export class CustomerComponent implements OnInit {
 
     this.confirmDialogRef.afterClosed()
       .subscribe((response: ConfirmDialogData) => {
-        this.onDisableAdmissionModalClosed(response);
+        this.onChangeStatusModalClosed(response);
       });
   }
 
-  onDisableAdmissionModalClosed(response: ConfirmDialogData): void {
+  onChangeStatusModalClosed(response: ConfirmDialogData): void {
     if (response.isConfirmed)
       this.changeStatusCustomer(response.id);
   }

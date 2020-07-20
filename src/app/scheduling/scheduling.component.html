@@ -1,1 +1,145 @@
-<p>scheduling works!</p>
+<div class="main-content">
+
+    <form class="navbar-form">
+        <div class="row">
+            <div class="col-md-3">
+                <mat-slide-toggle class="pr-24 toggle-style" color="warn" [checked]="!onlyActives" (change)="toggleStatus()">
+                    Mostrar inativos
+                </mat-slide-toggle>
+            </div>
+
+            <div class="input-group col-md-5">
+                <input class="form-control search-group" (keydown.enter)="searchCustomers()" matInput type="text" value="" #search placeholder="Pesquisar..." #search>
+        
+                <button (click)="searchCustomers()" mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon" matTooltip="Pequisar">
+                    <i class="material-icons">search</i>
+                    <div class="ripple-container"></div>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <h3 class="card-title">Consultas</h3>
+                        <!-- <button mat-fab class="add-scheduling-button" matTooltip="Agendar nova consulta"
+                        [routerLink]="['/scheduling-create']">
+                            <mat-icon>add</mat-icon>
+                        </button> -->
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" 
+                            type="triangle-skew-spin" [fullScreen]="true">
+                            <p style="color: white" > Carregando... </p>> 
+                        </ngx-spinner>
+                            <mat-table [dataSource]="schedules" class="table" *ngIf="schedules">
+                                <ng-container matColumnDef="date">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <b style="font-size: medium;">Data</b>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let schedule">
+                                        <p class="text-trucate align-cell">{{schedule.date}}</p>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="timeTable">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <b style="font-size: medium;">Horário</b>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let schedule">
+                                        <p class="text-trucate align-cell">{{schedule.timeTable}}</p>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="customer">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <b style="font-size: medium;">Cliente</b>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let schedule">
+                                        <p class="text-trucate align-cell">{{schedule.customer}}</p>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="action" *ngIf="!onlyActives">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <b style="font-size: medium;">Ação</b>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let schedule" (click)="$event.stopPropagation()">
+                                        <button class="btn btn-info btn-round" (click)="confirmDialog(schedule.id)">
+                                            Ativar
+                                        </button>
+                                    </mat-cell> 
+                                </ng-container>
+
+                                <ng-container matColumnDef="action" *ngIf="onlyActives">
+                                    <mat-header-cell *matHeaderCellDef>
+                                        <b style="font-size: medium;">Ação</b>
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let schedule" (click)="$event.stopPropagation()">
+                                        <button class="btn btn-danger btn-round" (click)="confirmDialog(schedule.id)">
+                                            Desativar
+                                        </button>
+                                    </mat-cell> 
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+                                <!-- <mat-row class="pointer" *matRowDef="let schedule; columns: displayedColumns"
+                                [routerLink]="['/scheduling-details']"
+                                [queryParams]="{schedulingId: schedule.id}">
+                                </mat-row> -->
+
+                            </mat-table>
+                            
+                            <div *ngIf="schedules" class="card-footer pb-0 pt-3" style="margin-top: 60px;">
+                                <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                                    <li>
+                                        <a [routerLink]="['/scheduling']" [queryParams]="{ page: 1}" matTooltip="Primeira página"
+                                        [ngClass]="{disable:pager.currentPage === 1}">
+                                            <mat-icon>first_page</mat-icon>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a [routerLink]="['/scheduling']" [queryParams]="{ page: pager.currentPage - 1 }" matTooltip="Anterior"
+                                        [ngClass]="{disable:pager.currentPage === 1}">
+                                            <mat-icon>keyboard_arrow_left</mat-icon>
+                                        </a>
+                                    </li>
+                                    <li *ngFor="let page of pager.pages">
+                                        <a [routerLink]="['/scheduling']" [queryParams]="{ page: page }"
+                                        [ngClass]="{active:pager.currentPage === page}"><b>{{page}}</b>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a [routerLink]="['/scheduling']" [queryParams]="{ page: pager.currentPage + 1 }" matTooltip="Próxima"
+                                        [ngClass]="{disable:pager.currentPage === pager.totalPages}">
+                                            <mat-icon>keyboard_arrow_right</mat-icon>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a [routerLink]="['/scheduling']" [queryParams]="{ page: pager.totalPages }" matTooltip="Última página"
+                                        [ngClass]="{disable:pager.currentPage === pager.totalPages}">
+                                            <mat-icon>last_page</mat-icon>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+                            <div *ngIf="!schedules || schedules.length == 0" style="text-align: center;">
+                                <span>
+                                    Nenhum dado encontrado.
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
