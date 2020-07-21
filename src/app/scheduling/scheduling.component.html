@@ -3,7 +3,7 @@
     <form class="navbar-form">
         <div class="row">
             <div class="col-md-3">
-                <mat-slide-toggle class="pr-24 toggle-style" color="warn" [checked]="!onlyActives" (change)="toggleStatus()">
+                <mat-slide-toggle class="pr-24 toggle-style" color="warn">
                     Mostrar inativos
                 </mat-slide-toggle>
             </div>
@@ -25,10 +25,10 @@
                 <div class="card">
                     <div class="card-header card-header-info">
                         <h3 class="card-title">Consultas</h3>
-                        <!-- <button mat-fab class="add-scheduling-button" matTooltip="Agendar nova consulta"
+                        <button mat-fab class="add-scheduling-button" matTooltip="Agendar nova consulta"
                         [routerLink]="['/scheduling-create']">
                             <mat-icon>add</mat-icon>
-                        </button> -->
+                        </button>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -42,7 +42,7 @@
                                         <b style="font-size: medium;">Data</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let schedule">
-                                        <p class="text-trucate align-cell">{{schedule.date}}</p>
+                                        <p class="text-trucate align-cell">{{ schedule.date }}</p>
                                     </mat-cell>
                                 </ng-container>
 
@@ -51,7 +51,7 @@
                                         <b style="font-size: medium;">Horário</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let schedule">
-                                        <p class="text-trucate align-cell">{{schedule.timeTable}}</p>
+                                        <p class="text-trucate align-cell">{{ schedule.timeTable }}</p>
                                     </mat-cell>
                                 </ng-container>
 
@@ -60,38 +60,36 @@
                                         <b style="font-size: medium;">Cliente</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let schedule">
-                                        <p class="text-trucate align-cell">{{schedule.customer}}</p>
+                                        <p class="text-trucate align-cell">{{ schedule.Customer.name }}</p>
                                     </mat-cell>
                                 </ng-container>
 
-                                <ng-container matColumnDef="action" *ngIf="!onlyActives">
+                                <ng-container matColumnDef="status">
                                     <mat-header-cell *matHeaderCellDef>
-                                        <b style="font-size: medium;">Ação</b>
+                                        <b style="font-size: medium;">Status</b>
                                     </mat-header-cell>
-                                    <mat-cell *matCellDef="let schedule" (click)="$event.stopPropagation()">
-                                        <button class="btn btn-info btn-round" (click)="confirmDialog(schedule.id)">
-                                            Ativar
-                                        </button>
-                                    </mat-cell> 
+                                    <mat-cell *matCellDef="let schedule">
+                                        <p class="text-trucate align-cell">{{ schedule.status }}</p>
+                                    </mat-cell>
                                 </ng-container>
 
-                                <ng-container matColumnDef="action" *ngIf="onlyActives">
+                                <ng-container matColumnDef="action">
                                     <mat-header-cell *matHeaderCellDef>
                                         <b style="font-size: medium;">Ação</b>
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let schedule" (click)="$event.stopPropagation()">
                                         <button class="btn btn-danger btn-round" (click)="confirmDialog(schedule.id)">
-                                            Desativar
+                                            Excluir
                                         </button>
                                     </mat-cell> 
                                 </ng-container>
 
                                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
-                                <!-- <mat-row class="pointer" *matRowDef="let schedule; columns: displayedColumns"
+                                <mat-row class="pointer" *matRowDef="let schedule; columns: displayedColumns"
                                 [routerLink]="['/scheduling-details']"
                                 [queryParams]="{schedulingId: schedule.id}">
-                                </mat-row> -->
+                                </mat-row>
 
                             </mat-table>
                             

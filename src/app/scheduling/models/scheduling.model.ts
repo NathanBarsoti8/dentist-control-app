@@ -3,9 +3,14 @@ export interface Scheduling {
     date: any;
     timeTable: string;
     customerId: string;
-    customer: Name;
+    statusId: number;
+    status: string;
+    Customer: {
+        name: string
+    };
 }
 
-export interface Name {
-    name: string;
+export enum Status {
+    SCHEDULED = 1,
+    DONE = 2
 }

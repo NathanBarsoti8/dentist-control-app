@@ -1,11 +1,11 @@
 import { NotificationService } from './../shared/notification/notification.service';
 import { SchedulingService } from './scheduling.service';
 import { Pager } from './../shared/models/paginated-items.model';
-import { Scheduling } from './models/scheduling.model';
+import { Scheduling, Status } from './models/scheduling.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import moment = require('moment');
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-scheduling',
@@ -14,7 +14,7 @@ import moment = require('moment');
 })
 export class SchedulingComponent implements OnInit {
 
-  displayedColumns = ['date', 'timeTable', 'customer', 'action'];
+  displayedColumns = ['date', 'timeTable', 'customer', 'status', 'action'];
   schedules: Array<Scheduling>;
   pager: Pager;
 
@@ -37,6 +37,10 @@ export class SchedulingComponent implements OnInit {
 
           this.schedules.forEach(x => {
             x.date = moment(x.date).format("DD/MM/YYYY");
+            if (x.statusId == Status.SCHEDULED)
+              x.status = "Agendada";
+            else if (x.statusId == Status.DONE)
+              x.status = "Concluída";
           });
         }
         else {
