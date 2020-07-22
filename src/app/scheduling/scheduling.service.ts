@@ -1,4 +1,5 @@
-import { Scheduling } from './models/scheduling.model';
+import { DefaultInterface } from './../shared/models/default-interface.model';
+import { Scheduling, SchedulingDetails } from './models/scheduling.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PaginatedItems } from 'app/shared/models/paginated-items.model';
@@ -22,5 +23,26 @@ export class SchedulingService {
     });
   }
 
-  
+  getById(id: string): Promise<SchedulingDetails> {
+    return new Promise<SchedulingDetails>((resolve, reject) => {
+      this.httpClient.get(`${APPLICATION_API}/schedules/${id}`)
+        .subscribe((response: SchedulingDetails) => {
+          resolve(response);
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    });
+  }
+
+  getServiceType(): Promise<Array<DefaultInterface<number>>> {
+    return new Promise<Array<DefaultInterface<number>>>((resolve, reject) => {
+      this.httpClient.get(`${APPLICATION_API}/resources/servicesType`)
+        .subscribe((response: Array<DefaultInterface<number>>) => {
+          resolve(response);
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    });
+  }
+
 }

@@ -1,3 +1,4 @@
+import { SchedulingDetailsComponent } from './../../scheduling/scheduling-details/scheduling-details.component';
 import { SchedulingComponent } from './../../scheduling/scheduling.component';
 import { CustomerCreateComponent } from './../../customer/customer-create/customer-create.component';
 import { CustomerDetailsComponent } from './../../customer/customer-details/customer-details.component';
@@ -18,9 +19,10 @@ export const AdminLayoutRoutes: Routes = [
     //   component: UserProfileComponent
     // }]
     // }
-    { path: 'dashboard',         component: DashboardComponent },
-    { path: 'customer',          component: CustomerComponent },
-    { path: 'customer-details',  component: CustomerDetailsComponent},
-    { path: 'customer-create',   component: CustomerCreateComponent },
-    { path: 'scheduling',        component: SchedulingComponent}
+    { path: 'dashboard',           component: DashboardComponent },
+    { path: 'customer',            component: CustomerComponent },
+    { path: 'customer-details',    component: CustomerDetailsComponent},
+    { path: 'customer-create',     component: CustomerCreateComponent },
+    { path: 'scheduling',          component: SchedulingComponent},
+    { path: 'scheduling-details',  component: SchedulingDetailsComponent }
 ];

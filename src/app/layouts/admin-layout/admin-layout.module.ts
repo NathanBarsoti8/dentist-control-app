@@ -26,6 +26,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ModalConfirmDialogComponent } from 'app/customer/modal-confirm-dialog/modal-confirm-dialog.component';
+import { SchedulingDetailsComponent } from './../../scheduling/scheduling-details/scheduling-details.component';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import { ModalConfirmDialogComponent } from 'app/customer/modal-confirm-dialog/m
     CustomerDetailsComponent,
     CustomerCreateComponent,
     ModalConfirmDialogComponent,
-    SchedulingComponent
+    SchedulingComponent,
+    SchedulingDetailsComponent
   ]
 })
 

@@ -10,6 +10,12 @@ export interface Scheduling {
     };
 }
 
+export interface SchedulingDetails extends Scheduling {
+    serviceTypeId: number;
+    serviceType: string;
+    customerName: string;
+}
+
 export enum Status {
     SCHEDULED = 1,
     DONE = 2
