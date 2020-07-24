@@ -67,7 +67,7 @@ export class SchedulingDetailsComponent implements OnInit {
   generateForm(): void {
       this.schedulingDetailsForm = this.formBuilder.group({
         date: ['', [Validators.required]],
-        timeTable: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+        timeTable: ['', [Validators.required]],
         customerName: ['', [Validators.required]],
         serviceType: ['', [Validators.required]],
         status: ['', [Validators.required]]
