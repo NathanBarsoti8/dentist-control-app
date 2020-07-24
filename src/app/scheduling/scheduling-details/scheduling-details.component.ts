@@ -1,13 +1,14 @@
 import { SchedulingDetails } from './../models/scheduling.model';
 import { DateConverterService } from './../../shared/services/dateConverter.service';
 import { NotificationService } from './../../shared/notification/notification.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SchedulingService } from './../scheduling.service';
 import { FormValidationMessages } from './../../shared/models/validation-messages.model';
 import { DefaultInterface } from './../../shared/models/default-interface.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-scheduling-details',
@@ -18,6 +19,7 @@ export class SchedulingDetailsComponent implements OnInit {
 
   schedulingId: string;
   scheduling: SchedulingDetails;
+  schedulingDetailsForm: FormGroup;
   serviceTypes: Array<DefaultInterface<number>>;
   validation_messages: FormValidationMessages;
 
@@ -33,9 +35,9 @@ export class SchedulingDetailsComponent implements OnInit {
       this.schedulingId = params.schedulingId;
       this.getDetails(this.schedulingId);
     });
-    // this.generateForm();
+    this.generateForm();
     this.getServiceType();
-    // this.setValidationMessages();
+    this.setValidationMessages();
   }
 
   getDetails(id: string): void {
@@ -61,5 +63,40 @@ export class SchedulingDetailsComponent implements OnInit {
         this.notification.showNotification('danger', 'Ocorreu um erro ao buscar os tipos de serviço.', 'error');
       })
   }
+
+  generateForm(): void {
+      this.schedulingDetailsForm = this.formBuilder.group({
+        date: ['', [Validators.required]],
+        timeTable: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
+        customerName: ['', [Validators.required]],
+        serviceType: ['', [Validators.required]],
+        status: ['', [Validators.required]]
+      });
+  }
+
+  populateForm(schedule: SchedulingDetails): void {
+    if (schedule) {
+
+      schedule[0].date = moment(schedule[0].date).format("DD/MM/YYYY");
+
+      this.schedulingDetailsForm.patchValue(schedule[0]);
+      this.schedulingDetailsForm.get('date').setValue(schedule[0].date);
+      this.schedulingDetailsForm.get('timeTable').setValue(schedule[0].timeTable);
+      this.schedulingDetailsForm.get('customerName').setValue(schedule[0].customerName);
+      this.schedulingDetailsForm.get('serviceType').setValue(schedule[0].serviceType);
+      this.schedulingDetailsForm.get('status').setValue(schedule[0].status);
+    }
+    return;
+  }
+
+  setValidationMessages(): void {
+    this.validation_messages = {
+      generic: [
+        { type: 'required', message: 'Campo obrigatório' }
+      ]
+    }
+  }
+
+
 
 }
