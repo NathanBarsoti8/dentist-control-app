@@ -15,6 +15,12 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
+                                        <mat-label>Cliente</mat-label>
+                                        <input matInput type="text" formControlName="customerName" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
                                         <mat-label>Data da Consulta</mat-label>
                                         <input matInput type="text" mask="00/00/0000" maxlength="10" formControlName="date" required>
                                     </mat-form-field>
@@ -22,13 +28,7 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Horário</mat-label>
-                                        <input matInput type="text" mask="00:00" formControlName="timeTable" required>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-4">
-                                    <mat-form-field class="example-full-width">
-                                        <mat-label>Cliente</mat-label>
-                                        <input matInput type="text" formControlName="customerName" required>
+                                        <input matInput type="text" formControlName="timeTable" required>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -40,14 +40,14 @@
                                             <mat-option *ngFor="let option of serviceTypes" [value]="option.id">{{ option.name }}</mat-option>
                                         </mat-select>
                                         <mat-error *ngFor="let validation of validation_messages.generic">
-                                            <span *ngIf="customerDetailsForm.get('serviceType').dirty || customerDetailsForm.get('serviceType').touched
-                                                && customerDetailsForm.get('serviceType').hasError(validation.type)">
+                                            <span *ngIf="schedulingDetailsForm.get('serviceType').dirty || schedulingDetailsForm.get('serviceType').touched
+                                                && schedulingDetailsForm.get('serviceType').hasError(validation.type)">
                                                 {{ validation.message }}
                                             </span>
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Status</mat-label>
                                         <input matInput type="text" formControlName="status" required>
@@ -55,9 +55,9 @@
                                 </div>
                             </div>
                             
-                            <!-- <button mat-raised-button type="submit" class="btn btn-info pull-right"
+                            <button mat-raised-button type="submit" class="btn btn-info pull-right"
                             [disabled]="schedulingDetailsForm.invalid"
-                            (click)="update(schedulingDetailsForm.value)">Atualizar</button> -->
+                            (click)="update(schedulingDetailsForm.value)">Atualizar</button>
 
                             <button mat-raised-button type="submit" class="btn btn-default pull-right"
                             style="margin-right: 10px;" [routerLink]="['/scheduling']">Voltar</button>

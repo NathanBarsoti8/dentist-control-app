@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PaginatedItems } from 'app/shared/models/paginated-items.model';
 import { APPLICATION_API } from 'app/app.api';
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,17 @@ export class SchedulingService {
     }).catch(error => {
       return Promise.reject(error);
     });
+  }
+
+  update(id: string, obj: SchedulingDetails) {
+    return new Promise<any>((resolve, reject) => {
+      this.httpClient.put(`${APPLICATION_API}/schedules/${id}`, obj)
+        .subscribe(() => {
+          resolve();
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    })
   }
 
 }

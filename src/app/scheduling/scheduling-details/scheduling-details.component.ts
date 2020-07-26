@@ -46,6 +46,7 @@ export class SchedulingDetailsComponent implements OnInit {
       .then(result => {
         if (result) {
           this.scheduling = result;
+          this.populateForm(this.scheduling);
         }
         this.spinner.hide();
       }).catch(() => {
@@ -83,7 +84,7 @@ export class SchedulingDetailsComponent implements OnInit {
       this.schedulingDetailsForm.get('date').setValue(schedule[0].date);
       this.schedulingDetailsForm.get('timeTable').setValue(schedule[0].timeTable);
       this.schedulingDetailsForm.get('customerName').setValue(schedule[0].customerName);
-      this.schedulingDetailsForm.get('serviceType').setValue(schedule[0].serviceType);
+      this.schedulingDetailsForm.get('serviceType').setValue(schedule[0].serviceTypeId);
       this.schedulingDetailsForm.get('status').setValue(schedule[0].status);
     }
     return;
@@ -95,6 +96,21 @@ export class SchedulingDetailsComponent implements OnInit {
         { type: 'required', message: 'Campo obrigatório' }
       ]
     }
+  }
+
+  update(obj: SchedulingDetails): void {
+    this.spinner.show();
+
+    obj.date = this.dateConverter.formatStringManually(obj.date);
+
+    this._schedulingService.update(this.schedulingId, obj)
+      .then(() => {
+        this.spinner.hide();
+        this.notification.showNotification('success', 'Consulta atualizada com sucesso.', 'info');
+      }).catch(error => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', error.error.msg, 'error');
+      })
   }
 
 
