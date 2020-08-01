@@ -46,6 +46,17 @@ export class SchedulingService {
     });
   }
 
+  create(obj: SchedulingDetails) {
+    return new Promise<any>((resolve, reject) => {
+      this.httpClient.post(`${APPLICATION_API}/schedules`, obj)
+        .subscribe(() => {
+          resolve();
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    });
+  }
+
   update(id: string, obj: SchedulingDetails) {
     return new Promise<any>((resolve, reject) => {
       this.httpClient.put(`${APPLICATION_API}/schedules/${id}`, obj)
@@ -54,7 +65,7 @@ export class SchedulingService {
         }, reject);
     }).catch(error => {
       return Promise.reject(error);
-    })
+    });
   }
 
 }
