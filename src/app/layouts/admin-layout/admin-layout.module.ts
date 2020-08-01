@@ -27,6 +27,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ModalConfirmDialogComponent } from 'app/customer/modal-confirm-dialog/modal-confirm-dialog.component';
 import { SchedulingDetailsComponent } from './../../scheduling/scheduling-details/scheduling-details.component';
+import { SchedulingCreateComponent } from 'app/scheduling/scheduling-create/scheduling-create.component';
 
 @NgModule({
   imports: [
@@ -59,7 +60,8 @@ import { SchedulingDetailsComponent } from './../../scheduling/scheduling-detail
     CustomerCreateComponent,
     ModalConfirmDialogComponent,
     SchedulingComponent,
-    SchedulingDetailsComponent
+    SchedulingDetailsComponent,
+    SchedulingCreateComponent
   ]
 })
 
