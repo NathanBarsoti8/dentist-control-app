@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { PaginatedItems } from 'app/shared/models/paginated-items.model';
 import { APPLICATION_API } from 'app/app.api';
 import { ThrowStmt } from '@angular/compiler';
+import { Customer } from 'app/customer/models/customer.model';
 
 @Injectable({
   providedIn: 'root'
@@ -62,6 +63,21 @@ export class SchedulingService {
       this.httpClient.put(`${APPLICATION_API}/schedules/${id}`, obj)
         .subscribe(() => {
           resolve();
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    });
+  }
+
+  getCustomers(): Promise<Array<Customer>> {
+    let page: number = 1;
+    let pageSize: number = 100;
+    let status: boolean = true;
+
+    return new Promise<Array<Customer>>((resolve, reject) => {
+      this.httpClient.get(`${APPLICATION_API}/customers?page=${page}&pageSize=${pageSize}&status=${status}`)
+        .subscribe((response: Array<Customer>) => {
+          resolve(response);
         }, reject);
     }).catch(error => {
       return Promise.reject(error);

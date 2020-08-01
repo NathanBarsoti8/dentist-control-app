@@ -4,7 +4,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-info">
-                        <h3 class="card-title">Adicionar novo Cliente</h3>
+                        <h3 class="card-title">Adicionar nova Consulta</h3>
                     </div>
                     <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" 
                         type="triangle-skew-spin" [fullScreen]="true">
@@ -18,29 +18,27 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <mat-form-field class="example-full-width">
-                                            <mat-label>Cliente</mat-label>
-                                            <input matInput type="text" formControlName="customerName" required>
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <mat-form-field class="example-full-width">
-                                            <mat-label>Data da Consulta</mat-label>
-                                            <input matInput type="text" mask="00/00/0000" maxlength="10" formControlName="date" required>
-                                        </mat-form-field>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <mat-form-field class="example-full-width">
-                                            <mat-label>Horário</mat-label>
-                                            <input matInput type="text" formControlName="timeTable" required>
-                                        </mat-form-field>
-                                    </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Cliente</mat-label>
+                                        <input matInput type="text" formControlName="customerName" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Data da Consulta</mat-label>
+                                        <input matInput type="text" mask="00/00/0000" maxlength="10" formControlName="date" required>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Horário</mat-label>
+                                        <input matInput type="text" formControlName="timeTable" required>
+                                    </mat-form-field>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Tipo de Serviço</mat-label>
                                         <mat-select formControlName="serviceType" (selectionChange)="getServiceType()" required>
@@ -54,16 +52,10 @@
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
-                            </div>
-                            
-                            
-                            <div class="row title-form text-primary">
-                                <div class="col-md-12">
-                                    <h5><b><i>Endereço</i></b></h5>
+                                <div class="col-md-4">
+                                    
                                 </div>
                             </div>
-                            
-                  
                             
                             <button mat-raised-button type="submit" class="btn btn-info pull-right"
                             [disabled]="addSchedulingForm.invalid"

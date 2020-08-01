@@ -13,8 +13,10 @@ export class CustomerService {
   constructor(private httpClient: HttpClient) { }
 
   getAll(page: number, status: boolean, search?: string): Promise<PaginatedItems<Customer>> {
+    let pageSize: number = 10;
+
     return new Promise<PaginatedItems<Customer>>((resolve, reject) => {
-      this.httpClient.get(`${APPLICATION_API}/customers?page=${page}&status=${status}&search=${search}`)
+      this.httpClient.get(`${APPLICATION_API}/customers?page=${page}&pageSize=${pageSize}&status=${status}&search=${search}`)
         .subscribe((response: PaginatedItems<Customer>) => {
           resolve(response);
         }, reject);
