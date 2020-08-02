@@ -84,4 +84,15 @@ export class SchedulingService {
     });
   }
 
+  delete(id: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.httpClient.delete(`${APPLICATION_API}/schedules/${id}`)
+        .subscribe(() => {
+          resolve();
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    });
+  }
+
 }
