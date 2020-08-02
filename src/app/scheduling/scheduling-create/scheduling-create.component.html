@@ -21,7 +21,15 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Cliente</mat-label>
-                                        <input matInput type="text" formControlName="customerName" required>
+                                        <mat-select formControlName="customerId" (selectionChange)="getCustomers()" required>
+                                            <mat-option *ngFor="let customer of customers" [value]="customer.id">{{ customer.name }}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="addSchedulingForm.get('customerId').dirty || addSchedulingForm.get('customerId').touched
+                                                && addSchedulingForm.get('customerId').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4">
@@ -41,12 +49,12 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Tipo de Serviço</mat-label>
-                                        <mat-select formControlName="serviceType" (selectionChange)="getServiceType()" required>
+                                        <mat-select formControlName="serviceTypeId" (selectionChange)="getServiceType()" required>
                                             <mat-option *ngFor="let option of serviceTypes" [value]="option.id">{{ option.name }}</mat-option>
                                         </mat-select>
                                         <mat-error *ngFor="let validation of validation_messages.generic">
-                                            <span *ngIf="addSchedulingForm.get('serviceType').dirty || addSchedulingForm.get('serviceType').touched
-                                                && addSchedulingForm.get('serviceType').hasError(validation.type)">
+                                            <span *ngIf="addSchedulingForm.get('serviceTypeId').dirty || addSchedulingForm.get('serviceTypeId').touched
+                                                && addSchedulingForm.get('serviceTypeId').hasError(validation.type)">
                                                 {{ validation.message }}
                                             </span>
                                         </mat-error>

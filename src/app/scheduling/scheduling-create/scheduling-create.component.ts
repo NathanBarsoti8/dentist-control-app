@@ -8,6 +8,7 @@ import { FormValidationMessages } from './../../shared/models/validation-message
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DefaultInterface } from './../../shared/models/default-interface.model';
 import { Component, OnInit } from '@angular/core';
+import { Customer } from 'app/customer/models/customer.model';
 
 @Component({
   selector: 'app-scheduling-create',
@@ -19,6 +20,7 @@ export class SchedulingCreateComponent implements OnInit {
   serviceTypes: Array<DefaultInterface<number>>;
   addSchedulingForm: FormGroup;
   validation_messages: FormValidationMessages;
+  customers: Array<Customer>;
 
   constructor(private _schedulingService: SchedulingService,
     private formBuilder: FormBuilder,
@@ -30,6 +32,7 @@ export class SchedulingCreateComponent implements OnInit {
   ngOnInit(): void {
     this.generateForm();
     this.getServiceType();
+    this.getCustomers();
     this.setValidationMessages();
   }
 
@@ -37,9 +40,8 @@ export class SchedulingCreateComponent implements OnInit {
     this.addSchedulingForm = this.formBuilder.group({
       date: ['', [Validators.required]],
       timeTable: ['', [Validators.required]],
-      customerName: ['', [Validators.required]],
-      serviceType: ['', [Validators.required]],
-      status: ['', [Validators.required]]
+      customerId: ['', [Validators.required]],
+      serviceTypeId: ['', [Validators.required]]
     });
   }
 
@@ -61,20 +63,39 @@ export class SchedulingCreateComponent implements OnInit {
       })
   }
 
-  createScheduling(scheduling: SchedulingDetails) {
+  createScheduling(scheduling: SchedulingDetails): void {
     this.spinner.show();
     scheduling.date = this.dateConverter.formatStringManually(scheduling.date);
 
     this._schedulingService.create(scheduling)
       .then(() => {
         this.spinner.hide();
-        this.notification.showNotification('success', 'Cliente adicionado com sucesso.', 'info');
+        this.notification.showNotification('success', 'Consulta agendada com sucesso.', 'info');
         this.router.navigate([`/scheduling`]);
       })
       .catch(error => {
+
+        console.log('error => ', error)
+
         this.spinner.hide();
         this.notification.showNotification('danger', error.error.msg, 'error');
       })
   }
+
+  getCustomers(): void {
+    this.spinner.show();
+    this._schedulingService.getCustomers()
+      .then(result => {
+        if (result) {
+          this.customers = result.data;
+        }
+        this.spinner.hide();
+      })
+      .catch(() => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao carregar os clientes.', 'error');
+      });
+  }
+
 
 }

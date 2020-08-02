@@ -69,14 +69,14 @@ export class SchedulingService {
     });
   }
 
-  getCustomers(): Promise<Array<Customer>> {
+  getCustomers(): Promise<PaginatedItems<Customer>> {
     let page: number = 1;
     let pageSize: number = 100;
     let status: boolean = true;
 
-    return new Promise<Array<Customer>>((resolve, reject) => {
-      this.httpClient.get(`${APPLICATION_API}/customers?page=${page}&pageSize=${pageSize}&status=${status}`)
-        .subscribe((response: Array<Customer>) => {
+    return new Promise<PaginatedItems<Customer>>((resolve, reject) => {
+      this.httpClient.get(`${APPLICATION_API}/customers?page=${page}&pageSize=${pageSize}&status=${status}&search=`)
+        .subscribe((response: PaginatedItems<Customer>) => {
           resolve(response);
         }, reject);
     }).catch(error => {
