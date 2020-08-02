@@ -74,9 +74,6 @@ export class SchedulingCreateComponent implements OnInit {
         this.router.navigate([`/scheduling`]);
       })
       .catch(error => {
-
-        console.log('error => ', error)
-
         this.spinner.hide();
         this.notification.showNotification('danger', error.error.msg, 'error');
       })
