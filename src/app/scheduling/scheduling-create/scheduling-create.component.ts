@@ -9,6 +9,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DefaultInterface } from './../../shared/models/default-interface.model';
 import { Component, OnInit } from '@angular/core';
 import { Customer } from 'app/customer/models/customer.model';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-scheduling-create',
@@ -21,6 +23,7 @@ export class SchedulingCreateComponent implements OnInit {
   addSchedulingForm: FormGroup;
   validation_messages: FormValidationMessages;
   customers: Array<Customer>;
+  filteredCustomers: Observable<Array<string>> | Array<Customer> | Observable<Array<Customer>>; 
 
   constructor(private _schedulingService: SchedulingService,
     private formBuilder: FormBuilder,
@@ -40,7 +43,7 @@ export class SchedulingCreateComponent implements OnInit {
     this.addSchedulingForm = this.formBuilder.group({
       date: ['', [Validators.required]],
       timeTable: ['', [Validators.required]],
-      customerId: ['', [Validators.required]],
+      customerId: [this.filteredCustomers, [Validators.required]],
       serviceTypeId: ['', [Validators.required]]
     });
   }
@@ -85,6 +88,7 @@ export class SchedulingCreateComponent implements OnInit {
       .then(result => {
         if (result) {
           this.customers = result.data;
+          this.setFilteredCustomers();
         }
         this.spinner.hide();
       })
@@ -92,6 +96,24 @@ export class SchedulingCreateComponent implements OnInit {
         this.spinner.hide();
         this.notification.showNotification('danger', 'Ocorreu um erro ao carregar os clientes.', 'error');
       });
+  }
+
+  setFilteredCustomers(): void {
+    this.filteredCustomers = this.addSchedulingForm.get('customerId').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filter(name) : this.customers));
+  }
+
+  _filter(name: string): Array<Customer> {
+    const filterValue = name.toLowerCase();
+
+    return this.customers.filter(opt => opt.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  displayFn(customer?: Customer): string | undefined {
+    return customer ? customer.name : undefined;
   }
 
 

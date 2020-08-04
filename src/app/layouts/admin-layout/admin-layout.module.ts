@@ -16,6 +16,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon'
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CustomerDetailsComponent } from './../../customer/customer-details/customer-details.component';
 import { CustomerComponent } from './../../customer/customer.component';
 import { CustomerCreateComponent } from 'app/customer/customer-create/customer-create.component';
@@ -52,7 +53,8 @@ import { SchedulingDeleteComponent } from './../../scheduling/scheduling-delete/
     SharedModule.forRoot(),
     NgxSpinnerModule,
     MatToolbarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule
   ],
   declarations: [
     DashboardComponent,
