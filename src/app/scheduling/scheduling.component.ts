@@ -1,3 +1,4 @@
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmDialogData } from './../customer/models/confirm-dialog.model';
 import { SchedulingDeleteComponent } from './scheduling-delete/scheduling-delete.component';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
@@ -21,14 +22,29 @@ export class SchedulingComponent implements OnInit {
   schedules: Array<Scheduling>;
   pager: Pager;
   deleteDialogRef: MatDialogRef<SchedulingDeleteComponent>;
+  formFilter: FormGroup;
+  filterStartDate: Date = new Date();
+  filterFinishDate: Date = new Date();
+  today: Date = new Date();
 
   constructor(private _schedulingService: SchedulingService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private notification: NotificationService,
-    private matDialog: MatDialog) { }
+    private matDialog: MatDialog,
+    private formBuilder: FormBuilder) {
+      
+    this.formFilter = formBuilder.group({
+      inicialDate: this.filterStartDate,
+      finalDate: this.filterFinishDate
+    });
+  }
 
   ngOnInit(): void {
+
+    this.filterStartDate.setDate(this.today.getDate() - 30)
+    this.filterFinishDate.setDate(this.today.getDate())
+
     this.getSchedules(1);
   }
 
@@ -90,6 +106,10 @@ export class SchedulingComponent implements OnInit {
         this.spinner.hide();
         this.notification.showNotification('danger', 'Ocorreu um erro ao excluir consulta.', 'error')
       });
+  }
+
+  cleanFilter(): void {
+    this.formFilter.reset();
   }
 
 }

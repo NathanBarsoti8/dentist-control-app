@@ -24,6 +24,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { DataService } from './shared/services/data.service';
 import { NgxSpinnerModule } from "ngx-spinner";
 
@@ -45,7 +46,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
     MatSortModule,
     MatProgressSpinnerModule,
     NgxSpinnerModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatExpansionModule
   ],
   declarations: [
     AppComponent,

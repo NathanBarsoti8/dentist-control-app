@@ -1,23 +1,43 @@
 <div class="main-content">
 
-    <form class="navbar-form">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3">
-                <mat-slide-toggle class="pr-24 toggle-style" color="warn">
-                    Mostrar inativos
-                </mat-slide-toggle>
-            </div>
-
-            <div class="input-group col-md-5">
-                <!-- <input class="form-control search-group" (keydown.enter)="searchCustomers()" matInput type="text" value="" #search placeholder="Pesquisar..." #search>
-        
-                <button (click)="searchCustomers()" mat-raised-button type="submit" class="btn btn-white btn-round btn-just-icon" matTooltip="Pequisar">
-                    <i class="material-icons">search</i>
-                    <div class="ripple-container"></div>
-                </button> -->
+            <div class="col-md-12">
+                <div class="card">
+                    <mat-accordion>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                Filtro
+                            </mat-expansion-panel-header>
+                            <form [formGroup]="formFilter">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Data Inicial</mat-label>
+                                            <input matInput type="text" mask="00/00/0000" maxlength="10" formControlName="inicialDate">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Data Final</mat-label>
+                                            <input matInput type="text" mask="00/00/0000" maxlength="10" formControlName="finalDate">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <button mat-raised-button type="submit" class="btn btn-info pull-right"
+                                    [disabled]="formFilter.invalid"
+                                    >Filtrar
+                                </button>
+                                <button mat-raised-button type="submit" class="btn btn-default pull-right"
+                                    style="margin-right: 10px;" (click)="cleanFilter()">Limpar
+                                </button>
+                            </form>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
             </div>
         </div>
-    </form>
+    </div>
 
     <div class="container-fluid">
         <div class="row">
