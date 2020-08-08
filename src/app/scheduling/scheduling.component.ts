@@ -27,7 +27,6 @@ export class SchedulingComponent implements OnInit {
   filterStartDate: Date = new Date();
   filterFinishDate: Date = new Date();
   today: Date = new Date();
-  page: number = 1;
 
   constructor(private _schedulingService: SchedulingService,
     private route: ActivatedRoute,
@@ -44,11 +43,11 @@ export class SchedulingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(x => this.getSchedules(x.page || 1))
 
     this.filterStartDate.setDate(this.today.getDate())
     this.filterFinishDate.setDate(this.today.getDate() + 30)
  
-    this.getSchedules(this.page);
   }
 
   getSchedules(page: number): void {
