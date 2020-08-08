@@ -1,3 +1,4 @@
+import { DateConverterService } from 'app/shared/services/dateConverter.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmDialogData } from './../customer/models/confirm-dialog.model';
 import { SchedulingDeleteComponent } from './scheduling-delete/scheduling-delete.component';
@@ -26,12 +27,14 @@ export class SchedulingComponent implements OnInit {
   filterStartDate: Date = new Date();
   filterFinishDate: Date = new Date();
   today: Date = new Date();
+  page: number = 1;
 
   constructor(private _schedulingService: SchedulingService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService,
     private notification: NotificationService,
     private matDialog: MatDialog,
+    private dateConverter: DateConverterService,
     private formBuilder: FormBuilder) {
       
     this.formFilter = formBuilder.group({
@@ -42,10 +45,10 @@ export class SchedulingComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.filterStartDate.setDate(this.today.getDate() - 30)
-    this.filterFinishDate.setDate(this.today.getDate())
-
-    this.getSchedules(1);
+    this.filterStartDate.setDate(this.today.getDate())
+    this.filterFinishDate.setDate(this.today.getDate() + 30)
+ 
+    this.getSchedules(this.page);
   }
 
   getSchedules(page: number): void {
@@ -110,6 +113,14 @@ export class SchedulingComponent implements OnInit {
 
   cleanFilter(): void {
     this.formFilter.reset();
+  }
+
+  changeInitialDate(date: Date) {
+    this.filterStartDate = date;
+  }
+
+  changeFinalDate(date: Date) {
+    this.filterFinishDate = date;
   }
 
 }
