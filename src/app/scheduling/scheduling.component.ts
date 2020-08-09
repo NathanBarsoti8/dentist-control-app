@@ -1,3 +1,4 @@
+import { Customer } from 'app/customer/models/customer.model';
 import { DateConverterService } from 'app/shared/services/dateConverter.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmDialogData } from './../customer/models/confirm-dialog.model';
@@ -11,6 +12,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import * as moment from 'moment';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-scheduling',
@@ -27,6 +30,8 @@ export class SchedulingComponent implements OnInit {
   filterStartDate: Date = new Date();
   filterFinishDate: Date = new Date();
   today: Date = new Date();
+  customers: Array<Customer>;
+  filteredCustomers: Observable<Array<string>> | Array<Customer> | Observable<Array<Customer>>; 
 
   constructor(private _schedulingService: SchedulingService,
     private route: ActivatedRoute,
@@ -38,7 +43,8 @@ export class SchedulingComponent implements OnInit {
       
     this.formFilter = formBuilder.group({
       inicialDate: this.filterStartDate,
-      finalDate: this.filterFinishDate
+      finalDate: this.filterFinishDate,
+      customerId: [this.filteredCustomers]
     });
   }
 
@@ -48,6 +54,7 @@ export class SchedulingComponent implements OnInit {
     this.filterStartDate.setDate(this.today.getDate())
     this.filterFinishDate.setDate(this.today.getDate() + 30)
  
+    this.getCustomers();
   }
 
   getSchedules(page: number): void {
@@ -124,6 +131,40 @@ export class SchedulingComponent implements OnInit {
 
   changeFinalDate(date: Date) {
     this.filterFinishDate = date;
+  }
+
+  getCustomers(): void {
+    this.spinner.show();
+    this._schedulingService.getCustomers()
+      .then(result => {
+        if (result) {
+          this.customers = result.data;
+          this.setFilteredCustomers();
+        }
+        this.spinner.hide();
+      })
+      .catch(() => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao carregar os clientes.', 'error');
+      });
+  }
+
+  setFilteredCustomers(): void {
+    this.filteredCustomers = this.formFilter.get('customerId').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filter(name) : this.customers));
+  }
+
+  _filter(name: string): Array<Customer> {
+    const filterValue = name.toLowerCase();
+
+    return this.customers.filter(opt => opt.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  displayFn(customer?: Customer): string | undefined {
+    return customer ? customer.name : undefined;
   }
 
 }

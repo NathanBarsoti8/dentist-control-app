@@ -29,7 +29,17 @@
                                             <mat-datepicker #finalPicker></mat-datepicker>
                                         </mat-form-field>
                                     </div>
-                                    
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Cliente</mat-label>
+                                            <input type="text" matInput [formControl]="formFilter.get('customerId')" [matAutocomplete]="auto" required>
+                                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+                                                <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+                                                    {{ customer.name }}
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </mat-form-field>
+                                    </div>
                                 </div>
                                 <button mat-raised-button type="submit" class="btn btn-info pull-right"
                                     [disabled]="formFilter.invalid"
