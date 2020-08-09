@@ -42,8 +42,8 @@ export class SchedulingComponent implements OnInit {
     private formBuilder: FormBuilder) {
       
     this.formFilter = formBuilder.group({
-      inicialDate: this.filterStartDate,
-      finalDate: this.filterFinishDate,
+      inicialDate: [this.filterStartDate],
+      finalDate: [this.filterFinishDate],
       customerId: [this.filteredCustomers]
     });
   }
@@ -57,13 +57,14 @@ export class SchedulingComponent implements OnInit {
     this.getCustomers();
   }
 
-  getSchedules(page: number): void {
+  getSchedules(page: number, customerId?: any): void {
 
     let startDate = this.dateConverter.dateFormat(this.filterStartDate);
     let finishDate = this.dateConverter.dateFormat(this.filterFinishDate);
-
+    let customer = customerId != null ? customerId.id : ''
+    
     this.spinner.show();
-    this._schedulingService.getAll(page)
+    this._schedulingService.getAll(page, startDate, finishDate, customer)
       .then(result => {
         if (result) {
           this.pager = result.pager;

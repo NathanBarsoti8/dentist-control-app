@@ -14,9 +14,9 @@ export class SchedulingService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAll(page: number): Promise<PaginatedItems<Scheduling>> {
+  getAll(page: number, startDate: string, finishDate: string, customer: string): Promise<PaginatedItems<Scheduling>> {
     return new Promise<PaginatedItems<Scheduling>>((resolve, reject) => {
-      this.httpClient.get(`${APPLICATION_API}/schedules?page=${page}`)
+      this.httpClient.get(`${APPLICATION_API}/schedules?page=${page}&startDate=${startDate}&finishDate=${finishDate}&customer=${customer}`)
         .subscribe((response: PaginatedItems<Scheduling>) => {
           resolve(response);
         }, reject);

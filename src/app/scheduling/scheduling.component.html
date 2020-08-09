@@ -43,7 +43,7 @@
                                 </div>
                                 <button mat-raised-button type="submit" class="btn btn-info pull-right"
                                     [disabled]="formFilter.invalid"
-                                    (click)="getSchedules()">Filtrar
+                                    (click)="getSchedules(1, formFilter.get('customerId').value)">Filtrar
                                 </button>
                                 <button mat-raised-button type="submit" class="btn btn-default pull-right"
                                     style="margin-right: 10px;" (click)="cleanFilter()">Limpar

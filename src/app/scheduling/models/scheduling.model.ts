@@ -2,7 +2,7 @@ export interface Scheduling {
     id: string;
     date: any;
     timeTable: string;
-    customerId: string;
+    customerId: any;
     statusId: number;
     status: string;
     Customer: {
