@@ -1,5 +1,6 @@
 # Dentist Control APP
 > An APP built in Angular to comunicate with a Node.js API
+<br>
 > Link to see the API (<https://github.com/NathanBarsoti8/dentist-control-api>)
 
 ## Instalação e Configuração para Desenvolvimento
@@ -33,7 +34,7 @@ Nathan Barsoti – [@nathanbarsoti_](https://twitter.com/...) – nathanbarsoti@
 
 ## Contribua
 
-1. Faça o _fork_ do projeto (<https://github.com/NathanBarsoti8/dentist-control-api>)
+1. Faça o _fork_ do projeto (<https://github.com/NathanBarsoti8/dentist-control-app>)
 2. Crie uma _branch_ para sua modificação (`git checkout -b feature/<feature>`)
 3. Faça o _commit_ (`git commit -am 'Add some feature'`)
 4. _Push_ (`git push origin feature/feature`)
