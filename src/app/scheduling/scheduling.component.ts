@@ -1,4 +1,4 @@
-import { Customer } from 'app/customer/models/customer.model';
+import { Customer } from './../customer/models/customer.model';
 import { DateConverterService } from 'app/shared/services/dateConverter.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmDialogData } from './../customer/models/confirm-dialog.model';
@@ -49,28 +49,21 @@ export class SchedulingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(x => this.getSchedules(x.page || 1))
-
     this.filterStartDate.setDate(this.today.getDate())
     this.filterFinishDate.setDate(this.today.getDate() + 30)
+
+    this.route.queryParams.subscribe(x => this.getSchedules(x.page || 1))
  
     this.getCustomers();
   }
 
-  getSchedules(page: number, customerId?: any): void {
-
-    console.warn('this.filterStartDate', this.filterStartDate);
-    console.warn('this.filterFinishDate', this.filterFinishDate);
-
+  getSchedules(page: number, customer?: Customer): void {
     let startDate = this.dateConverter.dateFormat(this.filterStartDate);
     let finishDate = this.dateConverter.dateFormat(this.filterFinishDate);
-    let customer = customerId != null ? customerId.id : ''
+    let customerId = customer != null ? customer.id : ''
 
-    console.log('startDate', startDate);
-    console.log('finishDate', finishDate);
-    
     this.spinner.show();
-    this._schedulingService.getAll(page, startDate, finishDate, customer)
+    this._schedulingService.getAll(page, startDate, finishDate, customerId)
       .then(result => {
         if (result) {
           this.pager = result.pager;
