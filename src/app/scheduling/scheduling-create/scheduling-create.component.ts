@@ -70,6 +70,7 @@ export class SchedulingCreateComponent implements OnInit {
     this.spinner.show();
     scheduling.date = this.dateConverter.formatStringManually(scheduling.date);
     scheduling.customerId = scheduling.customerId.id
+    scheduling.timeTable = this.dateConverter.formatHour(scheduling.timeTable);
 
     this._schedulingService.create(scheduling)
       .then(() => {
