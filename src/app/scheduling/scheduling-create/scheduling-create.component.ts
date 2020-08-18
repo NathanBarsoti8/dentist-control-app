@@ -7,10 +7,11 @@ import { SchedulingService } from './../scheduling.service';
 import { FormValidationMessages } from './../../shared/models/validation-messages.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DefaultInterface } from './../../shared/models/default-interface.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { Customer } from 'app/customer/models/customer.model';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-scheduling-create',
@@ -24,13 +25,16 @@ export class SchedulingCreateComponent implements OnInit {
   validation_messages: FormValidationMessages;
   customers: Array<Customer>;
   filteredCustomers: Observable<Array<string>> | Array<Customer> | Observable<Array<Customer>>; 
+  @ViewChild('showSchedules', { static: true }) showSchedules: TemplateRef<this>;
+  dialogRef: MatDialogRef<SchedulingCreateComponent>;
 
   constructor(private _schedulingService: SchedulingService,
     private formBuilder: FormBuilder,
     private router: Router,
     private spinner: NgxSpinnerService,
     private notification: NotificationService,
-    private dateConverter: DateConverterService) { }
+    private dateConverter: DateConverterService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.generateForm();
@@ -116,6 +120,15 @@ export class SchedulingCreateComponent implements OnInit {
 
   displayFn(customer?: Customer): string | undefined {
     return customer ? customer.name : undefined;
+  }
+
+  openSchedulesModal() {
+    this.dialogRef = this.dialog.open(this.showSchedules, {
+      panelClass: 'plans-form-dialog',
+      // data: {
+
+      // }
+    });
   }
 
 

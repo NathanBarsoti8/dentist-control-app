@@ -60,7 +60,7 @@ export class SchedulingComponent implements OnInit {
   getSchedules(page: number, customer?: Customer): void {
     let startDate = this.dateConverter.dateFormat(this.filterStartDate);
     let finishDate = this.dateConverter.dateFormat(this.filterFinishDate);
-    let customerId = customer != null ? customer.id : ''
+    let customerId = customer != null ? customer.id : null
 
     this.spinner.show();
     this._schedulingService.getAll(page, startDate, finishDate, customerId)
