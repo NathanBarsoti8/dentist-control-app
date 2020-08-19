@@ -95,4 +95,15 @@ export class SchedulingService {
     });
   }
 
+  getSchedulesByPeriod(): Promise<Array<Scheduling>> {
+    return new Promise<Array<Scheduling>>((resolve, reject) => {
+      this.httpClient.get(`${APPLICATION_API}/schedules`)
+        .subscribe((response: Array<Scheduling>) => {
+          resolve(response);
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    });
+  }
+
 }

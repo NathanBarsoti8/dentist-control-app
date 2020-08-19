@@ -1,4 +1,4 @@
-import { SchedulingDetails } from './../models/scheduling.model';
+import { SchedulingDetails, Scheduling } from './../models/scheduling.model';
 import { DateConverterService } from './../../shared/services/dateConverter.service';
 import { NotificationService } from './../../shared/notification/notification.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -122,13 +122,28 @@ export class SchedulingCreateComponent implements OnInit {
     return customer ? customer.name : undefined;
   }
 
-  openSchedulesModal() {
+  openSchedulesModal(data: Array<Scheduling>): void {
     this.dialogRef = this.dialog.open(this.showSchedules, {
       panelClass: 'plans-form-dialog',
-      // data: {
-
-      // }
+      data: {
+        schedules: data
+      }
     });
+  }
+
+  getSchedulesToModal(): void {
+    this.spinner.show();
+    this._schedulingService.getSchedulesByPeriod()
+      .then(result => {
+        if (result) {
+          this.openSchedulesModal(result);
+          this.spinner.hide();
+        }
+      })
+      .catch(() => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao carregar as consultas.', 'error');
+      });
   }
 
 
