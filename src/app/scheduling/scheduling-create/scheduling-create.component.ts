@@ -125,6 +125,7 @@ export class SchedulingCreateComponent implements OnInit {
 
   openSchedulesModal(): void {
     this.dialogRef = this.dialog.open(this.showSchedules, {
+      width: '500px',
       panelClass: 'plans-form-dialog'
     });
   }
