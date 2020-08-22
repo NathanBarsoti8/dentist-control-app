@@ -29,17 +29,6 @@ export class SchedulingCreateComponent implements OnInit {
   dialogRef: MatDialogRef<SchedulingCreateComponent>;
   schedulesToModal: Array<any>;
 
-  panels = [
-    {
-      title: "panel 1",
-      content: ["content 1"]
-    },
-    {
-      title: "panel 2",
-      content: ["content 2", "contenttttt 2"]
-    }
-  ];
-
   constructor(private _schedulingService: SchedulingService,
     private formBuilder: FormBuilder,
     private router: Router,
@@ -144,10 +133,6 @@ export class SchedulingCreateComponent implements OnInit {
     this.spinner.show();
     this._schedulingService.getByPeriod()
       .then(result => {
-
-        console.log('result', result.schedules);
-        console.log('panel', this.panels)
-
         if (result) {
           this.schedulesToModal = result.schedules;
           this.openSchedulesModal();
