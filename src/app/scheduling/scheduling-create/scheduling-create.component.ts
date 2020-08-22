@@ -27,6 +27,18 @@ export class SchedulingCreateComponent implements OnInit {
   filteredCustomers: Observable<Array<string>> | Array<Customer> | Observable<Array<Customer>>; 
   @ViewChild('showSchedules', { static: true }) showSchedules: TemplateRef<this>;
   dialogRef: MatDialogRef<SchedulingCreateComponent>;
+  schedulesToModal: Array<any>;
+
+  panels = [
+    {
+      title: "panel 1",
+      content: ["content 1"]
+    },
+    {
+      title: "panel 2",
+      content: ["content 2", "contenttttt 2"]
+    }
+  ];
 
   constructor(private _schedulingService: SchedulingService,
     private formBuilder: FormBuilder,
@@ -122,21 +134,23 @@ export class SchedulingCreateComponent implements OnInit {
     return customer ? customer.name : undefined;
   }
 
-  openSchedulesModal(data: Array<Scheduling>): void {
+  openSchedulesModal(): void {
     this.dialogRef = this.dialog.open(this.showSchedules, {
-      panelClass: 'plans-form-dialog',
-      data: {
-        schedules: data
-      }
+      panelClass: 'plans-form-dialog'
     });
   }
 
   getSchedulesToModal(): void {
     this.spinner.show();
-    this._schedulingService.getSchedulesByPeriod()
+    this._schedulingService.getByPeriod()
       .then(result => {
+
+        console.log('result', result.schedules);
+        console.log('panel', this.panels)
+
         if (result) {
-          this.openSchedulesModal(result);
+          this.schedulesToModal = result.schedules;
+          this.openSchedulesModal();
           this.spinner.hide();
         }
       })
