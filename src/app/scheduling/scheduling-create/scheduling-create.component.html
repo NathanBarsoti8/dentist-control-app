@@ -100,7 +100,7 @@
 <ng-template #showSchedules>
     <div class="row title-form text-primary">
         <div class="col-md-12">
-            <h4 mat-mat-dialog-title><b><i>Consultas</i></b></h4>
+            <h4 mat-mat-dialog-title><b><i>{{ renderModalTitle() }}</i></b></h4>
         </div>
     </div>
     <p></p>
@@ -108,7 +108,7 @@
         <mat-accordion>
             <mat-expansion-panel *ngFor="let schedule of schedulesToModal">
                 <mat-expansion-panel-header>
-                    {{schedule.date}}
+                    <b>{{schedule.date}}</b>
                 </mat-expansion-panel-header>
                 {{schedule.timeTables}}
             </mat-expansion-panel>

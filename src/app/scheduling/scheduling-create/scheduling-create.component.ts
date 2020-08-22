@@ -12,6 +12,7 @@ import { Customer } from 'app/customer/models/customer.model';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-scheduling-create',
@@ -128,6 +129,15 @@ export class SchedulingCreateComponent implements OnInit {
       width: '500px',
       panelClass: 'plans-form-dialog'
     });
+  }
+
+  renderModalTitle(): string {
+
+    let date = moment(new Date().setDate(new Date().getDate() + 30)).format('YYYY-MM-DD');
+    let dateLess15 = moment(new Date(date).setDate(new Date(date).getDate() - 15)).format('DD/MM/YYYY');
+    let dateMore15 = moment(new Date(date).setDate(new Date(date).getDate() + 15)).format('DD/MM/YYYY');
+
+    return `Consultas do dia ${dateLess15} ao dia ${dateMore15}`;
   }
 
   getSchedulesToModal(): void {
