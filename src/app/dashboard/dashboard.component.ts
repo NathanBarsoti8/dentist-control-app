@@ -1,7 +1,8 @@
-import { Customer } from 'app/customer/models/customer.model';
+import { Customers } from './models/birthdays.model';
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,21 +11,30 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class DashboardComponent implements OnInit {
 
-  customers: Array<Customer>;
+  displayedColumns = ['name', 'birthDate', 'icon'];
+  customersBirthday: Array<Customers>;
+  userDate: number = new Date().getDate();
 
   constructor(private _dashboardService: DashboardService,
     private spinner: NgxSpinnerService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getMonthBirthdays();
   }
 
-  getMonthBirthdays(): void {
+  getMonthBirthdays() {
     this.spinner.show();
     this._dashboardService.getMonthBirthdays()
       .then(result => {
         if (result) {
-          this.customers = result
+          this.customersBirthday = result.customers;
+          this.customersBirthday.forEach(x => {
+            x.day = new Date(x.birthDate).getDate() + 1;
+            x.birthDate = moment(x.birthDate).format("DD/MM/YYYY");
+          });
+        }
+        else {
+          this.customersBirthday = undefined;
         }
         this.spinner.hide();
       })
