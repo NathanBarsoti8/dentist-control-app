@@ -1,64 +1,158 @@
 <div class="main-content">
   <div class="container-fluid">
-      <div class="row">
-          <div class="col-lg-6 col-md-12">
-              <div class="card">
-                  <div class="card-header card-header-warning">
-                      <h3 class="card-title">Aniversariantes do mês</h3>
-                  </div>
-                  <div class="card-body table-responsive">
-                    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" 
-                        type="triangle-skew-spin" [fullScreen]="true">
-                        <p style="color: white" > Carregando... </p>> 
-                    </ngx-spinner>
-                        <mat-table [dataSource]="customersBirthday" class="table" *ngIf="customersBirthday">
-                            <ng-container matColumnDef="name">
-                                <mat-header-cell *matHeaderCellDef>
-                                    <b style="font-size: medium;">Nome</b>
-                                </mat-header-cell>
-                                <mat-cell *matCellDef="let customer">
-                                    <p class="text-trucate align-cell">{{customer.name}}</p>
-                                </mat-cell>
-                            </ng-container>
 
-                            <ng-container matColumnDef="birthDate">
-                                <mat-header-cell *matHeaderCellDef>
-                                    <b style="font-size: medium;">Data de nascimento</b>
-                                </mat-header-cell>
-                                <mat-cell *matCellDef="let customer">
-                                    <p class="text-trucate align-cell">{{customer.birthDate}}</p>
-                                </mat-cell>
-                            </ng-container>
+    <div class="row">
 
-                            <ng-container matColumnDef="icon">
-                                <mat-header-cell *matHeaderCellDef>
-                                    <b style="font-size: medium;"></b>
-                                </mat-header-cell>
-                                <mat-cell *matCellDef="let customer">
-                                    <img *ngIf="customer.day == userDate" class="birthdayCake" src="../../assets/img/cake.jpg">
-                                </mat-cell>
-                            </ng-container>
+        <!--SCHEDULES OF TODAY-->
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-warning">
+                    <h3 class="card-title">Consultas de hoje</h3>
+                </div>
+                <div class="card-body table-responsive">
+                  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" 
+                      type="triangle-skew-spin" [fullScreen]="false">
+                      <p style="color: white" > Carregando... </p>> 
+                  </ngx-spinner>
+                      <mat-table [dataSource]="todaySchedules" class="table" *ngIf="todaySchedules">
+                          <ng-container matColumnDef="timeTable">
+                              <mat-header-cell *matHeaderCellDef>
+                                  <b style="font-size: medium;">Horário</b>
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let schedule">
+                                  <p class="text-trucate align-cell">{{schedule.timeTable}}</p>
+                              </mat-cell>
+                          </ng-container>
 
-                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                          <ng-container matColumnDef="customer">
+                              <mat-header-cell *matHeaderCellDef>
+                                  <b style="font-size: medium;">Cliente</b>
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let schedule">
+                                  <p class="text-trucate align-cell">{{schedule.customer.name}}</p>
+                              </mat-cell>
+                          </ng-container>
 
-                            <mat-row class="pointer" *matRowDef="let customer; columns: displayedColumns"></mat-row>
-                        </mat-table>
+                          <mat-header-row *matHeaderRowDef="displayedColumnsSchedules"></mat-header-row>
 
-                        <!-- <div *ngIf="!customersBirthday || customersBirthday.length == 0" style="text-align: center;">
-                            <span>
-                                Nenhum dado encontrado.
-                            </span>
-                        </div> -->
+                          <mat-row class="pointer" *matRowDef="let schedule; columns: displayedColumnsSchedules"></mat-row>
+                      </mat-table>
 
-                  </div>
-              </div>
-          </div>
+                      <div *ngIf="!todaySchedules || todaySchedules.length == 0" style="text-align: center;">
+                          <span>
+                              Nenhum dado encontrado.
+                          </span>
+                      </div>
+                </div>
+            </div>
+        </div>
 
+        <!--SCHEDULES OF TOMORROW-->
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-warning">
+                    <h3 class="card-title">Consultas de amanhã</h3>
+                </div>
+                <div class="card-body table-responsive">
+                  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" 
+                      type="triangle-skew-spin" [fullScreen]="false">
+                      <p style="color: white" > Carregando... </p>> 
+                  </ngx-spinner>
+                      <mat-table [dataSource]="tomorrowSchedules" class="table" *ngIf="tomorrowSchedules">
+                          <ng-container matColumnDef="timeTable">
+                              <mat-header-cell *matHeaderCellDef>
+                                  <b style="font-size: medium;">Horário</b>
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let schedule">
+                                  <p class="text-trucate align-cell">{{schedule.timeTable}}</p>
+                              </mat-cell>
+                          </ng-container>
 
+                          <ng-container matColumnDef="customer">
+                              <mat-header-cell *matHeaderCellDef>
+                                  <b style="font-size: medium;">Cliente</b>
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let schedule">
+                                  <p class="text-trucate align-cell">{{schedule.customer.name}}</p>
+                              </mat-cell>
+                          </ng-container>
 
+                          <mat-header-row *matHeaderRowDef="displayedColumnsSchedules"></mat-header-row>
 
+                          <mat-row class="pointer" *matRowDef="let schedule; columns: displayedColumnsSchedules"></mat-row>
+                      </mat-table>
 
-          <div class="col-lg-6 col-md-12">
+                      <div *ngIf="!tomorrowSchedules || tomorrowSchedules.length == 0" style="text-align: center;">
+                          <span>
+                              Nenhum dado encontrado.
+                          </span>
+                      </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+  
+        <!--BIRTHDAYS-->
+        <div class="col-lg-6 col-md-12">
+            <div class="card">
+                <div class="card-header card-header-warning">
+                    <h3 class="card-title">Aniversariantes do mês</h3>
+                </div>
+                <div class="card-body table-responsive">
+                  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" 
+                      type="triangle-skew-spin" [fullScreen]="false">
+                      <p style="color: white" > Carregando... </p>> 
+                  </ngx-spinner>
+                      <mat-table [dataSource]="customersBirthday" class="table" *ngIf="customersBirthday">
+                          <ng-container matColumnDef="name">
+                              <mat-header-cell *matHeaderCellDef>
+                                  <b style="font-size: medium;">Nome</b>
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let customer">
+                                  <p class="text-trucate align-cell">{{customer.name}}</p>
+                              </mat-cell>
+                          </ng-container>
+
+                          <ng-container matColumnDef="birthDate">
+                              <mat-header-cell *matHeaderCellDef>
+                                  <b style="font-size: medium;">Data de nascimento</b>
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let customer">
+                                  <p class="text-trucate align-cell">{{customer.birthDate}}</p>
+                              </mat-cell>
+                          </ng-container>
+
+                          <ng-container matColumnDef="icon">
+                              <mat-header-cell *matHeaderCellDef>
+                                  <b style="font-size: medium;"></b>
+                              </mat-header-cell>
+                              <mat-cell *matCellDef="let customer">
+                                  <img *ngIf="customer.day == userDate" class="birthdayCake" src="../../assets/img/cake.jpg">
+                              </mat-cell>
+                          </ng-container>
+
+                          <mat-header-row *matHeaderRowDef="displayedColumnsBirthDay"></mat-header-row>
+
+                          <mat-row class="pointer" *matRowDef="let customer; columns: displayedColumnsBirthDay"></mat-row>
+                      </mat-table>
+
+                      <div *ngIf="!customersBirthday || customersBirthday.length == 0" style="text-align: center;">
+                          <span>
+                              Nenhum dado encontrado.
+                          </span>
+                      </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+          <!-- <div class="col-lg-6 col-md-12">
             <div class="card">
                 <div class="card-header card-header-warning">
                     <h4 class="card-title">Employees Stats</h4>
@@ -101,7 +195,11 @@
                     </table>
                 </div>
             </div>
-        </div>
-      </div>
+        </div> -->
+
+
+
+
+      
   </div>
 </div>

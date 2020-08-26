@@ -12,7 +12,8 @@ import { SchedulesByDay } from './models/schedules.model';
 })
 export class DashboardComponent implements OnInit {
 
-  displayedColumns = ['name', 'birthDate', 'icon'];
+  displayedColumnsBirthDay = ['name', 'birthDate', 'icon'];
+  displayedColumnsSchedules = ['timeTable', 'customer'];
   customersBirthday: Array<Customers>;
   userDate: number = new Date().getDate();
   todaySchedules: Array<SchedulesByDay>;
