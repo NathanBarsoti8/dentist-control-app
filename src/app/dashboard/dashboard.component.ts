@@ -57,8 +57,6 @@ export class DashboardComponent implements OnInit {
       .then(result => {
         if (result) {
           this.todaySchedules = result;
-
-          console.log(result)
         }
         else {
           this.todaySchedules = undefined;
