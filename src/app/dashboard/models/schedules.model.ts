@@ -4,4 +4,7 @@ export interface SchedulesByDay {
     Customer: {
         name: string;
     }
+    ServiceType: {
+        name: string;
+    }
 }
