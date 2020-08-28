@@ -3,6 +3,11 @@
     width: 35px;
 }
 
+.wpp {
+    min-width: 35px;
+    width: 35px;
+}
+
 .align-cell {
     margin-top: 10px;
 }
