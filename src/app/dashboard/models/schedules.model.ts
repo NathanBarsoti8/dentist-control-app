@@ -9,3 +9,9 @@ export interface SchedulesByDay {
         name: string;
     }
 }
+
+export interface WppLink {
+    wppLink: {
+        link: string;
+    }
+}
