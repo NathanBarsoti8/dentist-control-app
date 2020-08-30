@@ -33,4 +33,15 @@ export class DashboardService {
     });
   }
 
+  sendWppMessage(obj: SchedulesByDay): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      this.httpClient.post(`${APPLICATION_API}/dashboard/schedules/whatsapp`, obj)
+        .subscribe((response: string) => {
+          resolve(response);
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    });
+  }
+
 }

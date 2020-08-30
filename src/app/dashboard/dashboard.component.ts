@@ -99,4 +99,9 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  openWpp(value: SchedulesByDay): void {
+
+    console.log('value', value);
+  }
+
 }

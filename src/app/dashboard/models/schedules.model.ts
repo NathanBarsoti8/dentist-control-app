@@ -3,6 +3,7 @@ export interface SchedulesByDay {
     timeTable: string;
     Customer: {
         name: string;
+        id: string;
     }
     ServiceType: {
         name: string;

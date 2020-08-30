@@ -44,10 +44,10 @@
 
                             <ng-container matColumnDef="whatsapp">
                                 <mat-header-cell *matHeaderCellDef>
-                                    <b style="font-size: medium;">Tipo de Serviço</b>
+                                    <b style="font-size: medium;"></b>
                                 </mat-header-cell>
                                 <mat-cell *matCellDef="let schedule">
-                                    <p class="text-trucate align-cell">{{schedule.ServiceType.name}}</p>
+                                    <p class="text-trucate align-cell"></p>
                                 </mat-cell>
                             </ng-container>
 
@@ -112,7 +112,7 @@
                                 <mat-cell *matCellDef="let schedule">
                                     <img
                                     class="wpp" src="../../assets/img/wpp.png" type="button"
-                                    
+                                    (click)="openWpp(schedule)"
                                     >
                                     <!--(click)="test()"-->
                                 </mat-cell>
