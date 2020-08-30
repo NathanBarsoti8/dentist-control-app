@@ -13,12 +13,14 @@ import { SchedulesByDay } from './models/schedules.model';
 export class DashboardComponent implements OnInit {
 
   displayedColumnsBirthDay = ['name', 'birthDate', 'icon'];
-  displayedColumnsSchedules = ['timeTable', 'customer', 'serviceType'];
+  displayedColumnsSchedules = ['timeTable', 'customer', 'serviceType', 'whatsapp'];
   customersBirthday: Array<Customers>;
   userDate: number = new Date().getDate();
   todaySchedules: Array<SchedulesByDay>;
   tomorrowSchedules: Array<SchedulesByDay>;
   date: Date = new Date();
+  businessDay: string;
+  nextBusinessDay: string;
 
   constructor(private _dashboardService: DashboardService,
     private spinner: NgxSpinnerService) { }
@@ -52,6 +54,7 @@ export class DashboardComponent implements OnInit {
 
   getTodaySchedules(): void {
     let today = moment(this.date).format("YYYY-MM-DD");
+    this.businessDay = moment(today).format("DD/MM/YYYY");
     this.spinner.show();
     this._dashboardService.getSchedulesByDay(today)
       .then(result => {
@@ -70,6 +73,7 @@ export class DashboardComponent implements OnInit {
 
   getTomorrowSchedules(): void {
     let tomorrow = moment(this.date.setDate(this.date.getDate() + 1)).format("YYYY-MM-DD");
+    this.nextBusinessDay = moment(tomorrow).format("DD/MM/YYYY");
     this.spinner.show();
     this._dashboardService.getSchedulesByDay(tomorrow)
       .then(result => {
@@ -84,6 +88,15 @@ export class DashboardComponent implements OnInit {
       .catch(() => {
         this.spinner.hide();
       });
+  }
+
+  renderTitle(param: string): string {
+    if (param === 'today' || param === 'TODAY') {
+      return `Consultas de hoje (${this.businessDay})`
+    }
+    else {
+      return `Consultas do próximo dia útil (${this.nextBusinessDay})`
+    }
   }
 
 }

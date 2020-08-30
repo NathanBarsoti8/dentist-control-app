@@ -7,7 +7,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="card">
                     <div class="card-header card-header-warning">
-                        <h3 class="card-title">Consultas de hoje</h3>
+                        <h3 class="card-title"> {{ renderTitle('today') }} </h3>
                     </div>
                     <div class="card-body table-responsive">
                         <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="triangle-skew-spin"
@@ -42,6 +42,15 @@
                                 </mat-cell>
                             </ng-container>
 
+                            <ng-container matColumnDef="whatsapp">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <b style="font-size: medium;">Tipo de Serviço</b>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let schedule">
+                                    <p class="text-trucate align-cell">{{schedule.ServiceType.name}}</p>
+                                </mat-cell>
+                            </ng-container>
+
                             <mat-header-row *matHeaderRowDef="displayedColumnsSchedules"></mat-header-row>
 
                             <mat-row class="pointer" *matRowDef="let schedule; columns: displayedColumnsSchedules">
@@ -61,7 +70,7 @@
             <div class="col-lg-6 col-md-12">
                 <div class="card">
                     <div class="card-header card-header-warning">
-                        <h3 class="card-title">Consultas de amanhã</h3>
+                        <h3 class="card-title"> {{ renderTitle('tomorrow') }} </h3>
                     </div>
                     <div class="card-body table-responsive">
                         <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#fff" type="triangle-skew-spin"
@@ -93,6 +102,19 @@
                                 </mat-header-cell>
                                 <mat-cell *matCellDef="let schedule">
                                     <p class="text-trucate align-cell">{{schedule.ServiceType.name}}</p>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="whatsapp">
+                                <mat-header-cell *matHeaderCellDef>
+                                    <b style="font-size: medium;"></b>
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let schedule">
+                                    <img
+                                    class="wpp" src="../../assets/img/wpp.png" type="button"
+                                    
+                                    >
+                                    <!--(click)="test()"-->
                                 </mat-cell>
                             </ng-container>
 
