@@ -1,3 +1,4 @@
+import { NotificationService } from './../shared/notification/notification.service';
 import { Customers } from './models/birthdays.model';
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
@@ -23,7 +24,8 @@ export class DashboardComponent implements OnInit {
   nextBusinessDay: string;
 
   constructor(private _dashboardService: DashboardService,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService,
+    private notification: NotificationService) { }
 
   ngOnInit(): void {
     this.getMonthBirthdays();
@@ -100,8 +102,20 @@ export class DashboardComponent implements OnInit {
   }
 
   openWpp(value: SchedulesByDay): void {
+    value.date = moment(value.date).format("DD/MM/YYYY");
 
-    console.log('value', value);
+    this.spinner.show();
+    this._dashboardService.sendWppMessage(value)
+      .then(result => {
+        if (result) {
+          window.open('')
+        }
+        this.spinner.hide();
+      })
+      .catch(() => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao tentar enviar mensagem.', 'error');
+      })
   }
 
 }
