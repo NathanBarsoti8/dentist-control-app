@@ -1,3 +1,4 @@
+import { DateConverterService } from 'app/shared/services/dateConverter.service';
 import { NotificationService } from './../shared/notification/notification.service';
 import { Customers } from './models/birthdays.model';
 import { Component, OnInit } from '@angular/core';
@@ -25,7 +26,8 @@ export class DashboardComponent implements OnInit {
 
   constructor(private _dashboardService: DashboardService,
     private spinner: NgxSpinnerService,
-    private notification: NotificationService) { }
+    private notification: NotificationService,
+    private dateConverter: DateConverterService) { }
 
   ngOnInit(): void {
     this.getMonthBirthdays();
@@ -93,7 +95,7 @@ export class DashboardComponent implements OnInit {
   }
 
   renderTitle(param: string): string {
-    if (param === 'today' || param === 'TODAY') {
+    if (param.toLowerCase() === 'today') {
       return `Consultas de hoje (${this.businessDay})`
     }
     else {
@@ -102,13 +104,14 @@ export class DashboardComponent implements OnInit {
   }
 
   openWpp(value: SchedulesByDay): void {
-    value.date = moment(value.date).format("DD/MM/YYYY");
+    let date = value.date;
+    date = this.dateConverter.toLocaleString(date);
 
     this.spinner.show();
-    this._dashboardService.sendWppMessage(value)
+    this._dashboardService.sendWppMessage(value, date)
       .then(result => {
         if (result) {
-          window.open('')
+          window.open(result.wppLink)
         }
         this.spinner.hide();
       })
