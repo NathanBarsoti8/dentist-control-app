@@ -2,7 +2,7 @@ import { CustomerBirthday } from './models/birthdays.model';
 import { APPLICATION_API } from './../app.api';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SchedulesByDay } from './models/schedules.model';
+import { SchedulesByDay, WppLink } from './models/schedules.model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +33,10 @@ export class DashboardService {
     });
   }
 
-  sendWppMessage(obj: SchedulesByDay): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      this.httpClient.post(`${APPLICATION_API}/dashboard/schedules/whatsapp`, obj)
-        .subscribe((response: string) => {
+  sendWppMessage(obj: SchedulesByDay, date: string): Promise<WppLink> {
+    return new Promise<WppLink>((resolve, reject) => {
+      this.httpClient.post(`${APPLICATION_API}/dashboard/schedules/whatsapp?date=${date}`, obj)
+        .subscribe((response: WppLink) => {
           resolve(response);
         }, reject);
     }).catch(error => {
