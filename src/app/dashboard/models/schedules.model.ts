@@ -11,7 +11,5 @@ export interface SchedulesByDay {
 }
 
 export interface WppLink {
-    wppLink: {
-        link: string;
-    }
+    wppLink: string;
 }
