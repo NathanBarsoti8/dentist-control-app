@@ -33,9 +33,9 @@ export class DashboardService {
     });
   }
 
-  sendWppMessage(obj: SchedulesByDay, date: string): Promise<WppLink> {
+  sendWppMessage(obj: SchedulesByDay | CustomerBirthday, option: string, date?: string): Promise<WppLink> {
     return new Promise<WppLink>((resolve, reject) => {
-      this.httpClient.post(`${APPLICATION_API}/dashboard/whatsapp?date=${date}`, obj)
+      this.httpClient.post(`${APPLICATION_API}/dashboard/whatsapp?option=${option}&date=${date}`, obj)
         .subscribe((response: WppLink) => {
           resolve(response);
         }, reject);
