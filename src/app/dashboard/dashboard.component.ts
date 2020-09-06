@@ -1,6 +1,6 @@
 import { DateConverterService } from 'app/shared/services/dateConverter.service';
 import { NotificationService } from './../shared/notification/notification.service';
-import { Customers } from './models/birthdays.model';
+import { Customers, CustomerBirthday } from './models/birthdays.model';
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -33,6 +33,12 @@ export class DashboardComponent implements OnInit {
     this.getMonthBirthdays();
     this.getTodaySchedules();
     this.getTomorrowSchedules();
+
+
+    console.log('date', new Date());
+
+    console.log('date of the week', new Date().getDay())
+
   }
 
   getMonthBirthdays(): void {
@@ -76,6 +82,16 @@ export class DashboardComponent implements OnInit {
   }
 
   getTomorrowSchedules(): void {
+
+    let day = new Date().getDay();
+
+    if (day == 5 /*friday*/) {
+
+    }
+    else {
+
+    }
+
     let tomorrow = moment(this.date.setDate(this.date.getDate() + 1)).format("YYYY-MM-DD");
     this.nextBusinessDay = moment(tomorrow).format("DD/MM/YYYY");
     this.spinner.show();
@@ -103,12 +119,27 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  openWpp(value: SchedulesByDay): void {
+  openWppSchedule(value: SchedulesByDay): void {
     let date = value.date;
     date = this.dateConverter.toLocaleString(date);
 
     this.spinner.show();
-    this._dashboardService.sendWppMessage(value, date)
+    this._dashboardService.sendWppMessage(value, 'schedule', date)
+      .then(result => {
+        if (result) {
+          window.open(result.wppLink)
+        }
+        this.spinner.hide();
+      })
+      .catch(() => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao tentar enviar mensagem.', 'error');
+      })
+  }
+
+  openWppBirthday(value: CustomerBirthday): void {
+    this.spinner.show();
+    this._dashboardService.sendWppMessage(value, 'birthday')
       .then(result => {
         if (result) {
           window.open(result.wppLink)

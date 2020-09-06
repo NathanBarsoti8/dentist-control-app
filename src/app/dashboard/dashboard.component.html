@@ -110,11 +110,10 @@
                                     <b style="font-size: medium;"></b>
                                 </mat-header-cell>
                                 <mat-cell *matCellDef="let schedule">
-                                    <img
+                                    <img matTooltip="Confirmar consulta pelo WhatsApp"
                                     class="wpp" src="../../assets/img/wpp.png" type="button"
-                                    (click)="openWpp(schedule)"
+                                    (click)="openWppSchedule(schedule)"
                                     >
-                                    <!--(click)="test()"-->
                                 </mat-cell>
                             </ng-container>
 
@@ -173,8 +172,16 @@
                                     <b style="font-size: medium;"></b>
                                 </mat-header-cell>
                                 <mat-cell *matCellDef="let customer">
-                                    <img *ngIf="customer.day == userDate" class="birthdayCake"
-                                        src="../../assets/img/cake.jpg">
+                                    <div>
+                                        <img *ngIf="customer.day == userDate" class="birthdayCake"
+                                            src="../../assets/img/cake.jpg">
+                                    </div>
+                                    <div>
+                                        <img matTooltip="Mandar parabéns pelo WhatsApp"
+                                        class="wpp" src="../../assets/img/wpp.png" type="button"
+                                        (click)="openWppBirthday(customer)"
+                                        >
+                                    </div>
                                 </mat-cell>
                             </ng-container>
 
