@@ -4,7 +4,7 @@ import { DefaultInterface } from 'app/shared/models/default-interface.model';
 import { FormValidationMessages } from '../../shared/models/validation-messages.model';
 import { CustomerService } from './../customer.service';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CpfValidator } from 'app/shared/custom/cpf-validator';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -51,9 +51,7 @@ export class CustomerCreateComponent implements OnInit {
       sex: ['', [Validators.required]],
       email: [''],
       job: ['', [Validators.required]],
-      phoneType: ['', [Validators.required]],
-      ddd: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(3)]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]],
+      phones: this.formBuilder.array([this.newPhone()]),
       zipCode: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
       address: ['', [Validators.required]],
       addressNumber: ['', [Validators.minLength(3), Validators.maxLength(5), Validators.pattern('[0-9]*')]],
@@ -62,6 +60,26 @@ export class CustomerCreateComponent implements OnInit {
       city: ['', [Validators.required]],
       state: ['', [Validators.required]]
     });
+  }
+
+  get phones(): FormArray {
+    return this.addCustomerForm.get('phones') as FormArray;
+  }
+
+  newPhone(): FormGroup {
+    return this.formBuilder.group({
+      phoneType: '', 
+      ddd: '',
+      phoneNumber: ''
+    })
+  }
+
+  addPhones(): void {
+    this.phones.push(this.newPhone());
+  }
+
+  removePhone(i: number): void {
+    this.phones.removeAt(i);
   }
 
   setValidationMessages(): void {

@@ -11,9 +11,7 @@ export interface Customer {
 
 export interface CustomerDetails extends Customer {
     phoneId: string;
-    phoneNumber: string;
-    DDD: string;
-    phoneType: string;
+    phones: Array<Phone>;
     addressId: string;
     zipCode: number;
     address: string;
@@ -22,4 +20,10 @@ export interface CustomerDetails extends Customer {
     complement: string;
     city: string;
     state: string;
+}
+
+export interface Phone {
+    phoneType: string;
+    DDD: string;
+    phoneNumber: string;
 }
