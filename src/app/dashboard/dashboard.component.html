@@ -177,7 +177,7 @@
                                             src="../../assets/img/cake.jpg">
                                     </div>
                                     <div>
-                                        <img matTooltip="Mandar parabéns pelo WhatsApp"
+                                        <img *ngIf="customer.day == userDate" matTooltip="Mandar parabéns pelo WhatsApp"
                                         class="wpp" src="../../assets/img/wpp.png" type="button"
                                         (click)="openWppBirthday(customer)"
                                         >
