@@ -12,6 +12,11 @@
                     </ngx-spinner>
                     <div class="card-body">
                         <form [formGroup]="customerDetailsForm">
+                            <div class="row title-form text-primary">
+                                <div class="col-md-12">
+                                    <h5><b><i>Informações Pessoais</i></b></h5>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
@@ -60,32 +65,62 @@
                                     </mat-form-field>
                                 </div>
                             </div>
+                            <div class="row title-form text-primary">
+                                <div class="col-md-12">
+                                    <h5><b><i>Telefone</i></b></h5>
+                                </div>
+                            </div>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <mat-form-field class="example-full-width">
-                                        <mat-label>Tipo de Telefone</mat-label>
-                                        <mat-select formControlName="phoneType" (selectionChange)="getPhoneType()" required>
-                                            <mat-option *ngFor="let option of phoneTypes" [value]="option.id">{{ option.name }}</mat-option>
-                                        </mat-select>
-                                        <mat-error *ngFor="let validation of validation_messages.generic">
-                                            <span *ngIf="customerDetailsForm.get('phoneType').dirty || customerDetailsForm.get('phoneType').touched
-                                                && customerDetailsForm.get('phoneType').hasError(validation.type)">
-                                                {{ validation.message }}
-                                            </span>
-                                        </mat-error>
-                                    </mat-form-field>
+                                <div class="col-md-11">
+                                    <div formArrayName="phones">
+                                        <div *ngFor="let item of phones.controls; let i=index">
+                                            <div [formGroupName]="i">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <mat-form-field>
+                                                            <mat-label>Tipo de Telefone</mat-label>
+                                                            <mat-select formControlName="phoneType" (selectionChange)="getPhoneType()" required>
+                                                                <mat-option *ngFor="let option of phoneTypes" [value]="option.id">{{ option.name }}</mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <mat-form-field class="example-full-width">
+                                                            <mat-label>DDD</mat-label>
+                                                            <input matInput type="text" mask="00" maxlength="2" formControlName="ddd" required>
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-md-5">
+                                                        <mat-form-field class="example-full-width">
+                                                            <mat-label>Número do Telefone</mat-label>
+                                                            <input matInput type="text" mask="00000-0000" maxlength="10" formControlName="phoneNumber" required>
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-md-1" class="example-full-width">
+                                                        <a type="button" (click)="removePhone(i)" matTooltip="Remover telefone">
+                                                            <mat-icon>delete</mat-icon>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <mat-form-field class="example-full-width">
-                                        <mat-label>DDD</mat-label>
-                                        <input matInput type="text" mask="00" maxlength="2" formControlName="ddd" required>
-                                    </mat-form-field>
+                                <div class="col-md-1">
+                                    <a type="button" (click)="addPhones()" matTooltip="Adicionar telefone">
+                                        <mat-icon>add_circle</mat-icon>
+                                    </a>  
                                 </div>
-                                <div class="col-md-7">
-                                    <mat-form-field class="example-full-width">
-                                        <mat-label>Número do Telefone</mat-label>
-                                        <input matInput type="text" mask="00000-0000" maxlength="10" formControlName="phoneNumber" required>
-                                    </mat-form-field>
+                            </div>
+
+
+                            <div class="row title-form text-primary">
+                                <div class="col-md-12">
+                                    <h5><b><i>Endereço</i></b></h5>
                                 </div>
                             </div>
                             <div class="row">
