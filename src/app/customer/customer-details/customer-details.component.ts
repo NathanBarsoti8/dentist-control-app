@@ -5,7 +5,7 @@ import { CustomerService } from './../customer.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CustomerDetails } from '../models/customer.model';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import * as moment from 'moment';
 import { CpfValidator } from 'app/shared/custom/cpf-validator';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -60,9 +60,7 @@ export class CustomerDetailsComponent implements OnInit {
       isActive: [''],
       email: [''],
       job: ['', [Validators.required]],
-      phoneType: ['', [Validators.required]],
-      ddd: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(3)]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]],
+      phones: this.formBuilder.array([]),
       zipCode: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8)]],
       address: ['', [Validators.required]],
       addressNumber: ['', [Validators.minLength(3), Validators.maxLength(5), Validators.pattern('[0-9]*')]],
@@ -73,29 +71,50 @@ export class CustomerDetailsComponent implements OnInit {
     });
   }
 
+  get phones(): FormArray {
+    return this.customerDetailsForm.get('phones') as FormArray;
+  }
+
+  newPhone(): FormGroup {
+    return this.formBuilder.group({
+      typeId: '', 
+      ddd: '',
+      phoneNumber: ''
+    })
+  }
+
+  addPhones(): void {
+    this.phones.push(this.newPhone());
+  }
+
+  removePhone(i: number): void {
+    this.phones.removeAt(i);
+  }
+
   populateForm(customer: CustomerDetails): void {
     if (customer) {
 
-      customer[0].birthDate = moment(customer[0].birthDate).format("DD/MM/YYYY");
+      for (let i = 0; i < customer.phones.length; i++) {
+        this.phones.push(this.newPhone());
+      }
+      
+      customer.birthDate = moment(customer.birthDate).format("DD/MM/YYYY");
 
-      this.customerDetailsForm.patchValue(customer[0]);
-      this.customerDetailsForm.get('name').setValue(customer[0].name);
-      this.customerDetailsForm.get('cpf').setValue(customer[0].cpf);
-      this.customerDetailsForm.get('birthDate').setValue(customer[0].birthDate);
-      this.customerDetailsForm.get('sex').setValue(customer[0].sex);
-      this.customerDetailsForm.get('email').setValue(customer[0].email);
-      this.customerDetailsForm.get('job').setValue(customer[0].job);
-      this.customerDetailsForm.get('isActive').setValue(customer[0].isActive);
-      this.customerDetailsForm.get('phoneType').setValue(customer[0].phoneTypeId);
-      this.customerDetailsForm.get('ddd').setValue(customer[0].DDD);
-      this.customerDetailsForm.get('phoneNumber').setValue(customer[0].phoneNumber);
-      this.customerDetailsForm.get('zipCode').setValue(customer[0].zipCode);
-      this.customerDetailsForm.get('address').setValue(customer[0].address);
-      this.customerDetailsForm.get('addressNumber').setValue(customer[0].addressNumber);
-      this.customerDetailsForm.get('neighborhood').setValue(customer[0].neighborhood);
-      this.customerDetailsForm.get('complement').setValue(customer[0].complement);
-      this.customerDetailsForm.get('city').setValue(customer[0].city);
-      this.customerDetailsForm.get('state').setValue(customer[0].state);
+      this.customerDetailsForm.patchValue(customer);
+      this.customerDetailsForm.get('name').setValue(customer.name);
+      this.customerDetailsForm.get('cpf').setValue(customer.cpf);
+      this.customerDetailsForm.get('birthDate').setValue(customer.birthDate);
+      this.customerDetailsForm.get('sex').setValue(customer.sex);
+      this.customerDetailsForm.get('email').setValue(customer.email);
+      this.customerDetailsForm.get('job').setValue(customer.job);
+      this.customerDetailsForm.get('isActive').setValue(customer.isActive);
+      this.customerDetailsForm.get('zipCode').setValue(customer.address.zipCode);
+      this.customerDetailsForm.get('address').setValue(customer.address.address);
+      this.customerDetailsForm.get('addressNumber').setValue(customer.address.addressNumber);
+      this.customerDetailsForm.get('neighborhood').setValue(customer.address.neighborhood);
+      this.customerDetailsForm.get('complement').setValue(customer.address.complement);
+      this.customerDetailsForm.get('city').setValue(customer.address.city);
+      this.customerDetailsForm.get('state').setValue(customer.address.state);
     }
     return;
   }
@@ -109,7 +128,10 @@ export class CustomerDetailsComponent implements OnInit {
           this.populateForm(this.customer);
         }
         this.spinner.hide();
-      }).catch(() => {
+      }).catch(err => {
+
+        console.log(err)
+
         this.spinner.hide();
         this.notification.showNotification('danger', 'Ocorreu um erro ao carregar os detalhes do cliente.', 'error');
       });
