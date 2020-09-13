@@ -79,7 +79,7 @@
                                                     <div class="col-md-3">
                                                         <mat-form-field>
                                                             <mat-label>Tipo de Telefone</mat-label>
-                                                            <mat-select formControlName="typeId" (selectionChange)="getPhoneType()" required>
+                                                            <mat-select formControlName="typeId" (selectionChange)="getPhoneType()">
                                                                 <mat-option *ngFor="let option of phoneTypes" [value]="option.id">{{ option.name }}</mat-option>
                                                             </mat-select>
                                                         </mat-form-field>
@@ -88,14 +88,14 @@
                                                     <div class="col-md-2">
                                                         <mat-form-field class="example-full-width">
                                                             <mat-label>DDD</mat-label>
-                                                            <input matInput type="text" mask="00" maxlength="2" formControlName="ddd" required>
+                                                            <input matInput type="text" mask="00" maxlength="2" formControlName="ddd">
                                                         </mat-form-field>
                                                     </div>
 
                                                     <div class="col-md-5">
                                                         <mat-form-field class="example-full-width">
                                                             <mat-label>Número do Telefone</mat-label>
-                                                            <input matInput type="text" mask="00000-0000" maxlength="10" formControlName="phoneNumber" required>
+                                                            <input matInput type="text" mask="00000-0000" maxlength="10" formControlName="phoneNumber">
                                                         </mat-form-field>
                                                     </div>
 
@@ -107,14 +107,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                    <a type="button" (click)="addPhones()" matTooltip="Adicionar telefone" style="margin-top: 15px; margin-right: -40px;">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a type="button" (click)="addPhones()" matTooltip="Adicionar telefone" >
                                         <mat-icon>add_circle</mat-icon>
                                     </a>  
-
+                                </div>
                             </div>
-
-
+                            <br>
                             <div class="row title-form text-primary">
                                 <div class="col-md-12">
                                     <h5><b><i>Endereço</i></b></h5>
