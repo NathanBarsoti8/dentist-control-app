@@ -79,7 +79,7 @@
                                                     <div class="col-md-3">
                                                         <mat-form-field>
                                                             <mat-label>Tipo de Telefone</mat-label>
-                                                            <mat-select formControlName="phoneType" (selectionChange)="getPhoneType()" required>
+                                                            <mat-select formControlName="typeId" (selectionChange)="getPhoneType()" required>
                                                                 <mat-option *ngFor="let option of phoneTypes" [value]="option.id">{{ option.name }}</mat-option>
                                                             </mat-select>
                                                         </mat-form-field>
@@ -99,22 +99,19 @@
                                                         </mat-form-field>
                                                     </div>
 
-                                                    <div class="col-md-1" class="example-full-width">
-                                                        <a type="button" (click)="removePhone(i)" matTooltip="Remover telefone">
-                                                            <mat-icon>delete</mat-icon>
-                                                        </a>
-                                                    </div>
+                                                    <a type="button" (click)="removePhone(i)" matTooltip="Remover telefone" style="margin-top: 15px;">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </a>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-1">
-                                    <a type="button" (click)="addPhones()" matTooltip="Adicionar telefone">
+                                
+                                    <a type="button" (click)="addPhones()" matTooltip="Adicionar telefone" style="margin-top: 15px; margin-right: -40px;">
                                         <mat-icon>add_circle</mat-icon>
                                     </a>  
-                                </div>
+
                             </div>
 
 
