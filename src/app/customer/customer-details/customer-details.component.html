@@ -84,21 +84,18 @@
                                                             </mat-select>
                                                         </mat-form-field>
                                                     </div>
-
                                                     <div class="col-md-2">
                                                         <mat-form-field class="example-full-width">
                                                             <mat-label>DDD</mat-label>
                                                             <input matInput type="text" mask="00" maxlength="2" formControlName="ddd">
                                                         </mat-form-field>
                                                     </div>
-
                                                     <div class="col-md-5">
                                                         <mat-form-field class="example-full-width">
                                                             <mat-label>Número do Telefone</mat-label>
                                                             <input matInput type="text" mask="00000-0000" maxlength="10" formControlName="phoneNumber">
                                                         </mat-form-field>
                                                     </div>
-
                                                     <a type="button" (click)="removePhone(i)" matTooltip="Remover telefone" style="margin-top: 15px;">
                                                         <mat-icon>delete</mat-icon>
                                                     </a>
@@ -110,7 +107,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <a type="button" (click)="addPhones()" matTooltip="Adicionar telefone" >
+                                    <a type="button" (click)="addPhones()" matTooltip="Adicionar telefone">
                                         <mat-icon>add_circle</mat-icon>
                                     </a>  
                                 </div>

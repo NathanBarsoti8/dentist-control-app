@@ -115,32 +115,29 @@
                                                             <input matInput type="text" mask="00" maxlength="2" formControlName="ddd" required>
                                                         </mat-form-field>
                                                     </div>
-
                                                     <div class="col-md-5">
                                                         <mat-form-field class="example-full-width">
                                                             <mat-label>Número do Telefone</mat-label>
                                                             <input matInput type="text" mask="00000-0000" maxlength="10" formControlName="phoneNumber" required>
                                                         </mat-form-field>
                                                     </div>
-                                                    
-                                                    <div class="col-md-1" class="example-full-width">
-                                                        <a type="button" (click)="removePhone(i)" matTooltip="Remover telefone">
-                                                            <mat-icon>delete</mat-icon>
-                                                        </a>
-                                                    </div>
+                                                    <a type="button" (click)="removePhone(i)" matTooltip="Remover telefone" style="margin-top: 15px;">
+                                                        <mat-icon>delete</mat-icon>
+                                                    </a>
                                                 </div>    
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-1">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <a type="button" (click)="addPhones()" matTooltip="Adicionar telefone">
                                         <mat-icon>add_circle</mat-icon>
                                     </a>  
                                 </div>
                             </div>
-
-
+                            <p></p>
                             <div class="row title-form text-primary">
                                 <div class="col-md-12">
                                     <h5><b><i>Endereço</i></b></h5>
