@@ -101,7 +101,7 @@ export class SchedulingDetailsComponent implements OnInit {
   update(obj: SchedulingDetails): void {
     this.spinner.show();
 
-    obj.date = this.dateConverter.formatStringManually(obj.date);
+    obj.date = this.dateConverter.convertStringToDate(obj.date);
 
     this._schedulingService.update(this.schedulingId, obj)
       .then(() => {
