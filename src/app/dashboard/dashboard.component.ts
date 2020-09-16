@@ -33,12 +33,6 @@ export class DashboardComponent implements OnInit {
     this.getMonthBirthdays();
     this.getTodaySchedules();
     this.getTomorrowSchedules();
-
-
-    console.log('date', new Date());
-
-    console.log('date of the week', new Date().getDay())
-
   }
 
   getMonthBirthdays(): void {
@@ -82,17 +76,21 @@ export class DashboardComponent implements OnInit {
   }
 
   getTomorrowSchedules(): void {
-
     let day = new Date().getDay();
+    let tomorrow: moment.MomentInput;
 
-    if (day == 5 /*friday*/) {
-
+    switch (day) {
+      case 5:
+        tomorrow = moment(this.date.setDate(this.date.getDate() + 3)).format("YYYY-MM-DD");
+        break;
+      case 6:
+        tomorrow = moment(this.date.setDate(this.date.getDate() + 2)).format("YYYY-MM-DD");
+        break;
+      default:
+        tomorrow = moment(this.date.setDate(this.date.getDate() + 1)).format("YYYY-MM-DD");
+        break;
     }
-    else {
 
-    }
-
-    let tomorrow = moment(this.date.setDate(this.date.getDate() + 1)).format("YYYY-MM-DD");
     this.nextBusinessDay = moment(tomorrow).format("DD/MM/YYYY");
     this.spinner.show();
     this._dashboardService.getSchedulesByDay(tomorrow)
