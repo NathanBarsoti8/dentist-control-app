@@ -74,8 +74,8 @@ export class SchedulingCreateComponent implements OnInit {
 
   createScheduling(scheduling: SchedulingDetails): void {
     this.spinner.show();
-    scheduling.date = this.dateConverter.formatStringManually(scheduling.date);
-    scheduling.customerId = scheduling.customerId.id
+    scheduling.date = this.dateConverter.convertStringToDate(scheduling.date);
+    scheduling.customerId = scheduling.customerId.id;
     scheduling.timeTable = this.dateConverter.formatHour(scheduling.timeTable);
 
     this._schedulingService.create(scheduling)
