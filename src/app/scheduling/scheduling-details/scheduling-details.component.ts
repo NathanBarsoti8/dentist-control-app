@@ -70,8 +70,7 @@ export class SchedulingDetailsComponent implements OnInit {
         date: ['', [Validators.required]],
         timeTable: ['', [Validators.required]],
         customerName: ['', [Validators.required]],
-        serviceType: ['', [Validators.required]],
-        status: ['', [Validators.required]]
+        serviceType: ['', [Validators.required]]
       });
   }
 
@@ -85,7 +84,6 @@ export class SchedulingDetailsComponent implements OnInit {
       this.schedulingDetailsForm.get('timeTable').setValue(schedule[0].timeTable);
       this.schedulingDetailsForm.get('customerName').setValue(schedule[0].customerName);
       this.schedulingDetailsForm.get('serviceType').setValue(schedule[0].serviceTypeId);
-      this.schedulingDetailsForm.get('status').setValue(schedule[0].status);
     }
     return;
   }
