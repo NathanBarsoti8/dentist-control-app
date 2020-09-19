@@ -57,7 +57,6 @@ export class CustomerDetailsComponent implements OnInit {
       cpf: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(11), CpfValidator.validate]],
       birthDate: ['', [Validators.required]],
       sex: ['', [Validators.required]],
-      isActive: [''],
       email: [''],
       job: ['', [Validators.required]],
       phones: this.formBuilder.array([]),
@@ -107,7 +106,6 @@ export class CustomerDetailsComponent implements OnInit {
       this.customerDetailsForm.get('sex').setValue(customer.sex);
       this.customerDetailsForm.get('email').setValue(customer.email);
       this.customerDetailsForm.get('job').setValue(customer.job);
-      this.customerDetailsForm.get('isActive').setValue(customer.isActive);
       this.customerDetailsForm.get('zipCode').setValue(customer.address.zipCode);
       this.customerDetailsForm.get('address').setValue(customer.address.address);
       this.customerDetailsForm.get('addressNumber').setValue(customer.address.addressNumber);
@@ -128,10 +126,7 @@ export class CustomerDetailsComponent implements OnInit {
           this.populateForm(this.customer);
         }
         this.spinner.hide();
-      }).catch(err => {
-
-        console.log(err)
-
+      }).catch(() => {
         this.spinner.hide();
         this.notification.showNotification('danger', 'Ocorreu um erro ao carregar os detalhes do cliente.', 'error');
       });
