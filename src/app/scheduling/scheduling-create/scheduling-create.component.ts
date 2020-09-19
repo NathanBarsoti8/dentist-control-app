@@ -149,6 +149,11 @@ export class SchedulingCreateComponent implements OnInit {
           this.openSchedulesModal();
           this.spinner.hide();
         }
+        else {
+          this.schedulesToModal = undefined;
+          this.openSchedulesModal();
+          this.spinner.hide();
+        }
       })
       .catch(() => {
         this.spinner.hide();
