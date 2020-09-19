@@ -20,14 +20,26 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
-                                      <mat-label>Nome</mat-label>
-                                      <input matInput type="text" formControlName="name" required>
+                                        <mat-label>Nome</mat-label>
+                                        <input matInput type="text" formControlName="name" required>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="customerDetailsForm.get('name').dirty || customerDetailsForm.get('name').touched
+                                                && customerDetailsForm.get('name').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-3">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>CPF</mat-label>
                                         <input matInput type="text" mask="000.000.000-00" maxlength="14" formControlName="cpf" required>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="customerDetailsForm.get('cpf').dirty || customerDetailsForm.get('cpf').touched
+                                                && customerDetailsForm.get('cpf').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-3">
@@ -36,6 +48,12 @@
                                         <mat-select formControlName="sex" required>
                                             <mat-option *ngFor="let gender of genders" [value]="gender.value">{{ gender.option }}</mat-option>
                                         </mat-select>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="customerDetailsForm.get('sex').dirty || customerDetailsForm.get('sex').touched
+                                                && customerDetailsForm.get('sex').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-3">
@@ -55,13 +73,19 @@
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Email</mat-label>
-                                        <input matInput type="email" formControlName="email" required>
+                                        <input matInput type="email" formControlName="email">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Trabalho</mat-label>
                                         <input matInput type="text" formControlName="job" required>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="customerDetailsForm.get('job').dirty || customerDetailsForm.get('job').touched
+                                                && customerDetailsForm.get('job').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -123,6 +147,12 @@
                                     <mat-form-field class="example-full-width">
                                         <mat-label>CEP</mat-label>
                                         <input matInput type="text" mask="00.000-000" maxlength="10" formControlName="zipCode" required>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="customerDetailsForm.get('zipCode').dirty || customerDetailsForm.get('zipCode').touched
+                                                && customerDetailsForm.get('zipCode').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4">
@@ -131,12 +161,24 @@
                                         <mat-select formControlName="state" required>
                                             <mat-option *ngFor="let state of states" [value]="state">{{ state }}</mat-option>
                                         </mat-select>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="customerDetailsForm.get('state').dirty || customerDetailsForm.get('state').touched
+                                                && customerDetailsForm.get('state').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Cidade</mat-label>
                                         <input matInput type="text" formControlName="city" required>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="customerDetailsForm.get('city').dirty || customerDetailsForm.get('city').touched
+                                                && customerDetailsForm.get('city').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -145,6 +187,12 @@
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Endereço</mat-label>
                                         <input matInput type="text" formControlName="address" required>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="customerDetailsForm.get('address').dirty || customerDetailsForm.get('address').touched
+                                                && customerDetailsForm.get('address').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-1">
@@ -157,6 +205,12 @@
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Bairro</mat-label>
                                         <input matInput type="text" formControlName="neighborhood" required>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="customerDetailsForm.get('neighborhood').dirty || customerDetailsForm.get('neighborhood').touched
+                                                && customerDetailsForm.get('neighborhood').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                         </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-3">
