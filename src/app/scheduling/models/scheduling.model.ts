@@ -20,3 +20,8 @@ export enum Status {
     SCHEDULED = 1,
     DONE = 2
 }
+
+export interface FormDates {
+    inicialDate: any;
+    finalDate: any;
+}
