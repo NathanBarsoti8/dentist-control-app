@@ -1,4 +1,4 @@
-import { SchedulingDetails, Scheduling } from './../models/scheduling.model';
+import { SchedulingDetails, FormDates } from './../models/scheduling.model';
 import { DateConverterService } from './../../shared/services/dateConverter.service';
 import { NotificationService } from './../../shared/notification/notification.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -17,16 +17,19 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-scheduling-create',
   templateUrl: './scheduling-create.component.html',
-  styleUrls: ['./scheduling-create.component.css']
+  styleUrls: ['./scheduling-create.component.css'],
 })
 export class SchedulingCreateComponent implements OnInit {
 
   serviceTypes: Array<DefaultInterface<number>>;
   addSchedulingForm: FormGroup;
+  addFormSchedules: FormGroup;
+
   validation_messages: FormValidationMessages;
   customers: Array<Customer>;
   filteredCustomers: Observable<Array<string>> | Array<Customer> | Observable<Array<Customer>>; 
   @ViewChild('showSchedules', { static: true }) showSchedules: TemplateRef<this>;
+  @ViewChild('formSchedules', { static: true }) formSchedules: TemplateRef<this>;
   dialogRef: MatDialogRef<SchedulingCreateComponent>;
   schedulesToModal: Array<any>;
 
@@ -43,6 +46,7 @@ export class SchedulingCreateComponent implements OnInit {
     this.getServiceType();
     this.getCustomers();
     this.setValidationMessages();
+    this.generateFormSchedules();
   }
 
   generateForm(): void {
@@ -52,6 +56,13 @@ export class SchedulingCreateComponent implements OnInit {
       customerId: [this.filteredCustomers, [Validators.required]],
       serviceTypeId: ['', [Validators.required]]
     });
+  }
+
+  generateFormSchedules(): void {
+    this.addFormSchedules = this.formBuilder.group({
+      inicialDate: [''],
+      finalDate: ['']
+    })
   }
 
   setValidationMessages(): void {
@@ -69,7 +80,7 @@ export class SchedulingCreateComponent implements OnInit {
       })
       .catch(() => {
         this.notification.showNotification('danger', 'Ocorreu um erro ao buscar os tipos de serviço.', 'error');
-      })
+      });
   }
 
   createScheduling(scheduling: SchedulingDetails): void {
@@ -87,7 +98,7 @@ export class SchedulingCreateComponent implements OnInit {
       .catch(error => {
         this.spinner.hide();
         this.notification.showNotification('danger', error.error.msg, 'error');
-      })
+      });
   }
 
   getCustomers(): void {
@@ -131,7 +142,21 @@ export class SchedulingCreateComponent implements OnInit {
     });
   }
 
+  openFormSchedulesModal(): void {
+    this.dialogRef = this.dialog.open(this.formSchedules, {
+      width: '45%',
+      height: '35%',
+      panelClass: 'plans-form-dialog'
+    })
+  }
+
+  cleanFilter(): void {
+    this.addFormSchedules.reset();
+  }
+
   renderModalTitle(): string {
+
+    //need to change
 
     let date = moment(new Date().setDate(new Date().getDate() + 30)).format('YYYY-MM-DD');
     let dateLess15 = moment(new Date(date).setDate(new Date(date).getDate() - 15)).format('DD/MM/YYYY');
@@ -140,9 +165,12 @@ export class SchedulingCreateComponent implements OnInit {
     return `Consultas do dia ${dateLess15} ao dia ${dateMore15}`;
   }
 
-  getSchedulesToModal(): void {
+  getSchedulesToModal(dates: FormDates): void {
+    dates.inicialDate = this.dateConverter.dateFormat(dates.inicialDate);
+    dates.finalDate = this.dateConverter.dateFormat(dates.finalDate);
+
     this.spinner.show();
-    this._schedulingService.getByPeriod()
+    this._schedulingService.getByPeriod(dates.inicialDate, dates.finalDate)
       .then(result => {
         if (result) {
           this.schedulesToModal = result.schedules;
@@ -160,6 +188,5 @@ export class SchedulingCreateComponent implements OnInit {
         this.notification.showNotification('danger', 'Ocorreu um erro ao carregar as consultas.', 'error');
       });
   }
-
 
 }
