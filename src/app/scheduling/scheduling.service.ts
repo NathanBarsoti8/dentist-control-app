@@ -95,9 +95,13 @@ export class SchedulingService {
     });
   }
 
-  getByPeriod(): Promise<any> {
+  getByPeriod(inicialDate: string, finalDate: string): Promise<any> {
+
+    console.log('inicialdate', inicialDate)
+    console.log('finaldate', finalDate)
+
     return new Promise<any>((resolve, reject) => {
-      this.httpClient.get(`${APPLICATION_API}/schedules/internal/byPeriod`)
+      this.httpClient.get(`${APPLICATION_API}/schedules/internal/byPeriod?initialDate=${inicialDate}&finalDate=${finalDate}`)
         .subscribe((response: any) => {
           resolve(response);
         }, reject);
