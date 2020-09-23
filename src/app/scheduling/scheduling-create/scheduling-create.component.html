@@ -38,7 +38,10 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Data da Consulta</mat-label>
-                                        <input matInput type="text" mask="00/00/0000" maxlength="10" formControlName="date" required>
+                                        <input matInput [matDatepicker]="datePicker" [placeholder]="'Data da Consulta'" 
+                                            formControlName="date" name="datepicker" required>
+                                        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #datePicker></mat-datepicker>
                                         <mat-error *ngFor="let validation of validation_messages.generic">
                                             <span *ngIf="addSchedulingForm.get('date').dirty || addSchedulingForm.get('date').touched
                                                 && addSchedulingForm.get('date').hasError(validation.type)">
