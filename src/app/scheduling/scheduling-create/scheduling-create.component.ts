@@ -12,7 +12,6 @@ import { Customer } from 'app/customer/models/customer.model';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-scheduling-create',
@@ -24,7 +23,6 @@ export class SchedulingCreateComponent implements OnInit {
   serviceTypes: Array<DefaultInterface<number>>;
   addSchedulingForm: FormGroup;
   addFormSchedules: FormGroup;
-
   validation_messages: FormValidationMessages;
   customers: Array<Customer>;
   filteredCustomers: Observable<Array<string>> | Array<Customer> | Observable<Array<Customer>>; 
@@ -32,6 +30,8 @@ export class SchedulingCreateComponent implements OnInit {
   @ViewChild('formSchedules', { static: true }) formSchedules: TemplateRef<this>;
   dialogRef: MatDialogRef<SchedulingCreateComponent>;
   schedulesToModal: Array<any>;
+  dayFrom: string;
+  dayTo: string;
 
   constructor(private _schedulingService: SchedulingService,
     private formBuilder: FormBuilder,
@@ -154,19 +154,15 @@ export class SchedulingCreateComponent implements OnInit {
   }
 
   renderModalTitle(): string {
-
-    //need to change
-
-    let date = moment(new Date().setDate(new Date().getDate() + 30)).format('YYYY-MM-DD');
-    let dateLess15 = moment(new Date(date).setDate(new Date(date).getDate() - 15)).format('DD/MM/YYYY');
-    let dateMore15 = moment(new Date(date).setDate(new Date(date).getDate() + 15)).format('DD/MM/YYYY');
-
-    return `Consultas do dia ${dateLess15} ao dia ${dateMore15}`;
+    return `Consultas do dia ${this.dayFrom} ao dia ${this.dayTo}`;
   }
 
   getSchedulesToModal(dates: FormDates): void {
     dates.inicialDate = this.dateConverter.dateFormat(dates.inicialDate);
     dates.finalDate = this.dateConverter.dateFormat(dates.finalDate);
+
+    this.dayFrom = this.dateConverter.toLocaleString(dates.inicialDate);
+    this.dayTo = this.dateConverter.toLocaleString(dates.finalDate);
 
     this.spinner.show();
     this._schedulingService.getByPeriod(dates.inicialDate, dates.finalDate)
