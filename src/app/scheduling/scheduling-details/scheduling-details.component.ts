@@ -8,7 +8,9 @@ import { DefaultInterface } from './../../shared/models/default-interface.model'
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import * as moment from 'moment';
+import { Customer } from './../../customer/models/customer.model';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-scheduling-details',
@@ -22,6 +24,8 @@ export class SchedulingDetailsComponent implements OnInit {
   schedulingDetailsForm: FormGroup;
   serviceTypes: Array<DefaultInterface<number>>;
   validation_messages: FormValidationMessages;
+  customers: Array<Customer>;
+  filteredCustomers: Observable<Array<string>> | Array<Customer> | Observable<Array<Customer>>; 
 
   constructor(private router: ActivatedRoute,
     private _schedulingService: SchedulingService,
@@ -38,6 +42,7 @@ export class SchedulingDetailsComponent implements OnInit {
     this.generateForm();
     this.getServiceType();
     this.setValidationMessages();
+    this.getCustomers();
   }
 
   getDetails(id: string): void {
@@ -45,7 +50,7 @@ export class SchedulingDetailsComponent implements OnInit {
     this._schedulingService.getById(id)
       .then(result => {
         if (result) {
-          this.scheduling = result;
+          this.scheduling = result[0];
           this.populateForm(this.scheduling);
         }
         this.spinner.hide();
@@ -69,21 +74,20 @@ export class SchedulingDetailsComponent implements OnInit {
       this.schedulingDetailsForm = this.formBuilder.group({
         date: ['', [Validators.required]],
         timeTable: ['', [Validators.required]],
-        customerName: ['', [Validators.required]],
-        serviceType: ['', [Validators.required]]
+        customer: [this.filteredCustomers, [Validators.required]],
+        serviceTypeId: ['', [Validators.required]]
       });
   }
 
   populateForm(schedule: SchedulingDetails): void {
     if (schedule) {
+      schedule.date = new Date(schedule.date + ' 00:00:00');
 
-      schedule[0].date = moment(schedule[0].date).format("DD/MM/YYYY");
-
-      this.schedulingDetailsForm.patchValue(schedule[0]);
-      this.schedulingDetailsForm.get('date').setValue(schedule[0].date);
-      this.schedulingDetailsForm.get('timeTable').setValue(schedule[0].timeTable);
-      this.schedulingDetailsForm.get('customerName').setValue(schedule[0].customerName);
-      this.schedulingDetailsForm.get('serviceType').setValue(schedule[0].serviceTypeId);
+      this.schedulingDetailsForm.patchValue(schedule);
+      this.schedulingDetailsForm.get('date').setValue(schedule.date);
+      this.schedulingDetailsForm.get('timeTable').setValue(schedule.timeTable);
+      this.schedulingDetailsForm.get('customer').setValue(schedule.customerName);
+      this.schedulingDetailsForm.get('serviceTypeId').setValue(schedule.serviceTypeId);
     }
     return;
   }
@@ -96,11 +100,20 @@ export class SchedulingDetailsComponent implements OnInit {
     }
   }
 
-  update(obj: SchedulingDetails): void {
+  update(obj: any): void {
     this.spinner.show();
 
-    obj.date = this.dateConverter.convertStringToDate(obj.date);
+    if (typeof obj.customer == 'string') {
+      obj.customerId = this.scheduling.customerId;
+      delete obj['customer'];
+    }
+    else if (typeof obj.customer == 'object') {
+      obj.customerId = obj.customer.id;
+      delete obj['customer'];
+    }
 
+    obj.date = this.dateConverter.dateFormat(obj.date);
+    
     this._schedulingService.update(this.schedulingId, obj)
       .then(() => {
         this.spinner.hide();
@@ -111,6 +124,38 @@ export class SchedulingDetailsComponent implements OnInit {
       })
   }
 
+  getCustomers(): void {
+    this.spinner.show();
+    this._schedulingService.getCustomers()
+      .then(result => {
+        if (result) {
+          this.customers = result.data;
+          this.setFilteredCustomers();
+        }
+        this.spinner.hide();
+      })
+      .catch(() => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao carregar os clientes.', 'error');
+      });
+  }
 
+  setFilteredCustomers(): void {
+    this.filteredCustomers = this.schedulingDetailsForm.get('customer').valueChanges
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value.name),
+        map(name => name ? this._filter(name) : this.customers));
+  }
+
+  _filter(name: string): Array<Customer> {
+    const filterValue = name.toLowerCase();
+
+    return this.customers.filter(opt => opt.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  displayFn(customer?: Customer): string | undefined {
+    return customer ? customer.name : undefined;
+  }
 
 }
