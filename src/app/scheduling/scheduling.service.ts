@@ -58,7 +58,7 @@ export class SchedulingService {
     });
   }
 
-  update(id: string, obj: SchedulingDetails) {
+  update(id: string, obj: any): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       this.httpClient.put(`${APPLICATION_API}/schedules/${id}`, obj)
         .subscribe(() => {
