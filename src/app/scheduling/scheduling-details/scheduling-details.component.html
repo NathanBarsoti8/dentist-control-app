@@ -16,20 +16,46 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Cliente</mat-label>
-                                        <input matInput type="text" formControlName="customerName" required>
+                                        <input type="text" matInput [formControl]="schedulingDetailsForm.get('customer')" [matAutocomplete]="auto" 
+                                                [value]="scheduling ? scheduling.customerName : ''" requiredrequired>
+                                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayFn">
+                                            <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+                                                {{ customer.name }}
+                                            </mat-option>
+                                        </mat-autocomplete>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="schedulingDetailsForm.get('customer').dirty || schedulingDetailsForm.get('customer').touched
+                                                && schedulingDetailsForm.get('customer').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Data da Consulta</mat-label>
-                                        <input matInput type="text" mask="00/00/0000" maxlength="10" formControlName="date" required>
+                                        <input matInput [matDatepicker]="datePicker" [placeholder]="'Data da Consulta'" 
+                                            formControlName="date" name="datepicker" required>
+                                        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                                        <mat-datepicker #datePicker></mat-datepicker>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="schedulingDetailsForm.get('date').dirty || schedulingDetailsForm.get('date').touched
+                                                && schedulingDetailsForm.get('date').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Horário</mat-label>
-                                        <!-- <input matInput type="text" formControlName="timeTable" required> -->
-                                        <input matInput type="time" min="08:00" max="19:00" formControlName="timeTable" required>
+                                        <input matInput type="time" min="00:00" max="23:59" formControlName="timeTable" required>
+                                        <mat-error *ngFor="let validation of validation_messages.generic">
+                                            <span *ngIf="schedulingDetailsForm.get('timeTable').dirty || schedulingDetailsForm.get('timeTable').touched
+                                                && schedulingDetailsForm.get('timeTable').hasError(validation.type)">
+                                                {{ validation.message }}
+                                            </span>
+                                        </mat-error>
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -37,12 +63,12 @@
                                 <div class="col-md-4">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Tipo de Serviço</mat-label>
-                                        <mat-select formControlName="serviceType" (selectionChange)="getServiceType()" required>
+                                        <mat-select formControlName="serviceTypeId" (selectionChange)="getServiceType()" required>
                                             <mat-option *ngFor="let option of serviceTypes" [value]="option.id">{{ option.name }}</mat-option>
                                         </mat-select>
                                         <mat-error *ngFor="let validation of validation_messages.generic">
-                                            <span *ngIf="schedulingDetailsForm.get('serviceType').dirty || schedulingDetailsForm.get('serviceType').touched
-                                                && schedulingDetailsForm.get('serviceType').hasError(validation.type)">
+                                            <span *ngIf="schedulingDetailsForm.get('serviceTypeId').dirty || schedulingDetailsForm.get('serviceTypeId').touched
+                                                && schedulingDetailsForm.get('serviceTypeId').hasError(validation.type)">
                                                 {{ validation.message }}
                                             </span>
                                         </mat-error>
