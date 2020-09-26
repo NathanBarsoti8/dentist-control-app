@@ -12,6 +12,7 @@ import { Customer } from 'app/customer/models/customer.model';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-scheduling-create',
@@ -169,6 +170,11 @@ export class SchedulingCreateComponent implements OnInit {
       .then(result => {
         if (result) {
           this.schedulesToModal = result.schedules;
+
+          this.schedulesToModal.forEach(x => {
+            x.date = moment(x.date).format("DD/MM/YYYY");
+          })
+
           this.openSchedulesModal();
           this.spinner.hide();
         }
@@ -178,9 +184,9 @@ export class SchedulingCreateComponent implements OnInit {
           this.spinner.hide();
         }
       })
-      .catch(() => {
+      .catch(error => {
         this.spinner.hide();
-        this.notification.showNotification('danger', 'Ocorreu um erro ao carregar as consultas.', 'error');
+        this.notification.showNotification('danger', error.error.msg, 'error');
       });
   }
 
