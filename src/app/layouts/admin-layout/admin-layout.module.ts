@@ -32,6 +32,7 @@ import { ModalConfirmDialogComponent } from 'app/customer/modal-confirm-dialog/m
 import { SchedulingDetailsComponent } from './../../scheduling/scheduling-details/scheduling-details.component';
 import { SchedulingCreateComponent } from 'app/scheduling/scheduling-create/scheduling-create.component';
 import { SchedulingDeleteComponent } from './../../scheduling/scheduling-delete/scheduling-delete.component';
+import { AttendanceComponent } from './../../attendance/attendance.component';
 
 @NgModule({
   imports: [
@@ -70,7 +71,8 @@ import { SchedulingDeleteComponent } from './../../scheduling/scheduling-delete/
     SchedulingComponent,
     SchedulingDetailsComponent,
     SchedulingCreateComponent,
-    SchedulingDeleteComponent
+    SchedulingDeleteComponent,
+    AttendanceComponent
   ]
 })
 
