@@ -1,16 +1,18 @@
-import { SchedulingDetails } from './../models/scheduling.model';
+import { SchedulingDetails, FormDates } from './../models/scheduling.model';
 import { DateConverterService } from './../../shared/services/dateConverter.service';
 import { NotificationService } from './../../shared/notification/notification.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SchedulingService } from './../scheduling.service';
 import { FormValidationMessages } from './../../shared/models/validation-messages.model';
 import { DefaultInterface } from './../../shared/models/default-interface.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Customer } from './../../customer/models/customer.model';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-scheduling-details',
@@ -26,13 +28,21 @@ export class SchedulingDetailsComponent implements OnInit {
   validation_messages: FormValidationMessages;
   customers: Array<Customer>;
   filteredCustomers: Observable<Array<string>> | Array<Customer> | Observable<Array<Customer>>; 
+  addFormSchedules: FormGroup;
+  dialogRef: MatDialogRef<SchedulingDetailsComponent>;
+  schedulesToModal: Array<any>;
+  dayFrom: string;
+  dayTo: string;
+  @ViewChild('showSchedules', { static: true }) showSchedules: TemplateRef<this>;
+  @ViewChild('formSchedules', { static: true }) formSchedules: TemplateRef<this>;
 
   constructor(private router: ActivatedRoute,
     private _schedulingService: SchedulingService,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
     private notification: NotificationService,
-    private dateConverter: DateConverterService) { }
+    private dateConverter: DateConverterService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.router.queryParams.subscribe(params => {
@@ -43,6 +53,7 @@ export class SchedulingDetailsComponent implements OnInit {
     this.getServiceType();
     this.setValidationMessages();
     this.getCustomers();
+    this.generateFormSchedules();
   }
 
   getDetails(id: string): void {
@@ -156,6 +167,69 @@ export class SchedulingDetailsComponent implements OnInit {
 
   displayFn(customer?: Customer): string | undefined {
     return customer ? customer.name : undefined;
+  }
+
+  //MODAL SCHEDULES
+  generateFormSchedules(): void {
+    this.addFormSchedules = this.formBuilder.group({
+      inicialDate: [''],
+      finalDate: ['']
+    })
+  }
+
+  openFormSchedulesModal(): void {
+    this.dialogRef = this.dialog.open(this.formSchedules, {
+      width: '45%',
+      height: '35%',
+      panelClass: 'plans-form-dialog'
+    })
+  }
+
+  openSchedulesModal(): void {
+    this.dialogRef = this.dialog.open(this.showSchedules, {
+      width: '500px',
+      panelClass: 'plans-form-dialog'
+    });
+  }
+
+  cleanFilter(): void {
+    this.addFormSchedules.reset();
+  }
+
+  renderModalTitle(): string {
+    return `Consultas do dia ${this.dayFrom} ao dia ${this.dayTo}`;
+  }
+
+  getSchedulesToModal(dates: FormDates): void {
+    dates.inicialDate = this.dateConverter.dateFormat(dates.inicialDate);
+    dates.finalDate = this.dateConverter.dateFormat(dates.finalDate);
+
+    this.dayFrom = this.dateConverter.toLocaleString(dates.inicialDate);
+    this.dayTo = this.dateConverter.toLocaleString(dates.finalDate);
+
+    this.spinner.show();
+    this._schedulingService.getByPeriod(dates.inicialDate, dates.finalDate)
+      .then(result => {
+        if (result) {
+          this.schedulesToModal = result.schedules;
+
+          this.schedulesToModal.forEach(x => {
+            x.date = moment(x.date).format("DD/MM/YYYY");
+          })
+
+          this.openSchedulesModal();
+          this.spinner.hide();
+        }
+        else {
+          this.schedulesToModal = undefined;
+          this.openSchedulesModal();
+          this.spinner.hide();
+        }
+      })
+      .catch(error => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', error.error.msg, 'error');
+      });
   }
 
 }
