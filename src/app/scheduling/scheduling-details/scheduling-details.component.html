@@ -74,6 +74,10 @@
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
+                                <div class="col-md-4">
+                                    <button mat-raised-button (click)="openFormSchedulesModal()"
+                                    class="btn btn-info">Clique aqui para ver consultas</button>
+                                </div>
                             </div>
                             
                             <button mat-raised-button type="submit" class="btn btn-info pull-right"
@@ -91,4 +95,69 @@
         </div>
     </div>
   </div>
+
+  <ng-template #showSchedules>
+    <div class="row title-form text-primary">
+        <div class="col-md-12">
+            <h4 mat-mat-dialog-title><b><i>{{ renderModalTitle() }}</i></b></h4>
+        </div>
+    </div>
+    <p></p>
+    <div mat-dialog-content>
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let schedule of schedulesToModal">
+                <mat-expansion-panel-header>
+                    <b>{{schedule.date}}</b>
+                </mat-expansion-panel-header>
+                {{schedule.timeTables}}
+            </mat-expansion-panel>
+        </mat-accordion>
+        <div *ngIf="!schedulesToModal || schedulesToModal.length == 0" style="text-align: center;">
+            <span>
+                Nenhum dado encontrado.
+            </span>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #formSchedules>
+    <div class="row title-form text-primary">
+        <div class="col-md-12">
+            <h4 mat-mat-dialog-title><b><i>Digite as datas em que deseja pesquisar</i></b></h4>
+        </div>
+    </div>
+    <p></p>
+
+    <form [formGroup]="addFormSchedules">
+        <div class="row">
+            <div class="col-md-6">
+                <mat-form-field class="mr-24">
+                    <input matInput [matDatepicker]="initialPicker" [placeholder]="'Data Inicial'" 
+                        formControlName="inicialDate" name="datepicker" required>
+                    <mat-datepicker-toggle matSuffix [for]="initialPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #initialPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field class="mr-24">
+                    <input matInput [matDatepicker]="finalPicker" [placeholder]="'Data Final'" 
+                        formControlName="finalDate" name="datepicker" required>
+                    <mat-datepicker-toggle matSuffix [for]="finalPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #finalPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button mat-raised-button type="submit" class="btn btn-info pull-right"
+                    [disabled]="addFormSchedules.invalid"
+                    (click)="getSchedulesToModal(addFormSchedules.value)">Filtrar
+                </button>
+                <button mat-raised-button type="submit" class="btn btn-default pull-right"
+                    style="margin-right: 10px;" (click)="cleanFilter()">Limpar
+                </button>
+            </div>
+        </div>
+    </form>
+</ng-template>
   
