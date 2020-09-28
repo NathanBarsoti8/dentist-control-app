@@ -1,3 +1,4 @@
+import { AttendanceComponent } from './../../attendance/attendance.component';
 import { SchedulingCreateComponent } from 'app/scheduling/scheduling-create/scheduling-create.component';
 import { SchedulingDetailsComponent } from './../../scheduling/scheduling-details/scheduling-details.component';
 import { SchedulingComponent } from './../../scheduling/scheduling.component';
@@ -27,4 +28,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'scheduling',          component: SchedulingComponent},
     { path: 'scheduling-details',  component: SchedulingDetailsComponent },
     { path: 'scheduling-create',   component: SchedulingCreateComponent },
+    { path: 'attendance',          component: AttendanceComponent },
 ];
