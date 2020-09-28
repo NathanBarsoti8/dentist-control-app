@@ -1,0 +1,16 @@
+.pointer {
+    cursor: pointer;
+}
+
+.add-attendance-button {
+    position: absolute;
+    right: 10px;
+    bottom: 7px;
+    z-index: 10;
+    color: #18bace;
+    background-color: white;
+}
+
+.align-cell {
+    margin-top: 10px;
+}
