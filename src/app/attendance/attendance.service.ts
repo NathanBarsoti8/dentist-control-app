@@ -11,6 +11,15 @@ export class AttendanceService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getServicesType(): Promise<Array<DefaultInterface<number>>> {
+    return new Promise<Array<DefaultInterface<number>>>((resolve, reject) => {
+      this.httpClient.get(`${APPLICATION_API}/resources/servicesType`)
+        .subscribe((response: Array<DefaultInterface<number>>) => {
+          resolve(response);
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    });
+  }
   
-
 }
