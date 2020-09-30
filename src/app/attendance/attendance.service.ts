@@ -33,4 +33,17 @@ export class AttendanceService {
     });
   }
 
+  update(obj: ServiceType): Promise<ServiceType> {
+    return new Promise<ServiceType>((resolve, reject) => {
+      this.httpClient.put(`${APPLICATION_API}/servicesType/${obj.id}`, obj)
+        .subscribe((response: any) => {
+          resolve(response);
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    })
+  }
+
+  
+
 }
