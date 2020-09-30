@@ -21,5 +21,16 @@ export class AttendanceService {
       return Promise.reject(error);
     });
   }
-  
+
+  create(obj: ServiceType): Promise<ServiceType> {
+    return new Promise<ServiceType>((resolve, reject) => {
+      this.httpClient.post(`${APPLICATION_API}/servicesType`, obj.name)
+        .subscribe((response: any) => {
+          resolve(response);
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    });
+  }
+
 }
