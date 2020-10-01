@@ -14,8 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class AttendanceComponent implements OnInit {
 
-  // displayedColumns = ['name', 'action'];
-  displayedColumns = ['name'];
+  displayedColumns = ['name', 'action'];
   servicesType: Array<ServiceType>;
   dialogRef: MatDialogRef<AttendanceComponent>;
   @ViewChild('createServiceType', { static: true }) createServiceType: TemplateRef<this>;

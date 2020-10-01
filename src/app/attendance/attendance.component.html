@@ -27,16 +27,16 @@
                                     </mat-cell>
                                 </ng-container>
 
-                                <!-- <ng-container matColumnDef="action">
+                                <ng-container matColumnDef="action">
                                     <mat-header-cell *matHeaderCellDef>
                                         <b style="font-size: medium;">Ação</b>
                                     </mat-header-cell>
-                                    <mat-cell *matCellDef="let schedule" (click)="$event.stopPropagation()">
-                                        <button class="btn btn-danger btn-round" (click)="confirmDialog(schedule.id)">
+                                    <mat-cell *matCellDef="let row" (click)="$event.stopPropagation()">
+                                        <button class="btn btn-danger btn-round" (click)="confirmDialog(row.id)">
                                             Excluir
                                         </button>
                                     </mat-cell> 
-                                </ng-container> -->
+                                </ng-container>
 
                                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
 
