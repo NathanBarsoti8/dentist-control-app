@@ -44,6 +44,15 @@ export class AttendanceService {
     })
   }
 
-  
+  delete(id: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.httpClient.delete(`${APPLICATION_API}/servicesType/${id}`)
+        .subscribe(() => {
+          resolve();
+        }, reject);
+    }).catch(error => {
+      return Promise.reject(error);
+    });
+  }
 
 }
