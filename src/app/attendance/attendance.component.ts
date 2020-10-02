@@ -1,4 +1,4 @@
-import { ConfirmDialogData } from 'app/customer/models/confirm-dialog.model';
+import { ConfirmDialogData } from './../customer/models/confirm-dialog.model';
 import { NotificationService } from 'app/shared/notification/notification.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
@@ -16,15 +16,19 @@ export class AttendanceComponent implements OnInit {
 
   displayedColumns = ['name', 'action'];
   servicesType: Array<ServiceType>;
-  dialogRef: MatDialogRef<AttendanceComponent>;
-  @ViewChild('createServiceType', { static: true }) createServiceType: TemplateRef<this>;
+  deleteDialogRef: MatDialogRef<AttendanceComponent>;
+  deleteObj: ConfirmDialogData = { id: null, isConfirmed: null } as ConfirmDialogData;
+  @ViewChild('deleteServiceType', { static: true}) deleteServiceType: TemplateRef<this>;
+  
+  // dialogRef: MatDialogRef<AttendanceComponent>;
+  // @ViewChild('createServiceType', { static: true }) createServiceType: TemplateRef<this>;
 
   constructor(private _attendanceService: AttendanceService,
-    private formBuilder: FormBuilder,
+    // private formBuilder: FormBuilder,
     // private router: Router,
     private spinner: NgxSpinnerService,
     private notification: NotificationService,
-    private dialog: MatDialog) { }
+    private matDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getServicesType();
@@ -48,38 +52,41 @@ export class AttendanceComponent implements OnInit {
       });
   }
 
-  // confirmDialog(serviceId: string): void {
-  //   this.deleteDialogRef = this.matDialog.open(SchedulingDeleteComponent, {
-  //     width: '500px',
-  //     height: '210px',
-  //     data: {
-  //       id: serviceId
-  //     }
-  //   });
+  confirmDialog(serviceId: string): void {
+    this.deleteObj.id = serviceId;
+    this.deleteDialogRef = this.matDialog.open(this.deleteServiceType, {
+      width: '500px',
+      height: '210px',
+    });
 
-  //   this.deleteDialogRef.afterClosed()
-  //     .subscribe((response: ConfirmDialogData) => {
-  //       this.onDeleteModalClosed(response);
-  //     });
-  // }
+    this.deleteDialogRef.afterClosed()
+      .subscribe((response: ConfirmDialogData) => {
+        this.onDeleteModalClosed(response);
+      });
+  }
 
-  // onDeleteModalClosed(response: ConfirmDialogData): void {
-  //   if (response.isConfirmed)
-  //     this.deleteSchedule(response.id);
-  // }
+  sendResponse(response: boolean): void {
+    this.deleteObj.isConfirmed = response;
+    this.deleteDialogRef.close(this.deleteObj);
+  }
 
-  // deleteSchedule(id: string): void {
-  //   this.spinner.show();
-  //   this._attendanceService.delete(id)
-  //     .then(() => {
-  //       this.spinner.hide();
-  //       this.notification.showNotification('success', 'Serviço excluída com sucesso.', 'info');
-  //       this.getServicesType();
-  //     })
-  //     .catch(() => {
-  //       this.spinner.hide();
-  //       this.notification.showNotification('danger', 'Ocorreu um erro ao excluir serviço.', 'error')
-  //     });
-  // }
+  onDeleteModalClosed(response: ConfirmDialogData): void {
+    if (response && response.isConfirmed)
+      this.delete(response.id);
+  }
+
+  delete(id: string): void {
+    this.spinner.show();
+    this._attendanceService.delete(id)
+      .then(() => {
+        this.spinner.hide();
+        this.notification.showNotification('success', 'Serviço excluída com sucesso.', 'info');
+        this.getServicesType();
+      })
+      .catch(() => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', 'Ocorreu um erro ao excluir serviço.', 'error')
+      });
+  }
 
 }
