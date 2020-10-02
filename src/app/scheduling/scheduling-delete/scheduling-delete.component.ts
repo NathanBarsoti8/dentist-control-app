@@ -1,5 +1,5 @@
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ConfirmDialogData } from 'app/customer/models/confirm-dialog.model';
 
 @Component({
@@ -12,7 +12,7 @@ export class SchedulingDeleteComponent {
   constructor(public matDialogRef: MatDialogRef<SchedulingDeleteComponent>,
     @Inject(MAT_DIALOG_DATA) public _data: ConfirmDialogData) { }
 
-  sendResponse(response: boolean) {
+  sendResponse(response: boolean): void {
     this._data.isConfirmed = response;
     this.matDialogRef.close(this._data);
   }
