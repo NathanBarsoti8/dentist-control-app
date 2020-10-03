@@ -6,7 +6,7 @@
                     <div class="card-header card-header-info">
                         <h3 class="card-title">Serviços</h3>
                         <button mat-fab class="add-attendance-button" matTooltip="Adicionar novo serviço"
-                        
+                            (click)="openAddModal()"
                         >
                             <mat-icon>add</mat-icon>
                         </button>
@@ -58,6 +58,45 @@
         </div>
     </div>
 </div>
+
+<ng-template #createServiceType>
+    <div class="row title-form text-primary">
+        <div class="col-md-12">
+            <h4 mat-mat-dialog-title><b><i>Adicionar novo Tipo de Serviço</i></b></h4>
+        </div>
+    </div>
+    <p></p>
+  
+    <form [formGroup]="addForm">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-form-field class="example-full-width">
+                    <mat-label>Tipo de Serviço</mat-label>
+                    <input matInput type="text" formControlName="name" required>
+                    <mat-error *ngFor="let validation of validation_messages.generic">
+                        <span *ngIf="addForm.get('name').dirty || addForm.get('name').touched
+                            && addForm.get('name').hasError(validation.type)">
+                            {{ validation.message }}
+                        </span>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button mat-raised-button type="submit" class="btn btn-info pull-right"
+                    [disabled]="addForm.invalid"
+                    (click)="create(addForm.value)">Salvar
+                </button>
+        
+                <button mat-raised-button type="submit" class="btn btn-default pull-right"
+                    style="margin-right: 10px;" [mat-dialog-close]="true">Voltar
+                </button>
+                
+            </div>
+        </div>
+    </form>  
+</ng-template>
 
 <ng-template #deleteServiceType>
     <div>
