@@ -1,10 +1,11 @@
+import { FormValidationMessages } from './../shared/models/validation-messages.model';
 import { ConfirmDialogData } from './../customer/models/confirm-dialog.model';
 import { NotificationService } from 'app/shared/notification/notification.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ServiceType } from './models/attendance.model';
 import { AttendanceService } from './attendance.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -20,11 +21,13 @@ export class AttendanceComponent implements OnInit {
   deleteObj: ConfirmDialogData = { id: null, isConfirmed: null } as ConfirmDialogData;
   @ViewChild('deleteServiceType', { static: true}) deleteServiceType: TemplateRef<this>;
   
-  // dialogRef: MatDialogRef<AttendanceComponent>;
-  // @ViewChild('createServiceType', { static: true }) createServiceType: TemplateRef<this>;
+  addForm: FormGroup;
+  validation_messages: FormValidationMessages;
+  createDialogRef: MatDialogRef<AttendanceComponent>;
+  @ViewChild('createServiceType', { static: true }) createServiceType: TemplateRef<this>;
 
   constructor(private _attendanceService: AttendanceService,
-    // private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     // private router: Router,
     private spinner: NgxSpinnerService,
     private notification: NotificationService,
@@ -32,6 +35,8 @@ export class AttendanceComponent implements OnInit {
 
   ngOnInit(): void {
     this.getServicesType();
+    this.generateFormAttendance();
+    this.setValidationMessages();
   }
 
   getServicesType(): void {
@@ -50,6 +55,27 @@ export class AttendanceComponent implements OnInit {
         this.spinner.hide();
         this.notification.showNotification('danger', 'Ocorreu um erro ao carregar os tipos de serviço.', 'error');
       });
+  }
+
+  generateFormAttendance(): void {
+    this.addForm = this.formBuilder.group({
+      name: ['', [Validators.required]]
+    });
+  }
+
+  setValidationMessages(): void {
+    this.validation_messages = {
+      generic: [
+        { type: 'required', message: 'Campo obrigatório' }
+      ]
+    }
+  }
+
+  openAddModal(): void {
+    this.createDialogRef = this.matDialog.open(this.createServiceType, {
+      width: '500px',
+      height: '235px'
+    });
   }
 
   confirmDialog(serviceId: string): void {
