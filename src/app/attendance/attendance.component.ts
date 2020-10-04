@@ -78,11 +78,26 @@ export class AttendanceComponent implements OnInit {
     });
   }
 
+  create(value): void {
+    this.spinner.show();
+    this._attendanceService.create(value)
+      .then(() => {
+        this.createDialogRef.close();
+        this.spinner.hide();
+        this.notification.showNotification('success', 'Serviço adicionado com sucesso.', 'info'); 
+        this.getServicesType();
+      })
+      .catch(error => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', error.error.msg, 'error')
+      })
+  }
+
   confirmDialog(serviceId: string): void {
     this.deleteObj.id = serviceId;
     this.deleteDialogRef = this.matDialog.open(this.deleteServiceType, {
       width: '500px',
-      height: '210px',
+      height: '250px',
     });
 
     this.deleteDialogRef.afterClosed()
@@ -106,7 +121,7 @@ export class AttendanceComponent implements OnInit {
     this._attendanceService.delete(id)
       .then(() => {
         this.spinner.hide();
-        this.notification.showNotification('success', 'Serviço excluída com sucesso.', 'info');
+        this.notification.showNotification('success', 'Serviço excluído com sucesso.', 'info');
         this.getServicesType();
       })
       .catch(() => {
