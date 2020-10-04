@@ -24,7 +24,7 @@ export class AttendanceService {
 
   create(obj: ServiceType): Promise<ServiceType> {
     return new Promise<ServiceType>((resolve, reject) => {
-      this.httpClient.post(`${APPLICATION_API}/servicesType`, obj.name)
+      this.httpClient.post(`${APPLICATION_API}/servicesType`, obj)
         .subscribe((response: any) => {
           resolve(response);
         }, reject);
