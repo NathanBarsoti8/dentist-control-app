@@ -26,9 +26,10 @@ export class AttendanceComponent implements OnInit {
   createDialogRef: MatDialogRef<AttendanceComponent>;
   @ViewChild('createServiceType', { static: true }) createServiceType: TemplateRef<this>;
 
+  isUpdate: boolean = false;
+
   constructor(private _attendanceService: AttendanceService,
     private formBuilder: FormBuilder,
-    // private router: Router,
     private spinner: NgxSpinnerService,
     private notification: NotificationService,
     private matDialog: MatDialog) { }
@@ -76,6 +77,11 @@ export class AttendanceComponent implements OnInit {
       width: '500px',
       height: '235px'
     });
+
+    this.createDialogRef.afterClosed()
+      .subscribe(() => {
+        this.addForm.get('name').setValue(null);
+      })
   }
 
   create(value): void {
@@ -128,6 +134,50 @@ export class AttendanceComponent implements OnInit {
         this.spinner.hide();
         this.notification.showNotification('danger', 'Ocorreu um erro ao excluir serviço.', 'error')
       });
+  }
+
+  openUpdateModal(obj: ServiceType): void {
+    this.isUpdate = true;
+    this.addForm.patchValue(obj);
+    this.addForm.get('name').setValue(obj.name);
+
+    this.createDialogRef = this.matDialog.open(this.createServiceType, {
+      width: '500px',
+      height: '235px',
+      data: obj
+    });
+
+    this.createDialogRef.afterClosed()
+      .subscribe(res => {
+        if (res) {
+          this.update(obj.id, this.addForm.get('name').value)
+        }
+        this.addForm.get('name').setValue(null);
+        this.isUpdate = false;
+      })
+  }
+
+  sendUpdate(update: boolean): void {
+    if (update)
+      this.createDialogRef.close(true);
+    else 
+      this.createDialogRef.close(false);
+  }
+
+  update(id: number, value: string): void {
+    let obj = { id: id, name: value } as ServiceType;
+
+    this.spinner.show();
+    this._attendanceService.update(obj)
+      .then(() => {
+        this.spinner.hide();
+        this.notification.showNotification('success', 'Serviço atualizado com sucesso.', 'info'); 
+        this.getServicesType();
+      })
+      .catch(error => {
+        this.spinner.hide();
+        this.notification.showNotification('danger', error.error.msg, 'error')
+      })
   }
 
 }

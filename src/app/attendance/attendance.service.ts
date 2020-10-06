@@ -34,8 +34,10 @@ export class AttendanceService {
   }
 
   update(obj: ServiceType): Promise<ServiceType> {
+    let name = { name: obj.name }
+
     return new Promise<ServiceType>((resolve, reject) => {
-      this.httpClient.put(`${APPLICATION_API}/servicesType/${obj.id}`, obj)
+      this.httpClient.put(`${APPLICATION_API}/servicesType/${obj.id}`, name)
         .subscribe((response: any) => {
           resolve(response);
         }, reject);
