@@ -17,16 +17,14 @@ export class AttendanceComponent implements OnInit {
 
   displayedColumns = ['name', 'action'];
   servicesType: Array<ServiceType>;
-  deleteDialogRef: MatDialogRef<AttendanceComponent>;
-  deleteObj: ConfirmDialogData = { id: null, isConfirmed: null } as ConfirmDialogData;
-  @ViewChild('deleteServiceType', { static: true}) deleteServiceType: TemplateRef<this>;
-  
-  addForm: FormGroup;
   validation_messages: FormValidationMessages;
+  addForm: FormGroup;
+  deleteObj: ConfirmDialogData = { id: null, isConfirmed: null } as ConfirmDialogData;
+  deleteDialogRef: MatDialogRef<AttendanceComponent>;
   createDialogRef: MatDialogRef<AttendanceComponent>;
-  @ViewChild('createServiceType', { static: true }) createServiceType: TemplateRef<this>;
-
   isUpdate: boolean = false;
+  @ViewChild('deleteServiceType', { static: true}) deleteServiceType: TemplateRef<this>;
+  @ViewChild('createServiceType', { static: true }) createServiceType: TemplateRef<this>;
 
   constructor(private _attendanceService: AttendanceService,
     private formBuilder: FormBuilder,
